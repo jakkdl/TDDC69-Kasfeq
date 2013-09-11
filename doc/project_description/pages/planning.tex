@@ -2,19 +2,17 @@
    \textbf{\Huge Planering}\\[1cm]
 \end{center}
 \section{Introduktion till projektet}
-Kasfeq är ett multiplayer, modulärt, realtids fighting-spel som drar inspirationer från spel såsom Super Smash Bros. och LieroXtreme.\\
-Grundprincipen med spelet är att besegra alla motståndare. Detta görs med hjälp av vapen, spells, powerups och melee. Man spelar på en bana som kan vara dynamisk, t.ex. förstörbar terräng eller dynamiska element, eller statisk.\\
+Kasfeq är ett modulärt, realtids, multiplayer fighting-spel som drar inspirationer från spel såsom Super Smash Bros. och LieroXtreme.\\
+Grundprincipen med spelet är att besegra alla motståndare. Detta görs med hjälp av vapen, magi, närstrid och powerups. Man spelar på en bana som kan vara dynamisk, t.ex. förstörbar terräng eller dynamiska element, eller statisk.\\
 \vspace{11pt}
 Spelet har inte nätverksstöd utan spelas simultant vid en dator med hjälp av en eller flera tangentbord och kontroller.\\
 \vspace{11pt}
-Spelet är modulärt och detta möjliggör stor variation och hög underhållningsfaktor. Man kan t.ex. ändra/inaktivera många av spelets funktioner, såsom gravitation, friktion, explosioner, grafik, banan, etc.\\
+Spelet är modulärt och detta möjliggör mångsidighet och ger många timmars nöje. Man kan t.ex. ändra/inaktivera många av spelets funktioner, såsom gravitation, friktion, explosioner, grafik, kartan etc.\\
 
 \section{Ytterligare bakgrundsinformation}
-Vi kommer använda oss utav OpenGL (Genom LWJGL biblioteket http://www.lwjgl.org/). Vi vet dock inte om OpenGL kommer att fungera på IDA's Solarisklienter, isf så kommer vi redovisa på medtagna bärbara datorer eller på annat sätt.\\
+Vi kommer använda oss utav OpenGL genom \href{http://www.lwjgl.org/}{LWJGL}(Light Weight Java Game Library) biblioteket. Vi vet dock inte om OpenGL kommer att fungera på IDA's Solarisklienter, isf så kommer vi redovisa på medtagna bärbara datorer eller på annat sätt.\\
 \vspace{11pt}
-Eftersom spelet ska vara modulärt så kommer vi använda oss av klassen java.util.ServiceLoader. Denna klass tillåter oss att ladda in externa klasser i efter hand.\\
-\vspace{11pt}
-http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html
+Eftersom spelet ska vara modulärt så kommer vi använda oss av klassen \href{http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html}{java.util.ServiceLoader}. Denna klass tillåter oss att ladda in externa klasser efter att spelet blivit kompilerat.\\
 \section{Milstolpar}
 \begin{tabular}{| l | p{11cm} |}
     \hline
@@ -30,10 +28,10 @@ http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html
     9 & Jobba vidare och lägg till ytterligare funktionalitet. Skriv nya milestones. Stöd för exempelvis olika vapen, powerups, möjlighet att ha flera vapen och byta mellan dessa. \\ \hline
 \end{tabular}
 \section{Övriga implementationsförberedelser}
-För att få modularitet i spelet så kommer vi använda oss av ServiceLoader. Denna klass laddar in och instansierar alla klasser som ärver från en viss typ. Detta betyder att vi måste skapa gränssnitt eller abstrakta klasser som är tillgängliga för alla modulerna att implementera/utöka. Detta kan t.ex. vara en klass för att hantera spelobjekt som bland annat utökas av t.ex. fysikmotorn.
+För att uppnå modularitet i spelet kommer vi använda oss av ServiceLoader. Denna klass laddar in och instansierar alla klasser som ärver från en viss typ. Detta betyder att vi måste skapa gränssnitt eller abstrakta klasser som är tillgängliga för alla modulerna att implementera/utöka. Detta kan t.ex. vara en klass för att hantera spelobjekt som bland annat utökas av t.ex. fysikmotorn.
 \section{Utveckling och samarbete}
-Vi kommer använda GIT för versionshantering då vi har stor erfarenhet av att använda det. Vi kommer arbeta mycket på kvällar/nätter/helger, detta är mycket smidigt då vi är rumskamrater.\\
+Vi kommer använda GIT för versionshantering då vi har stor erfarenhet av att använda det. Vi kommer arbeta mycket på kvällar/helger, detta är mycket smidigt då vi är rumskamrater.\\
 \vspace{11pt}
-Då spelet är modulärt är det lätt att dela upp arbetet, där man jobbar på separata moduler. Vi kommer även läsa/kommentera/testa koden som den andre skrivit så vi får full förståelse för hela spelet och fångar upp eventuella buggar och ineffektiv kod.\\
+Då spelet är modulärt är det lätt att dela upp arbetet, då man jobbar på separata moduler. Vi kommer även läsa/kommentera/testa koden som den andre skrivit så vi får full förståelse för hela spelet och fångar eventuella buggar och ineffektiv kod.\\
 \vspace{11pt}
 Betygsambitionerna är ganska höga, men det spelar ingen större roll om vi får en 3:a p.g.a. andra ämnen och intressen.\\
