@@ -3,29 +3,29 @@
 \end{center}
 \section{Introduktion till projektet}
 Kasfeq är ett modulärt, realtids, multiplayer fighting-spel som drar inspirationer från spel såsom Super Smash Bros. och LieroXtreme.\\
-Grundprincipen med spelet är att besegra alla motståndare. Detta görs med hjälp av vapen, magi, närstrid och powerups. Man spelar på en bana som kan vara dynamisk, t.ex. förstörbar terräng eller dynamiska element, eller statisk.\\
+Grundprincipen med spelet är att besegra alla motståndare. Detta görs med hjälp av vapen, magi, närstrid och powerups. Man spelar på en bana som kan inehålla dynamiska element, t.ex. förstörbar terräng.\\
 \vspace{11pt}
 Spelet har inte nätverksstöd utan spelas simultant vid en dator med hjälp av en eller flera tangentbord och kontroller.\\
 \vspace{11pt}
-Spelet är modulärt och detta möjliggör mångsidighet och ger många timmars nöje. Man kan t.ex. ändra/inaktivera många av spelets funktioner, såsom gravitation, friktion, explosioner, grafik, kartan etc.\\
+Spelet är modulärt och detta möjliggör mångsidighet och ger förhoppningsvis många timmars nöje. Man kan t.ex. ändra/inaktivera många av spelets funktioner, såsom gravitation, friktion, explosioner, grafik, kartan etc.\\
 
 \section{Ytterligare bakgrundsinformation}
-Vi kommer använda oss utav OpenGL genom \href{http://www.lwjgl.org/}{LWJGL}(Light Weight Java Game Library) biblioteket. Vi vet dock inte om OpenGL kommer att fungera på IDA's Solarisklienter, isf så kommer vi redovisa på medtagna bärbara datorer eller på annat sätt.\\
+Vi kommer använda oss utav OpenGL genom \href{http://www.lwjgl.org/}{LWJGL}(Light Weight Java Game Library) biblioteket. Vi vet dock inte om OpenGL kommer att fungera på IDA's Solarisklienter, i så fall så kommer vi redovisa på medtagna bärbara datorer eller på annat sätt.\\
 \vspace{11pt}
 Eftersom spelet ska vara modulärt så kommer vi använda oss av klassen \href{http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html}{java.util.ServiceLoader}. Denna klass tillåter oss att ladda in externa klasser efter att spelet blivit kompilerat.\\
 \section{Milstolpar}
 \begin{tabular}{| l | p{11cm} |}
     \hline
     \# & Beskrivning \\ \hline
-    1 & Förarbete färdigt. Grundläggande programstruktur specificerad och skriven. Projektbeskrivning inskickad. Milestones specificerade. \\ \hline
+    1 & Förarbete färdigt. Grundläggande programstruktur specificerad och skriven. Projektbeskrivning inskickad. milstolpar specificerade. \\ \hline
     2 & Kartgrafik. Möjlighet att läsa in och rita ut kartan. \\ \hline
-    3 & Grafik. Mycket grundläggande sprites och objekt skapas som spelet kan läsa in.s Går att rita ut objekt och sprites som skickas till Graphics-modulen. Finns testfunktion(er) som ritar ut objekt på kartan slumpmässigt. \\ \hline
+    3 & Grafik. Mycket grundläggande sprites och objekt skapas som spelet kan läsa in. Går att rita ut objekt och sprites som skickas till Graphics-modulen. Finns testfunktion(er) som ritar ut objekt på kartan slumpmässigt. \\ \hline
     4 & Fysik/spelmotor. Objekt påverkas av gravitation och friktion. Objekt detekterar kollision och reagerar på det. Objekt med hastighet rör sig. Testfunktion som skapar objekt (spelare, skott) med hastighet etc som rör sig och kolliderar. \\ \hline
-    5 & Input. Spelare reagerar på förflyttningsknappar (vänster, höger). Jump, shoot och melee-knappar finns även och spelaren agerar på dessa input. \\ \hline
-    6 & Winning conditions. Spelet startar och avslutas. Skapar specificerat antal spelare, placerar dem på kartan, och respawnar dem om de dör. Spelet tar slut när endast en person har liv kvar. \\ \hline
+    5 & Input. Spelare reagerar på förflyttningsknappar (vänster, höger). Hoppa, skjut och melee-knappar ska även hanteras och spelaren ska agerar på dessa knappar. \\ \hline
+    6 & Winning conditions. Spelet startar och avslutas, skapar specificerat antal spelare, placerar dem på kartan, och respawnar dem om de dör. Spelet tar slut när endast en person har liv kvar. \\ \hline
     7 & GUI. Det finns ett grafiskt interface där man kan starta ett spel, ändra inställningar och knappar. Esc pausar spelet och man kan starta om eller avbryta spelet. \\ \hline
-    8 & Grundläggande spelet klart. Spelet innehåller alla tidigare milestones och det går att spela spelet från början till slut utan excessiv förkunskap. \\ \hline
-    9 & Jobba vidare och lägg till ytterligare funktionalitet. Skriv nya milestones. Stöd för exempelvis olika vapen, powerups, möjlighet att ha flera vapen och byta mellan dessa. \\ \hline
+    8 & Grundläggande spelet klart. Spelet innehåller alla tidigare milstolpar och det går att spela spelet från början till slut utan excessiv förkunskap. \\ \hline
+    9 & Jobba vidare och lägg till ytterligare funktionalitet. Skriv nya milstolpar. Stöd för exempelvis olika vapen, powerups, möjlighet att ha flera vapen och byta mellan dessa. \\ \hline
 \end{tabular}
 \section{Övriga implementationsförberedelser}
 För att uppnå modularitet i spelet kommer vi använda oss av ServiceLoader. Denna klass laddar in och instansierar alla klasser som ärver från en viss typ. Detta betyder att vi måste skapa gränssnitt eller abstrakta klasser som är tillgängliga för alla modulerna att implementera/utöka. Detta kan t.ex. vara en klass för att hantera spelobjekt som bland annat utökas av t.ex. fysikmotorn.
