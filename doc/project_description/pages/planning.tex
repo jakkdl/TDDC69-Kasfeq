@@ -16,7 +16,21 @@ Eftersom spelet ska vara modulärt så kommer vi använda oss av klassen java.ut
 \vspace{11pt}
 http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html
 \section{Milstolpar}
+\begin{tabular}{| l | p{11cm} |}
+    \hline
+    \# & Beskrivning \\ \hline
+    1 & Förarbete färdigt. Grundläggande programstruktur specificerad och skriven. Projektbeskrivning inskickad. Milestones specificerade. \\ \hline
+    2 & Kartgrafik. Möjlighet att läsa in och rita ut kartan. \\ \hline
+    3 & Grafik. Mycket grundläggande sprites och objekt skapas som spelet kan läsa in.s Går att rita ut objekt och sprites som skickas till Graphics-modulen. Finns testfunktion(er) som ritar ut objekt på kartan slumpmässigt. \\ \hline
+    4 & Fysik/spelmotor. Objekt påverkas av gravitation och friktion. Objekt detekterar kollision och reagerar på det. Objekt med hastighet rör sig. Testfunktion som skapar objekt (spelare, skott) med hastighet etc som rör sig och kolliderar. \\ \hline
+    5 & Input. Spelare reagerar på förflyttningsknappar (vänster, höger). Jump, shoot och melee-knappar finns även och spelaren agerar på dessa input. \\ \hline
+    6 & Winning conditions. Spelet startar och avslutas. Skapar specificerat antal spelare, placerar dem på kartan, och respawnar dem om de dör. Spelet tar slut när endast en person har liv kvar. \\ \hline
+    7 & GUI. Det finns ett grafiskt interface där man kan starta ett spel, ändra inställningar och knappar. Esc pausar spelet och man kan starta om eller avbryta spelet. \\ \hline
+    8 & Grundläggande spelet klart. Spelet innehåller alla tidigare milestones och det går att spela spelet från början till slut utan excessiv förkunskap. \\ \hline
+    9 & Jobba vidare och lägg till ytterligare funktionalitet. Skriv nya milestones. Stöd för exempelvis olika vapen, powerups, möjlighet att ha flera vapen och byta mellan dessa. \\ \hline
+\end{tabular}
 \section{Övriga implementationsförberedelser}
+För att få modularitet i spelet så kommer vi använda oss av ServiceLoader. Denna klass laddar in och instansierar alla klasser som ärver från en viss typ. Detta betyder att vi måste skapa gränssnitt eller abstrakta klasser som är tillgängliga för alla modulerna att implementera/utöka. Detta kan t.ex. vara en klass för att hantera spelobjekt som bland annat utökas av t.ex. fysikmotorn.
 \section{Utveckling och samarbete}
 Vi kommer använda GIT för versionshantering då vi har stor erfarenhet av att använda det. Vi kommer arbeta mycket på kvällar/nätter/helger, detta är mycket smidigt då vi är rumskamrater.\\
 \vspace{11pt}
