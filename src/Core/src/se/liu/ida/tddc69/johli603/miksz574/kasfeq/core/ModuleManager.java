@@ -35,6 +35,15 @@ enum ModuleManager {
 
     /** \brief Loads all the internal modules(Not from external jar files) */
     private void loadInternalModules() {
+        Module module;
+
+        module = new GameObjectManager();
+        loadedModules.add(module);
+        module.initialize();
+
+        module = new RenderingEngine();
+        loadedModules.add(module);
+        module.initialize();
     }
 
     /** \brief Loads all the enabled modules */
@@ -45,7 +54,7 @@ enum ModuleManager {
 
         for(Module module : serviceLoader) {
             // TODO: Check if module is enabled
-            module.load();
+            module.initialize();
             loadedModules.add(module);
         }
     }
@@ -60,7 +69,7 @@ enum ModuleManager {
     /** \brief Unloads all the loaded modules */
     void unloadModules() {
         for(Module module : loadedModules) {
-            module.unload();
+            module.dispose();
         }
 
         loadedModules.clear();

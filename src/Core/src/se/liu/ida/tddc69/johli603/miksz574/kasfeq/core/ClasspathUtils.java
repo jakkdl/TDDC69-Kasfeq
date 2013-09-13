@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 public class ClasspathUtils
 {
-
     private static Logger logger = Logger.getLogger(ClasspathUtils.class.getName());
     // Parameters
     private static final Class[] parameters = new Class[]

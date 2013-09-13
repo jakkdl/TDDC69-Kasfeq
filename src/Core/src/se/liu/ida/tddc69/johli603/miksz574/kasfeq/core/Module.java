@@ -11,10 +11,10 @@ public interface Module {
     /** \brief Returns a description for the module */
     public String getModuleDescription();
 
-    /** \brief Called when the module is loaded into the system */
-    public void load();
+    /** \brief Called when the module is initialized into the system */
+    public void initialize();
     /** \brief Called by the ModuleManager every update cycle */
     public void update();
-    /** \brief Called when the module is about to be unloaded */
-    public void unload();
+    /** \brief Called when the module is about to be disposed */
+    public void dispose();
 }
