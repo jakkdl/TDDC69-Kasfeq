@@ -1,5 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -19,13 +21,27 @@ enum ModuleManager {
     private final ServiceLoader<Module> serviceLoader;
 
     private ModuleManager() {
+        // We add the 'plugins' directory to the classpath
+        try {
+            ClasspathUtils.addDirToClasspath(new File("plugins"));
+        }
+        catch(IOException e) {
+            // We ignore the error, since this directory is optional
+        }
+
         loadedModules = new ArrayList<Module>();
         serviceLoader = ServiceLoader.load(Module.class);
+    }
+
+    /** \brief Loads all the internal modules(Not from external jar files) */
+    private void loadInternalModules() {
     }
 
     /** \brief Loads all the enabled modules */
     void loadModules() {
         serviceLoader.reload();
+
+        loadInternalModules();
 
         for(Module module : serviceLoader) {
             // TODO: Check if module is enabled

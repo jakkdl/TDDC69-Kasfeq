@@ -33,6 +33,8 @@ public enum Game {
         while(gameRunning) {
             ModuleManager.INSTANCE.update();
         }
+
+        stop();
     }
 
     /** \brief Unloads everything and stops the game */
