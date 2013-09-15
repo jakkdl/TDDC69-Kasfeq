@@ -4,6 +4,9 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+/** \class RenderingEngine
+ * \brief Handles all of the rendering for the game
+ */
 public class RenderingEngine implements Module {
     /**
      * \brief Can this module be disabled
@@ -51,6 +54,8 @@ public class RenderingEngine implements Module {
         if(!Display.isCloseRequested()) {
             // Render Here
             Display.update();
+            // Sync to 60 FPS
+            Display.sync(60);
         }
     }
 

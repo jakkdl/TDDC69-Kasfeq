@@ -3,8 +3,16 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameObjectManager implements Module {
+/** \enum GameObjectManager
+ * \brief Handles all of the game objects in the game
+ */
+public enum GameObjectManager implements Module{
+    INSTANCE;
+
     private List<GameObject> objectList;
+
+    private GameObjectManager() {
+    }
 
     /**
      * \brief Can this module be disabled
@@ -27,13 +35,12 @@ public class GameObjectManager implements Module {
      */
     @Override
     public String getModuleDescription() {
-        return "Handles all the objects in the game.";
+        return "Handles all the game objects in the game";
     }
 
     /**
      * \brief Called when the module is initialized into the system
      */
-    @Override
     public void initialize() {
         objectList = new ArrayList<GameObject>();
     }
@@ -41,14 +48,12 @@ public class GameObjectManager implements Module {
     /**
      * \brief Called by the ModuleManager every update cycle
      */
-    @Override
     public void update() {
     }
 
     /**
      * \brief Called when the module is about to be disposed
      */
-    @Override
     public void dispose() {
         for(GameObject object : objectList) {
             object.dispose();

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 /** \enum ModuleManager
- *  \brief ModuleManager manages all the modules in the game
+ *  \brief Handles all the modules in the game
  *
  *  A module is a class that inherits from the Module interface
  */
@@ -37,7 +37,7 @@ enum ModuleManager {
     private void loadInternalModules() {
         Module module;
 
-        module = new GameObjectManager();
+        module = GameObjectManager.INSTANCE;
         loadedModules.add(module);
         module.initialize();
 
