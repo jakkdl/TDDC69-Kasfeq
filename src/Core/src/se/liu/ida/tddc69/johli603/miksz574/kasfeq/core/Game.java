@@ -1,18 +1,16 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 
-/** \enum Game
+/** \class Game
  *  \brief Main class of the game
  *
  *  Contains the main entry point and handles initialization of everything
  */
-public enum Game {
-    /** \brief The singleton instance of the Game class */
-    INSTANCE;
-
+class Game {
     /** \brief Main entry point for the game */
     public static void main(String[] args) {
-        Game.INSTANCE.start();
-        Game.INSTANCE.spin();
+        Game game = new Game();
+        game.start();
+        game.spin();
     }
 
     private Boolean gameRunning = false;

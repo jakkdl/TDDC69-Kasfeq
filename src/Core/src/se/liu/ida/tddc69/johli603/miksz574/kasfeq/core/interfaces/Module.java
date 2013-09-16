@@ -1,4 +1,4 @@
-package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
+package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces;
 
 /** \interface Module
  *  \brief The Module interface is the interface that all the modules of the game have to implement

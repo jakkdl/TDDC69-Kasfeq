@@ -1,4 +1,5 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,19 @@ enum ModuleManager {
     /** \brief The ServiceLoader class is used to instantiate all the modules */
     private final ServiceLoader<Module> serviceLoader;
 
+    private GameObjectManager gameObjectManager;
+    private RenderingEngine renderingEngine;
+
+    /** \brief Returns an instance of the currently loaded GameObjectManager */
+    public GameObjectManager getGameObjectManager() {
+        return gameObjectManager;
+    }
+
+    /** \brief Returns an instance of the currently loaded RenderingEngine */
+    public RenderingEngine getRenderingEngine() {
+        return renderingEngine;
+    }
+
     private ModuleManager() {
         // We add the 'plugins' directory to the classpath
         try {
@@ -35,15 +49,6 @@ enum ModuleManager {
 
     /** \brief Loads all the internal modules(Not from external jar files) */
     private void loadInternalModules() {
-        Module module;
-
-        module = GameObjectManager.INSTANCE;
-        loadedModules.add(module);
-        module.initialize();
-
-        module = new RenderingEngine();
-        loadedModules.add(module);
-        module.initialize();
     }
 
     /** \brief Loads all the enabled modules */
