@@ -7,9 +7,9 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.logging.Logger;
 
-public class ClasspathUtils
+class ClasspathUtils
 {
-    private static Logger logger = Logger.getLogger(ClasspathUtils.class.getName());
+    private static final Logger logger = Logger.getLogger(ClasspathUtils.class.getName());
     // Parameters
     private static final Class[] parameters = new Class[]
             {
@@ -18,7 +18,7 @@ public class ClasspathUtils
 
     /**
      * Adds the jars in the given directory to classpath
-     * @param directory
+     * @param directory The root directory for the plugins
      * @throws IOException
      */
     public static void addDirToClasspath(File directory) throws IOException
@@ -26,16 +26,16 @@ public class ClasspathUtils
         if (directory.exists())
         {
             File[] files = directory.listFiles();
-            for (int i = 0; i < files.length; i++)
-            {
-                File file = files[i];
-                addURL(file.toURI().toURL());
+            if(files != null) {
+                for (File file : files) {
+                    addURL(file.toURI().toURL());
+                }
+
+                return;
             }
         }
-        else
-        {
-            logger.warning("The directory \"" + directory + "\" does not exist!");
-        }
+
+        logger.warning("The directory \"" + directory + "\" does not exist!");
     }
 
     /**
@@ -47,23 +47,18 @@ public class ClasspathUtils
     {
         URLClassLoader sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
         URL urls[] = sysLoader.getURLs();
-        for (int i = 0; i < urls.length; i++)
-        {
-            if (urls[i].toString().equalsIgnoreCase(u.toString()))
-            {
+        for (URL url : urls) {
+            if (url.toString().equalsIgnoreCase(u.toString())) {
                 logger.info("URL " + u + " is already in the CLASSPATH");
                 return;
             }
         }
-        Class sysclass = URLClassLoader.class;
+        Class<?> sysclass = URLClassLoader.class;
         try
         {
             Method method = sysclass.getDeclaredMethod("addURL", parameters);
             method.setAccessible(true);
-            method.invoke(sysLoader, new Object[]
-                    {
-                            u
-                    });
+            method.invoke(sysLoader, u);
         } catch (Throwable t)
         {
             t.printStackTrace();
