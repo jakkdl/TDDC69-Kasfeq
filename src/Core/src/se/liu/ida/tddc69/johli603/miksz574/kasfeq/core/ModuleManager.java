@@ -10,16 +10,17 @@ import java.util.ServiceLoader;
 /** \enum ModuleManager
  *  \brief Handles all the modules in the game
  *
- *  A module is a class that inherits from the Module interface
+ *  A module is comprised of a class that implements the ModuleHandler interface and individual components that
+ *  implement the ModuleComponent interface
  */
 enum ModuleManager {
     /** \brief The singleton instance of the ModuleManager class */
     INSTANCE;
 
     /** \brief Stores all the enabled modules */
-    private final List<Module> loadedModules;
+    private final List<ModuleHandler> loadedModules;
     /** \brief The ServiceLoader class is used to instantiate all the modules */
-    private final ServiceLoader<Module> serviceLoader;
+    private final ServiceLoader<ModuleHandler> serviceLoader;
 
     private GameObjectManager gameObjectManager;
     private RenderingEngine renderingEngine;
@@ -43,8 +44,8 @@ enum ModuleManager {
             // We ignore the error, since this directory is optional
         }
 
-        loadedModules = new ArrayList<Module>();
-        serviceLoader = ServiceLoader.load(Module.class);
+        loadedModules = new ArrayList<ModuleHandler>();
+        serviceLoader = ServiceLoader.load(ModuleHandler.class);
     }
 
     /** \brief Loads all the internal modules(Not from external jar files) */
@@ -57,24 +58,21 @@ enum ModuleManager {
 
         loadInternalModules();
 
-        for(Module module : serviceLoader) {
+        for(ModuleHandler moduleHandler : serviceLoader) {
             // TODO: Check if module is enabled
-            module.initialize();
-            loadedModules.add(module);
+            loadedModules.add(moduleHandler);
         }
     }
 
     /** \brief Update functions for all the enabled modules */
     void update() {
-        for(Module module : loadedModules) {
-            module.update();
+        for(ModuleHandler moduleHandler : loadedModules) {
         }
     }
 
     /** \brief Unloads all the loaded modules */
     void unloadModules() {
-        for(Module module : loadedModules) {
-            module.dispose();
+        for(ModuleHandler moduleHandler : loadedModules) {
         }
 
         loadedModules.clear();
