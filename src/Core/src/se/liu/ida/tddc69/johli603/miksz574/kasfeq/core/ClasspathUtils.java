@@ -1,5 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
-/** \file ClasspathUtils class taken from http://solitarygeek.com/java/a-simple-pluggable-java-application */
+/** \file ClasspathUtils class based on http://solitarygeek.com/java/a-simple-pluggable-java-application
+ * Cleanup and code inspection warnings fixed
+ */
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
