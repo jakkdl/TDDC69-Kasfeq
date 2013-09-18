@@ -70,10 +70,15 @@ enum ModuleManager {
     /** \brief Loads all the internal modules(Not from external jar files) */
     private void loadInternalModules() {
         resourceManager = new BasicResourceManager();
+        resourceManager.initialize();
         renderingEngine = new OpenGLRenderingEngine();
+        renderingEngine.initialize();
         physicsEngine = new BasicPhysicsEngine();
+        physicsEngine.initialize();
         inputManager = new BasicInputManager();
+        inputManager.initialize();
         gameObjectManager = new BasicGameObjectManager();
+        gameObjectManager.initialize();
     }
 
     /** \brief Loads all the enabled modules */
@@ -91,6 +96,12 @@ enum ModuleManager {
 
     /** \brief Update functions for all the enabled modules */
     void update() {
+        resourceManager.update();
+        inputManager.update();
+        physicsEngine.update();
+        gameObjectManager.update();
+        renderingEngine.update();
+
         for(ModuleHandler moduleHandler : loadedModules) {
         }
     }
