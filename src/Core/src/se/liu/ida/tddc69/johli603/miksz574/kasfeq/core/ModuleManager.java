@@ -1,5 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.*;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,17 +23,35 @@ enum ModuleManager {
     /** \brief The ServiceLoader class is used to instantiate all the modules */
     private final ServiceLoader<ModuleHandler> serviceLoader;
 
-    private GameObjectManager gameObjectManager;
+    private ResourceManager resourceManager;
     private RenderingEngine renderingEngine;
+    private PhysicsEngine physicsEngine;
+    private InputManager inputManager;
+    private GameObjectManager gameObjectManager;
 
-    /** \brief Returns an instance of the currently loaded GameObjectManager */
-    public GameObjectManager getGameObjectManager() {
-        return gameObjectManager;
+    /** \brief Returns an instance of the currently loaded ResourceManager */
+    public ResourceManager getResourceManager() {
+        return resourceManager;
     }
 
     /** \brief Returns an instance of the currently loaded RenderingEngine */
     public RenderingEngine getRenderingEngine() {
         return renderingEngine;
+    }
+
+    /** \brief Returns an instance of the currently loaded PhysicsEngine */
+    public PhysicsEngine getPhysicsEngine() {
+        return physicsEngine;
+    }
+
+    /** \brief Returns an instance of the currently loaded InputManager */
+    public InputManager getInputManager() {
+        return inputManager;
+    }
+
+    /** \brief Returns an instance of the currently loaded GameObjectManager */
+    public GameObjectManager getGameObjectManager() {
+        return gameObjectManager;
     }
 
     private ModuleManager() {
@@ -50,6 +69,11 @@ enum ModuleManager {
 
     /** \brief Loads all the internal modules(Not from external jar files) */
     private void loadInternalModules() {
+        resourceManager = new BasicResourceManager();
+        renderingEngine = new OpenGLRenderingEngine();
+        physicsEngine = new BasicPhysicsEngine();
+        inputManager = new BasicInputManager();
+        gameObjectManager = new BasicGameObjectManager();
     }
 
     /** \brief Loads all the enabled modules */
@@ -60,6 +84,7 @@ enum ModuleManager {
 
         for(ModuleHandler moduleHandler : serviceLoader) {
             // TODO: Check if module is enabled
+            // TODO: Handle module components
             loadedModules.add(moduleHandler);
         }
     }

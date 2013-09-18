@@ -1,6 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 /** \file ClasspathUtils class based on http://solitarygeek.com/java/a-simple-pluggable-java-application
  * Cleanup and code inspection warnings fixed
+ * Removed Logger, functions now return true is successful
  */
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.util.logging.Logger;
 
 class ClasspathUtils
 {
-    private static final Logger logger = Logger.getLogger(ClasspathUtils.class.getName());
     // Parameters
     private static final Class[] parameters = new Class[]
             {
@@ -21,9 +21,10 @@ class ClasspathUtils
     /**
      * Adds the jars in the given directory to classpath
      * @param directory The root directory for the plugins
+     * @return Returns true if successful, false if directory does not exist
      * @throws IOException
      */
-    public static void addDirToClasspath(File directory) throws IOException
+    public static boolean addDirToClasspath(File directory) throws IOException
     {
         if (directory.exists())
         {
@@ -33,26 +34,26 @@ class ClasspathUtils
                     addURL(file.toURI().toURL());
                 }
 
-                return;
+                return true;
             }
         }
 
-        logger.warning("The directory \"" + directory + "\" does not exist!");
+        return false;
     }
 
     /**
      * Add URL to CLASSPATH
      * @param u URL
+     * @return Returns true if successful, false if URL already in CLASSPATH
      * @throws IOException IOException
      */
-    private static void addURL(URL u) throws IOException
+    private static boolean addURL(URL u) throws IOException
     {
         URLClassLoader sysLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
         URL urls[] = sysLoader.getURLs();
         for (URL url : urls) {
             if (url.toString().equalsIgnoreCase(u.toString())) {
-                logger.info("URL " + u + " is already in the CLASSPATH");
-                return;
+                return false;
             }
         }
         Class<?> sysclass = URLClassLoader.class;
@@ -66,5 +67,7 @@ class ClasspathUtils
             t.printStackTrace();
             throw new IOException("Error, could not add URL to system classloader");
         }
+
+        return true;
     }
 }
