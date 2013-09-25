@@ -10,5 +10,5 @@ public interface ResourceManager extends ModuleComponent {
      * @param <LoadedType> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
-    public <LoadedType> LoadedType loadResource(String filename);
+    public <LoadedType> LoadedType loadResource(Class resourceClass, String filename);
 }

@@ -8,12 +8,15 @@ import java.util.Map;
 public abstract class AbstractResourceManager implements ResourceManager {
     private Map<Class,ResourceLoader> resourceLoaders;
 
+    AbstractResourceManager() {
+        resourceLoaders = new HashMap<Class, ResourceLoader>();
+    }
+
     /**
      * \brief Initializes the component
      */
     @Override
     public void initialize() {
-        resourceLoaders = new HashMap<Class, ResourceLoader>();
     }
 
     /**
@@ -31,12 +34,8 @@ public abstract class AbstractResourceManager implements ResourceManager {
      * @return The loaded object returned by a ResourceLoader
      */
     @Override
-    public <LoadedType> LoadedType loadResource(String filename) {
-        try {
-            return (LoadedType)resourceLoaders.get(LoadedType.class).loadResource(filename);
-        } catch() {
-
-        }
+    public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) {
+        return (LoadedType)resourceLoaders.get(resourceClass).loadResource(filename);
     }
 
     /**
