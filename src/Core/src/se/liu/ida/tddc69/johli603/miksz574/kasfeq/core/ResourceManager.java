@@ -1,28 +1,26 @@
-package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
+package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.ResourceManager;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.ResourceLoader;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractResourceManager implements ResourceManager {
+public class ResourceManager {
     private Map<Class,ResourceLoader> resourceLoaders;
 
-    AbstractResourceManager() {
+    ResourceManager() {
         resourceLoaders = new HashMap<Class, ResourceLoader>();
     }
 
     /**
      * \brief Initializes the component
      */
-    @Override
     public void initialize() {
     }
 
     /**
      * \brief Updates the component
      */
-    @Override
     public void update() {
     }
 
@@ -33,7 +31,6 @@ public abstract class AbstractResourceManager implements ResourceManager {
      * @param <LoadedType> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
-    @Override
     public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) {
         return (LoadedType)resourceLoaders.get(resourceClass).loadResource(filename);
     }
@@ -41,7 +38,6 @@ public abstract class AbstractResourceManager implements ResourceManager {
     /**
      * \brief Destroys the component
      */
-    @Override
     public void destroy() {
     }
 }
