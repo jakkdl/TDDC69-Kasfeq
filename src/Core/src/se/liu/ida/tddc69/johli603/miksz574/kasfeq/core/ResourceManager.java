@@ -1,6 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.ResourceLoader;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.ResourceLoader;
 
 import java.util.HashMap;
 import java.util.Map;
