@@ -7,21 +7,11 @@ import java.util.Map;
 
 public class ResourceManager {
     private Map<Class,ResourceLoader> resourceLoaders;
+    private Map<String, Object> cachedResources;
 
     ResourceManager() {
         resourceLoaders = new HashMap<Class, ResourceLoader>();
-    }
-
-    /**
-     * \brief Initializes the component
-     */
-    public void initialize() {
-    }
-
-    /**
-     * \brief Updates the component
-     */
-    public void update() {
+        cachedResources = new HashMap<String, Object>();
     }
 
     /**
@@ -32,12 +22,13 @@ public class ResourceManager {
      * @return The loaded object returned by a ResourceLoader
      */
     public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) {
-        return (LoadedType)resourceLoaders.get(resourceClass).loadResource(filename);
-    }
+        Object resource = cachedResources.get(filename);
 
-    /**
-     * \brief Destroys the component
-     */
-    public void destroy() {
+        if(resource == null) {
+            resource = resourceLoaders.get(resourceClass).loadResource(filename);
+            cachedResources.put(filename, (LoadedType)resource);
+        }
+
+        return (LoadedType)resource;
     }
 }
