@@ -1,45 +1,43 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 
+import org.newdawn.slick.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /** \class Game
  *  \brief Main class of the game
  *
  *  Contains the main entry point and handles initialization of everything
  */
-class Game {
+class Game extends BasicGame {
     /** \brief Main entry point for the game */
     public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
-        game.spin();
+        try {
+            AppGameContainer container = new AppGameContainer(new Game("Kasfeq"));
+            container.start();
+        } catch(SlickException e) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     private Boolean gameRunning = false;
 
-    private Game() {
-    }
-
-    /** \brief Initializes everything and starts the game */
-    void start() {
-        // Initialize the Module Manager
+    @Override
+    public void init(GameContainer gameContainer) throws SlickException {
+        gameContainer.setShowFPS(false);
         ModuleManager.INSTANCE.loadModules();
-
-        gameRunning = true;
     }
 
-    /** \brief Spins until the game is ready to quit */
-    void spin() {
-        while(gameRunning) {
-            ModuleManager.INSTANCE.update();
-        }
-
-        stop();
+    @Override
+    public void update(GameContainer gameContainer, int i) throws SlickException {
+        ModuleManager.INSTANCE.update();
     }
 
-    /** \brief Unloads everything and stops the game */
-    void stop() {
-        // Unload all the modules
-        ModuleManager.INSTANCE.unloadModules();
+    @Override
+    public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+    }
 
-        gameRunning = false;
+    private Game(String gameName) {
+        super(gameName);
     }
 }

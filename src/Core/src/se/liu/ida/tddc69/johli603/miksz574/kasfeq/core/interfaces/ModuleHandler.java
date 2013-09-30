@@ -9,8 +9,6 @@ public interface ModuleHandler {
     /** \brief Returns a description for the module */
     public String getModuleDescription();
 
-    public ResourceManager getResourceManager();
-    public RenderingEngine getRenderingEngine();
     public PhysicsEngine getPhysicsEngine();
     public InputManager getInputManager();
     public GameObjectManager getGameObjectManager();

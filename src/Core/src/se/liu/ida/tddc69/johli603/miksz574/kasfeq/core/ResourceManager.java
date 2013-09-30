@@ -21,7 +21,7 @@ public class ResourceManager {
      * @param <LoadedType> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
-    public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) {
+    public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) throws Exception {
         Object resource = cachedResources.get(filename);
 
         if(resource == null) {

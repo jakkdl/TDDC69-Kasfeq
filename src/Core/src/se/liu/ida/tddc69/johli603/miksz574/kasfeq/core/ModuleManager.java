@@ -23,15 +23,9 @@ enum ModuleManager {
     /** \brief The ServiceLoader class is used to instantiate all the modules */
     private final ServiceLoader<ModuleHandler> serviceLoader;
 
-    private RenderingEngine renderingEngine;
     private PhysicsEngine physicsEngine;
     private InputManager inputManager;
     private GameObjectManager gameObjectManager;
-
-    /** \brief Returns an instance of the currently loaded RenderingEngine */
-    public RenderingEngine getRenderingEngine() {
-        return renderingEngine;
-    }
 
     /** \brief Returns an instance of the currently loaded PhysicsEngine */
     public PhysicsEngine getPhysicsEngine() {
@@ -63,8 +57,6 @@ enum ModuleManager {
 
     /** \brief Loads all the internal modules(Not from external jar files) */
     private void loadInternalModules() {
-        renderingEngine = new OpenGLRenderingEngine();
-        renderingEngine.initialize();
         physicsEngine = new BasicPhysicsEngine();
         physicsEngine.initialize();
         inputManager = new BasicInputManager();
@@ -91,7 +83,6 @@ enum ModuleManager {
         inputManager.update();
         physicsEngine.update();
         gameObjectManager.update();
-        renderingEngine.update();
 
         for(ModuleHandler moduleHandler : loadedModules) {
         }
