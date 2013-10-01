@@ -20,8 +20,6 @@ class Game extends BasicGame {
         }
     }
 
-    private Boolean gameRunning = false;
-
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         gameContainer.setShowFPS(false);
