@@ -23,12 +23,10 @@ class Game extends BasicGame {
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         gameContainer.setShowFPS(false);
-        ModuleManager.INSTANCE.loadModules();
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        ModuleManager.INSTANCE.update();
     }
 
     @Override
