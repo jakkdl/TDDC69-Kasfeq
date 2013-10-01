@@ -1,11 +1,11 @@
-package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
+package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources;
 
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.ResourceLoader;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceLoader;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResourceManager {
+class ResourceManager {
     private Map<Class,ResourceLoader> resourceLoaders;
     private Map<String, Object> cachedResources;
 
@@ -26,9 +26,8 @@ public class ResourceManager {
 
         if(resource == null) {
             resource = resourceLoaders.get(resourceClass).loadResource(filename);
-            cachedResources.put(filename, (LoadedType)resource);
+            cachedResources.put(filename, resource);
         }
-
         return (LoadedType)resource;
     }
 }
