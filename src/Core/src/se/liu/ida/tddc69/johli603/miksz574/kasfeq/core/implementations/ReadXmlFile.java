@@ -1,3 +1,6 @@
+/*package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
+import java.util.*;
+
 class ReadXmlFile {
     enum Options {
         GRAVITY,
@@ -6,28 +9,29 @@ class ReadXmlFile {
         MAPTYPE
     } 
 
-    private Map<Options,Object> OptionsDict;
+    private Map<Options,Object> optionsDict;
     
     ReadXmlFile() {
         optionsDict = new EnumMap<Options, Object>(Options.class);
     }
 
     Object getOption(Options option) {
-        if (OptionsDict.containsKey(Options.option)) {
-            return OptionsDict.get(Options.option);
+        if (optionsDict.containsKey(option)) {
+            return optionsDict.get(option);
         }
         else {
             return null; //throw
         }
     }
 
-    public GameMap loadResource(string fileName) {
+    public GameMap loadResource(String fileName) {
         setDefaults();
         //for option in filename do shit;
+
     }
 
 
-    setDefaults() {
+    void setDefaults() {
         OptionsDict.put(Options.GRAVITY, 20);
         OptionsDict.put(Options.PIXELSPERBLOCK, 10);
         OptionsDict.put(Options.MAPNAME, "defaultMapName");
@@ -36,3 +40,4 @@ class ReadXmlFile {
 
 
 }
+*/
