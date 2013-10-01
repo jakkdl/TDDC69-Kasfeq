@@ -1,5 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources;
 
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.MapLoader;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.PlayingField;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceLoader;
 
 import java.util.HashMap;
@@ -11,6 +13,7 @@ class ResourceManager {
 
     ResourceManager() {
         resourceLoaders = new HashMap<Class, ResourceLoader>();
+        resourceLoaders.put(PlayingField.class, new MapLoader());
         cachedResources = new HashMap<String, Object>();
     }
 
