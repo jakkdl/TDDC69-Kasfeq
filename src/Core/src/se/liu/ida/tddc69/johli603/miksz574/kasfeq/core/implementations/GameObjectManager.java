@@ -1,35 +1,41 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObject;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObjectManager;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public abstract class GameObjectManager {
-    private List<GameObject> gameObjects;
+public class GameObjectManager implements GameComponent{
+    private final List<GameObject> gameObjects;
 
-    protected GameObjectManager() {
+    public GameObjectManager() {
         gameObjects = new ArrayList<GameObject>();
     }
 
-    /**
-     * \brief Initializes the component
-     */
-    public void initialize() {
+    public void spawnObject(GameObject obj) {
+        gameObjects.add(obj);
     }
 
-    /**
-     * \brief Updates the component
-     */
-    public void update() {
+    @Override
+    public void update(GameContainer gameContainer, int i) throws SlickException {
+        for(GameObject obj : gameObjects) {
+            obj.update(gameContainer, i);
+        }
     }
 
-    /**
-     * \brief Destroys the component
-     */
-    public void destroy() {
+    @Override
+    public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+        for(GameObject obj : gameObjects) {
+            obj.render(gameContainer, graphics);
+        }
+    }
+
+    @Override
+    public void dispose() throws Exception {
         Iterator<GameObject> iterator = gameObjects.iterator();
         while(iterator.hasNext()) {
             GameObject obj = iterator.next();

@@ -1,13 +1,11 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources;
 
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceLoader;
-
 import java.util.HashMap;
 import java.util.Map;
 
 class ResourceManager {
-    private Map<Class,ResourceLoader> resourceLoaders;
-    private Map<String, Object> cachedResources;
+    private final Map<Class,ResourceLoader> resourceLoaders;
+    private final Map<String, Object> cachedResources;
 
     ResourceManager() {
         resourceLoaders = new HashMap<Class, ResourceLoader>();
@@ -28,6 +26,7 @@ class ResourceManager {
             resource = resourceLoaders.get(resourceClass).loadResource(filename);
             cachedResources.put(filename, resource);
         }
+
         return (LoadedType)resource;
     }
 }
