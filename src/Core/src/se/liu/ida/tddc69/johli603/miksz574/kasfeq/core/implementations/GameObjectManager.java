@@ -1,7 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.GameObject;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameObjectManager;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObject;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObjectManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
