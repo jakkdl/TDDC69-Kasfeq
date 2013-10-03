@@ -17,6 +17,10 @@ public class MapComponent implements GameComponent {
     }
 
     @Override
+    public void init(GameContainer gameContainer) throws SlickException {
+    }
+
+    @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
     }
 

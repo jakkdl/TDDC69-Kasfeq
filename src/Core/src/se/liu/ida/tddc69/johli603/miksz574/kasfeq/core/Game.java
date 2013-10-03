@@ -23,6 +23,7 @@ class Game implements org.newdawn.slick.Game {
 
         // Enter game initially(Testing purposes)
         activeComponent = new World();
+        activeComponent.init(gameContainer);
     }
 
     @Override
