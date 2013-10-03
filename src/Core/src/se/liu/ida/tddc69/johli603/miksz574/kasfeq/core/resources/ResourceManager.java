@@ -1,13 +1,18 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources;
 
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.MapLoader;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.PlayingField;
+
 import java.util.HashMap;
 import java.util.Map;
 
-class ResourceManager {
+public enum ResourceManager {
+    INSTANCE;
+
     private final Map<Class,ResourceLoader> resourceLoaders;
     private final Map<String, Object> cachedResources;
 
-    ResourceManager() {
+    private ResourceManager() {
         resourceLoaders = new HashMap<Class, ResourceLoader>();
         resourceLoaders.put(PlayingField.class, new MapLoader());
         cachedResources = new HashMap<String, Object>();

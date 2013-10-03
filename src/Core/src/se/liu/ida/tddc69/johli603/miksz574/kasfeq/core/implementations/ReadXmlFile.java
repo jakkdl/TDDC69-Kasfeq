@@ -1,18 +1,14 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
-import java.awt.*;
 
-final class ReadXmlFile {
-    enum Options {
+import org.newdawn.slick.Color;
+
+public final class ReadXmlFile {
+    public enum Options {
         GRAVITY,
         PIXELSPERBLOCK,
         MAPNAME,
         MAPTYPE
     }
-
-
-
-
-
 
     public static PlayingField loadResource(String fileName) {
 
@@ -21,10 +17,10 @@ final class ReadXmlFile {
         PlayingField playingField = new PlayingField(10, 10);
         for (int x=0; x < 10; x++) {
             for (int y=0; y < 2; y++) {
-                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.SOLID, Color.BLACK));
+                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.SOLID, Color.black));
             }
             for (int y=2; y < 10; y++) {
-                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.EMPTY, Color.BLUE));
+                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.EMPTY, Color.blue));
             }
         }
         //for option in filename do shit;
@@ -43,7 +39,7 @@ final class ReadXmlFile {
             case GRAVITY:
                 return 20;
             case PIXELSPERBLOCK:
-                return 10;
+                return 32;
             case MAPNAME:
                 return "defaultMapName";
             case MAPTYPE:

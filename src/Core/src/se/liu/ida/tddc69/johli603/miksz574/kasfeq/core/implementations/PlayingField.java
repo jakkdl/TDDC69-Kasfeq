@@ -10,6 +10,8 @@ public class PlayingField {
     int height;
 
     PlayingField(int width, int height) {
+        this.width = width;
+        this.height = height;
         mapBlocks = new MapBlock[width][height];
     }
 
@@ -23,7 +25,7 @@ public class PlayingField {
     }
 
     public MapBlock getPixel(Point point) {
-        int pixelSize = optionsDict.get(ReadXmlFile.Options.PIXELSPERBLOCK);
+        int pixelSize = (Integer)optionsDict.get(ReadXmlFile.Options.PIXELSPERBLOCK);
         return mapBlocks[point.getX()][point.getY()];
     }
 
@@ -45,7 +47,7 @@ public class PlayingField {
     }
 
     public void setOption(ReadXmlFile.Options option, Object value) {
-        if (optionsDict.containsKey(option)) {
+        if (!optionsDict.containsKey(option)) {
             optionsDict.put(option, value);
         }
         //else throw

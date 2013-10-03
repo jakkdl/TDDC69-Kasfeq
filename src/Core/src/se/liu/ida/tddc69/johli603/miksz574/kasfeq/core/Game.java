@@ -17,7 +17,10 @@ class Game implements org.newdawn.slick.Game {
 
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
+        gameContainer.setTargetFrameRate(60);
+        gameContainer.setVSync(true);
         gameContainer.setShowFPS(false);
+
         // Enter game initially(Testing purposes)
         activeComponent = new World();
     }
