@@ -2,7 +2,7 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import java.awt.*;
 
-public class MapPixel {
+public class MapBlock {
     enum States {
         EMPTY, //AIR
         SOLID,
@@ -11,7 +11,7 @@ public class MapPixel {
     Color color;
     States state;
 
-    MapPixel(States state, Color color) {
+    MapBlock(States state, Color color) {
         this.state = state;
         this.color = color;
     }

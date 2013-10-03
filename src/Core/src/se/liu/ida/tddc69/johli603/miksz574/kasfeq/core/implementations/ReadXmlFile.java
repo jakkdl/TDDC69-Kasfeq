@@ -1,57 +1,55 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import java.awt.*;
-import java.util.*;
 
-class ReadXmlFile {
+final class ReadXmlFile {
     enum Options {
         GRAVITY,
         PIXELSPERBLOCK,
         MAPNAME,
         MAPTYPE
-    } 
-
-    private Map<Options,Object> optionsDict;
-    
-    ReadXmlFile() {
-        optionsDict = new EnumMap<Options, Object>(Options.class);
     }
 
-    Object getOption(Options option) {
-        if (optionsDict.containsKey(option)) {
-            return optionsDict.get(option);
-        }
-        else {
-            return null; //throw
-        }
-    }
 
-    public PlayingField loadResource(String fileName) {
-        setDefaults();
+
+
+
+
+    public static PlayingField loadResource(String fileName) {
 
         //TODO: Read file
 
         PlayingField playingField = new PlayingField(10, 10);
         for (int x=0; x < 10; x++) {
             for (int y=0; y < 2; y++) {
-                playingField.setPixel(new Point(x, y), new MapPixel(MapPixel.States.SOLID, SystemColor.black));
+                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.SOLID, Color.BLACK));
             }
             for (int y=2; y < 10; y++) {
-                playingField.setPixel(new Point(x, y), new MapPixel(MapPixel.States.EMPTY, SystemColor.blue));
+                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.EMPTY, Color.BLUE));
             }
         }
         //for option in filename do shit;
+        for (Options option : Options.values()) {
+            playingField.setOption(option, setDefaults(option));
+        }
+
 
         return playingField;
 
     }
 
 
-    void setDefaults() {
-        optionsDict.put(Options.GRAVITY, 20);
-        optionsDict.put(Options.PIXELSPERBLOCK, 10);
-        optionsDict.put(Options.MAPNAME, "defaultMapName");
-        optionsDict.put(Options.MAPTYPE, "text");
+    private static Object setDefaults(Options option) {
+        switch (option) {
+            case GRAVITY:
+                return 20;
+            case PIXELSPERBLOCK:
+                return 10;
+            case MAPNAME:
+                return "defaultMapName";
+            case MAPTYPE:
+                return "text";
+        }
+        return null; //throw exception
     }
-
 
 }
