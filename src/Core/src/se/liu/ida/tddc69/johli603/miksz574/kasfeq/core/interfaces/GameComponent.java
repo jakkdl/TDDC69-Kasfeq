@@ -5,4 +5,5 @@ import org.newdawn.slick.*;
 public interface GameComponent {
     public void update(GameContainer gameContainer, int i) throws SlickException;
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException;
+    public void dispose() throws Exception;
 }
