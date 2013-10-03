@@ -13,11 +13,11 @@ public class PlayingField {
         this.width = width;
         this.height = height;
         mapBlocks = new MapBlock[width][height];
+        optionsDict = new EnumMap<ReadXmlFile.Options, Object>(ReadXmlFile.Options.class);
     }
 
     public void setBlock(Point point, MapBlock mapBlock) {
         mapBlocks[point.getX()][point.getY()] = mapBlock;
-        optionsDict = new EnumMap<ReadXmlFile.Options, Object>(ReadXmlFile.Options.class);
     }
 
     public MapBlock getBlock(Point point) {
@@ -37,20 +37,52 @@ public class PlayingField {
         return width;
     }
 
-    public Object getOption(ReadXmlFile.Options option) {
+    public int getOptionInt(ReadXmlFile.Options option) throws NoSuchFieldException,ClassCastException {
         if (optionsDict.containsKey(option)) {
-            return optionsDict.get(option);
+            Object result = optionsDict.get(option);
+            if (result instanceof Integer) {
+                return (Integer) optionsDict.get(option);
+            }
+            throw new ClassCastException("Expected int.");
         }
-        else {
-            return null; //throw
+        throw new NoSuchFieldException("No such option.");
+    }
+
+    public float getOptionFloat(ReadXmlFile.Options option) throws NoSuchFieldException,ClassCastException {
+        if (optionsDict.containsKey(option)) {
+            Object result = optionsDict.get(option);
+            if (result instanceof Float) {
+                return (Float) optionsDict.get(option);
+            }
+            throw new ClassCastException("Expected float.");
         }
+        throw new NoSuchFieldException("No such option.");
+    }
+
+    public String getOptionString(ReadXmlFile.Options option) throws NoSuchFieldException,ClassCastException {
+        if (optionsDict.containsKey(option)) {
+            Object result = optionsDict.get(option);
+            if (result instanceof String) {
+                return (String) optionsDict.get(option);
+            }
+            throw new ClassCastException("Expected String.");
+        }
+        throw new NoSuchFieldException("No such option.");
+    }
+
+    public Boolean getOptionBoolean(ReadXmlFile.Options option) throws NoSuchFieldException,ClassCastException {
+        if (optionsDict.containsKey(option)) {
+            Object result = optionsDict.get(option);
+            if (result instanceof String) {
+                return (Boolean) optionsDict.get(option);
+            }
+            throw new ClassCastException("Expected Boolean.");
+        }
+        throw new NoSuchFieldException("No such option.");
     }
 
     public void setOption(ReadXmlFile.Options option, Object value) {
-        if (!optionsDict.containsKey(option)) {
-            optionsDict.put(option, value);
-        }
-        //else throw
+        optionsDict.put(option, value); //overwrites old values with same key
     }
 
 }

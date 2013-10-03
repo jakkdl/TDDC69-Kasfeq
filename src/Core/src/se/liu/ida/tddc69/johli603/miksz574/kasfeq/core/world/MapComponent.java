@@ -26,7 +26,13 @@ public class MapComponent implements GameComponent {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        int pixelsPerBlock = (Integer)playingField.getOption(ReadXmlFile.Options.PIXELSPERBLOCK);
+        int pixelsPerBlock = 0;
+        try {
+            pixelsPerBlock = playingField.getOptionInt(ReadXmlFile.Options.PIXELSPERBLOCK);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            pixelsPerBlock = (Integer) ReadXmlFile.getDefault(ReadXmlFile.Options.PIXELSPERBLOCK);
+        }
 
         for(int x = 0; x < playingField.getWidth(); x++) {
             for(int y = 0; y < playingField.getHeight(); y++) {

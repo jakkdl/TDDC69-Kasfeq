@@ -16,16 +16,16 @@ public final class ReadXmlFile {
 
         PlayingField playingField = new PlayingField(10, 10);
         for (int x=0; x < 10; x++) {
-            for (int y=0; y < 2; y++) {
-                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.SOLID, Color.black));
-            }
-            for (int y=2; y < 10; y++) {
+            for (int y=0; y < 8; y++) {
                 playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.EMPTY, Color.blue));
+            }
+            for (int y=8; y < 10; y++) {
+                playingField.setBlock(new Point(x, y), new MapBlock(MapBlock.States.SOLID, Color.green));
             }
         }
         //for option in filename do shit;
         for (Options option : Options.values()) {
-            playingField.setOption(option, setDefaults(option));
+            playingField.setOption(option, getDefault(option));
         }
 
 
@@ -34,7 +34,7 @@ public final class ReadXmlFile {
     }
 
 
-    private static Object setDefaults(Options option) {
+    public static Object getDefault(Options option) {
         switch (option) {
             case GRAVITY:
                 return 20;
