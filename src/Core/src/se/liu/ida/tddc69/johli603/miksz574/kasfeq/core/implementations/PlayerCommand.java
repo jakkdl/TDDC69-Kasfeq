@@ -6,7 +6,7 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class PlayerCommand implements Command {
     public enum InputType {
-        LEFT, JUMP, RIGHT;
+        LEFT, JUMP, RIGHT, SHOOT;
     }
 
     private World world;
@@ -25,6 +25,12 @@ public class PlayerCommand implements Command {
                 break;
             case RIGHT:
                 player.setForce(new Vector2f(0.1f, 0));
+                break;
+            case SHOOT:
+                Projectile bullet = new Projectile();
+                bullet.setPosition(player.getPosition().copy());
+                bullet.setForce(player.getVelocity().copy().scale(0.00001f));
+                world.spawn(bullet);
                 break;
         }
     }

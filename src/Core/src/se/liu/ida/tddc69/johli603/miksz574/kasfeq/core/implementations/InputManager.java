@@ -17,9 +17,10 @@ public class InputManager implements GameComponent, InputProviderListener {
         InputProvider provider = new InputProvider(input);
         provider.addListener(this);
 
-        provider.bindCommand(new KeyControl(Input.KEY_SPACE), new PlayerCommand(world, 1, PlayerCommand.InputType.JUMP));
+        provider.bindCommand(new KeyControl(Input.KEY_UP), new PlayerCommand(world, 1, PlayerCommand.InputType.JUMP));
         provider.bindCommand(new KeyControl(Input.KEY_LEFT), new PlayerCommand(world, 1, PlayerCommand.InputType.LEFT));
         provider.bindCommand(new KeyControl(Input.KEY_RIGHT), new PlayerCommand(world, 1, PlayerCommand.InputType.RIGHT));
+        provider.bindCommand(new KeyControl(Input.KEY_SPACE), new PlayerCommand(world, 1, PlayerCommand.InputType.SHOOT));
     }
 
     @Override

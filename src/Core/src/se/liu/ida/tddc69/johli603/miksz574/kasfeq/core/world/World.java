@@ -5,10 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObjectManager;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.InputManager;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.PlayingField;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
@@ -37,6 +34,10 @@ public class World implements GameComponent {
 
     public Player getPlayer(int playerID) {
         return players.get(playerID-1);
+    }
+
+    public void spawn(GameObject obj) {
+        gameObjectManager.spawnObject(obj);
     }
 
     @Override
