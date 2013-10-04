@@ -4,6 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObjectManager;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.InputManager;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
@@ -45,8 +46,7 @@ public class World implements GameComponent {
         inputManager.init(gameContainer);
 
         Player player1 = new Player();
-        player1.setPosX(0);
-        player1.setPosY(100);
+        player1.setPosition(new Vector2f(0,100));
         player1.setPlayerColor(Color.orange);
         gameObjectManager.spawnObject(player1);
         players.add(player1);

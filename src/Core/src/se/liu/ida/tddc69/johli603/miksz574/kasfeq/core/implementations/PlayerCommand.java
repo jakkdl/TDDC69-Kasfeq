@@ -1,6 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.command.Command;
+import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class PlayerCommand implements Command {
@@ -17,13 +18,13 @@ public class PlayerCommand implements Command {
 
         switch (inputType) {
             case LEFT:
-                player.setVelX(-2);
+                player.setForce(new Vector2f(-0.1f, 0));
                 break;
             case JUMP:
-                player.setVelY(-2);
+                player.setForce(new Vector2f(0, -0.1f));
                 break;
             case RIGHT:
-                player.setVelX(2);
+                player.setForce(new Vector2f(0.1f, 0));
                 break;
         }
     }
@@ -34,10 +35,10 @@ public class PlayerCommand implements Command {
         switch (inputType) {
             case LEFT:
             case RIGHT:
-                player.setVelX(0);
+                player.setForce(new Vector2f(0,0));
                 break;
             case JUMP:
-                player.setVelY(2);
+                player.setForce(new Vector2f(0,0.1f));
                 break;
         }
     }

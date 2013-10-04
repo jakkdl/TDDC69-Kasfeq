@@ -3,48 +3,56 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 
 public abstract class GameObject implements GameComponent {
-    private int posX, posY;
-    private int velX, velY;
+    private Vector2f position;
+    private Vector2f velocity;
+    private Vector2f force;
+    private float mass;
 
-    public int getPosX() {
-        return posX;
+    public Vector2f getPosition() {
+        return position;
     }
 
-    public int getPosY() {
-        return posY;
+    public void setPosition(Vector2f position) {
+        this.position = position;
     }
 
-    public void setPosX(int posX) {
-        this.posX = posX;
+    public Vector2f getVelocity() {
+        return velocity;
     }
 
-    public void setPosY(int posY) {
-        this.posY = posY;
+    public Vector2f getForce() {
+        return force;
     }
 
-    public int getVelX() {
-        return velX;
+    public void setForce(Vector2f force) {
+        this.force = force;
     }
 
-    public void setVelX(int velX) {
-        this.velX = velX;
+    public float getMass() {
+        return mass;
     }
 
-    public int getVelY() {
-        return velY;
+    public void setMass(float mass) {
+        this.mass = mass;
     }
 
-    public void setVelY(int velY) {
-        this.velY = velY;
+    protected GameObject(float mass) {
+        position = new Vector2f();
+        velocity = new Vector2f();
+        force = new Vector2f();
+        this.mass = mass;
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        posX += velX;
-        posY += velY;
+        // i = time since last update in ms
+        // F=m*a
+        velocity.add(force.scale(1.0f/mass));
+        position.add(velocity);
     }
 
     @Override
