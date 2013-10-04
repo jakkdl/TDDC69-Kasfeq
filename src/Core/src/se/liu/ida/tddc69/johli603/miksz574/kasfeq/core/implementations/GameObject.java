@@ -7,7 +7,7 @@ import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 
 public abstract class GameObject implements GameComponent {
-    private Vector2f position;
+    private Vector2f position; //use a point?
     private Vector2f velocity;
     private Vector2f force;
     private float mass;
