@@ -6,28 +6,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Player extends GameObject {
-    private Color playerColor;
-    private float health=1;
+public class Projectile extends GameObject {
 
-    public Color getPlayerColor() {
-        return playerColor;
-    }
-
-    public void setPlayerColor(Color playerColor) {
-        this.playerColor = playerColor;
-    }
-
-    public float getHealth() {
-        return health;
-    }
-
-    public void modHealth(float healthMod) {
-        this.health *= healthMod;
-    }
-
-    public Player() {
-        super(1);
+    public Projectile() {
+        super(0.1f);
     }
 
     @Override
@@ -41,9 +23,9 @@ public class Player extends GameObject {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        graphics.setColor(playerColor);
         Vector2f position = getPosition();
-        graphics.fillRect(position.getX(), position.getY(),32,64);
+        graphics.setColor(Color.white);
+        graphics.fillRect(position.getX(), position.getY(), 5, 5);
     }
 
     @Override

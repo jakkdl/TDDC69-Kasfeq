@@ -21,6 +21,10 @@ public class GameObjectManager implements GameComponent{
     }
 
     @Override
+    public void init(GameContainer gameContainer) throws SlickException {
+    }
+
+    @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
         for(GameObject obj : gameObjects) {
             obj.update(gameContainer, i);

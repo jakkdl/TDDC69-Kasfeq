@@ -4,22 +4,24 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObjectManager;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.PlayingField;
+import org.newdawn.slick.geom.Vector2f;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class World implements GameComponent {
     private final GameObjectManager gameObjectManager;
+    private final InputManager inputManager;
     private MapComponent mapComponent;
+    private List<Player> players;
 
     public World() {
+        players = new ArrayList<Player>();
         gameObjectManager = new GameObjectManager();
-        Player player1 = new Player();
-        player1.setPlayerColor(Color.orange);
-        gameObjectManager.spawnObject(player1);
-
+        inputManager = new InputManager(this);
         mapComponent = null;
 
         try {
@@ -30,9 +32,32 @@ public class World implements GameComponent {
         }
     }
 
+    public Player getPlayer(int playerID) {
+        return players.get(playerID-1);
+    }
+
+    public void spawn(GameObject obj) {
+        gameObjectManager.spawnObject(obj);
+    }
+
+    @Override
+    public void init(GameContainer gameContainer) throws SlickException {
+        gameObjectManager.init(gameContainer);
+        mapComponent.init(gameContainer);
+        inputManager.init(gameContainer);
+
+        Player player1 = new Player();
+        player1.setPosition(new Vector2f(0,100));
+        player1.setPlayerColor(Color.orange);
+        gameObjectManager.spawnObject(player1);
+        players.add(player1);
+    }
+
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
         gameObjectManager.update(gameContainer,i);
+        mapComponent.update(gameContainer, i);
+        inputManager.update(gameContainer, i);
     }
 
     @Override
@@ -40,7 +65,7 @@ public class World implements GameComponent {
         gameObjectManager.render(gameContainer, graphics);
         graphics.setColor(Color.white);
         graphics.drawString("Kasfeq",0,0);
-        mapComponent.render(gameContainer, graphics);
+        //mapComponent.render(gameContainer, graphics);
     }
 
     @Override
