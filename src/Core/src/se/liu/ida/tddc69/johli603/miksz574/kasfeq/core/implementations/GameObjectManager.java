@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,9 +12,11 @@ import java.util.List;
 
 public class GameObjectManager implements GameComponent{
     private final List<GameObject> gameObjects;
+    private final World world;
 
-    public GameObjectManager() {
+    public GameObjectManager(World world) {
         gameObjects = new ArrayList<GameObject>();
+        this.world = world;
     }
 
     public void spawnObject(GameObject obj) {
@@ -27,7 +30,8 @@ public class GameObjectManager implements GameComponent{
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
         for(GameObject obj : gameObjects) {
-            obj.update(gameContainer, i);
+            world.getPhysicsEngine().update(obj, i);
+            //obj.update(gameContainer, i);
         }
     }
 

@@ -26,8 +26,8 @@ public class Player extends GameObject {
         this.health *= healthMod;
     }
 
-    public Player() {
-        super(1);
+    public Player(float mass, float height, float width) {
+        super(mass, height, width);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Player extends GameObject {
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         graphics.setColor(playerColor);
         Vector2f position = getPosition();
-        graphics.fillRect(position.getX(), position.getY(),32,64);
+        graphics.fillRect(position.getX(), position.getY(),super.getWidth(),super.getHeight());
     }
 
     @Override

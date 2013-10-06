@@ -16,6 +16,10 @@ public class MapComponent implements GameComponent {
         this.playingField = playingField;
     }
 
+    public PlayingField getPlayingField() {
+        return playingField;
+    }
+
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
     }

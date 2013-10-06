@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 public class Projectile extends GameObject {
 
     public Projectile() {
-        super(0.1f);
+        super(0.1f, 2, 2);
     }
 
     @Override

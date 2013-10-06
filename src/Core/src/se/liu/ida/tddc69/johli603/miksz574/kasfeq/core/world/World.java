@@ -16,11 +16,12 @@ public class World implements GameComponent {
     private final GameObjectManager gameObjectManager;
     private final InputManager inputManager;
     private MapComponent mapComponent;
+    private PhysicsEngine physicsEngine;
     private List<Player> players;
 
     public World() {
         players = new ArrayList<Player>();
-        gameObjectManager = new GameObjectManager();
+        gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
         mapComponent = null;
 
@@ -30,6 +31,7 @@ public class World implements GameComponent {
         catch(Exception e) {
             e.printStackTrace();
         }
+        physicsEngine = new PhysicsEngine(mapComponent.getPlayingField());
     }
 
     public Player getPlayer(int playerID) {
@@ -40,13 +42,17 @@ public class World implements GameComponent {
         gameObjectManager.spawnObject(obj);
     }
 
+    public PhysicsEngine getPhysicsEngine() {
+        return physicsEngine;
+    }
+
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         gameObjectManager.init(gameContainer);
         mapComponent.init(gameContainer);
         inputManager.init(gameContainer);
 
-        Player player1 = new Player();
+        Player player1 = new Player(2, 32, 64);
         player1.setPosition(new Vector2f(0,100));
         player1.setPlayerColor(Color.orange);
         gameObjectManager.spawnObject(player1);
@@ -62,10 +68,10 @@ public class World implements GameComponent {
 
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
-        gameObjectManager.render(gameContainer, graphics);
         graphics.setColor(Color.white);
         graphics.drawString("Kasfeq",0,0);
-        //mapComponent.render(gameContainer, graphics);
+        mapComponent.render(gameContainer, graphics);
+        gameObjectManager.render(gameContainer, graphics);
     }
 
     @Override

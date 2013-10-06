@@ -18,18 +18,18 @@ public class PlayerCommand implements Command {
 
         switch (inputType) {
             case LEFT:
-                player.setForce(new Vector2f(-0.1f, 0));
-                break;
-            case JUMP:
-                player.setForce(new Vector2f(0, -0.1f));
+                player.addContForce(new Vector2f(-0.1f, 0));
                 break;
             case RIGHT:
-                player.setForce(new Vector2f(0.1f, 0));
+                player.addContForce(new Vector2f(0.1f, 0));
+                break;
+            case JUMP:
+                player.addInstantForce(new Vector2f(0, -0.5f));
                 break;
             case SHOOT:
                 Projectile bullet = new Projectile();
                 bullet.setPosition(player.getPosition().copy());
-                bullet.setForce(player.getVelocity().copy().scale(0.00001f));
+                bullet.addInstantForce(player.getVelocity().copy().scale(0.00001f));
                 world.spawn(bullet);
                 break;
         }
@@ -40,12 +40,14 @@ public class PlayerCommand implements Command {
 
         switch (inputType) {
             case LEFT:
+                player.addContForce(new Vector2f(0.1f, 0));
+                break;
             case RIGHT:
-                player.setForce(new Vector2f(0,0));
+                player.addContForce(new Vector2f(-0.1f, 0));
                 break;
-            case JUMP:
+            /*case JUMP:
                 player.setForce(new Vector2f(0,0.1f));
-                break;
+                break;*/
         }
     }
 

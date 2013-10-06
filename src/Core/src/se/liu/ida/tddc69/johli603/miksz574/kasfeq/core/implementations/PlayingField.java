@@ -26,7 +26,7 @@ public class PlayingField {
 
     public MapBlock getPixel(Point point) {
         int pixelSize = (Integer)optionsDict.get(ReadXmlFile.Options.PIXELSPERBLOCK);
-        return mapBlocks[point.getX()][point.getY()];
+        return mapBlocks[(int)Math.floor(point.getX()/pixelSize)][(int)Math.floor(point.getY()/pixelSize)];
     }
 
     public int getHeight() {
@@ -35,6 +35,14 @@ public class PlayingField {
 
     public int getWidth() {
         return width;
+    }
+
+    public int getPixelHeight() {
+        return height*(Integer)optionsDict.get(ReadXmlFile.Options.PIXELSPERBLOCK);
+    }
+
+    public int getPixelWidth() {
+        return width*(Integer)optionsDict.get(ReadXmlFile.Options.PIXELSPERBLOCK);
     }
 
     public int getOptionInt(ReadXmlFile.Options option) throws NoSuchFieldException,ClassCastException {
