@@ -5,16 +5,24 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public abstract class GameObject implements GameComponent {
-    private Vector2f position; //use a point?
+    private final World world;
+    private Vector2f position;
     private Vector2f velocity;
     private Vector2f continuousForce;
     private Vector2f instantaneousForce;
+    private double facing;
+
     private float mass;
 
     private float width;
     private float height;
+
+    public World getWorld() {
+        return world;
+    }
 
     public Vector2f getPosition() {
         return position;
@@ -40,8 +48,6 @@ public abstract class GameObject implements GameComponent {
         return height;
     }
 
-
-
     public Vector2f getInstantForce() {
         return instantaneousForce;
     }
@@ -53,7 +59,6 @@ public abstract class GameObject implements GameComponent {
     public void addInstantForce(Vector2f force) {
         instantaneousForce.add(force);
     }
-
 
     public Vector2f getContForce() {
         return continuousForce;
@@ -67,9 +72,6 @@ public abstract class GameObject implements GameComponent {
         continuousForce.add(force);
     }
 
-
-
-
     public float getMass() {
         return mass;
     }
@@ -78,7 +80,16 @@ public abstract class GameObject implements GameComponent {
         this.mass = mass;
     }
 
-    protected GameObject(float mass, float width, float height) {
+    public double getFacing() {
+        return facing;
+    }
+
+    public void setFacing(double facing) {
+        this.facing = facing;
+    }
+
+    protected GameObject(World world, float mass, float width, float height) {
+        this.world = world;
         position = new Vector2f();
         velocity = new Vector2f();
         continuousForce = new Vector2f();

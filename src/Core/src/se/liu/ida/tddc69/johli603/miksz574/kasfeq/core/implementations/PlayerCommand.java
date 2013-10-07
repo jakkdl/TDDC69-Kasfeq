@@ -1,7 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.command.Command;
-import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class PlayerCommand implements Command {
@@ -18,19 +17,16 @@ public class PlayerCommand implements Command {
 
         switch (inputType) {
             case LEFT:
-                player.addContForce(new Vector2f(-0.1f, 0));
+                player.moveLeft(true);
                 break;
             case RIGHT:
-                player.addContForce(new Vector2f(0.1f, 0));
+                player.moveRight(true);
                 break;
             case JUMP:
-                player.addInstantForce(new Vector2f(0, -0.5f));
+                player.jump(true);
                 break;
             case SHOOT:
-                Projectile bullet = new Projectile();
-                bullet.setPosition(player.getPosition().copy());
-                bullet.addInstantForce(player.getVelocity().copy().scale(0.00001f));
-                world.spawn(bullet);
+                player.shoot(true);
                 break;
         }
     }
@@ -40,14 +36,17 @@ public class PlayerCommand implements Command {
 
         switch (inputType) {
             case LEFT:
-                player.addContForce(new Vector2f(0.1f, 0));
+                player.moveLeft(false);
                 break;
             case RIGHT:
-                player.addContForce(new Vector2f(-0.1f, 0));
+                player.moveRight(false);
                 break;
-            /*case JUMP:
-                player.setForce(new Vector2f(0,0.1f));
-                break;*/
+            case JUMP:
+                player.jump(false);
+                break;
+            case SHOOT:
+                player.shoot(false);
+                break;
         }
     }
 

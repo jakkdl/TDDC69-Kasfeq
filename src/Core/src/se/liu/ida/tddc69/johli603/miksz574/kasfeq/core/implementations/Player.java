@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class Player extends GameObject {
     private Color playerColor;
@@ -26,8 +27,8 @@ public class Player extends GameObject {
         this.health *= healthMod;
     }
 
-    public Player(float mass, float height, float width) {
-        super(mass, height, width);
+    public Player(World world, float mass, float height, float width) {
+        super(world, mass, height, width);
     }
 
     @Override
@@ -44,6 +45,45 @@ public class Player extends GameObject {
         graphics.setColor(playerColor);
         Vector2f position = getPosition();
         graphics.fillRect(position.getX(), position.getY(),super.getWidth(),super.getHeight());
+    }
+
+    public void moveLeft(boolean isKeyPressed) {
+        setFacing(Math.PI);
+        if(isKeyPressed) {
+            addContForce(new Vector2f(-0.1f, 0));
+        }
+        else {
+            addContForce(new Vector2f(0.1f, 0));
+        }
+    }
+
+    public void moveRight(boolean isKeyPressed) {
+        setFacing(0);
+        if(isKeyPressed) {
+            addContForce(new Vector2f(0.1f, 0));
+        }
+        else {
+            addContForce(new Vector2f(-0.1f, 0));
+        }
+    }
+
+    public void jump(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            addInstantForce(new Vector2f(0, -0.5f));
+        }
+        else {
+        }
+    }
+
+    public void shoot(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            Projectile bullet = new Projectile(getWorld());
+            bullet.setPosition(getPosition().copy());
+            bullet.addInstantForce(new Vector2f(getFacing()));
+            getWorld().spawn(bullet);
+        }
+        else {
+        }
     }
 
     @Override
