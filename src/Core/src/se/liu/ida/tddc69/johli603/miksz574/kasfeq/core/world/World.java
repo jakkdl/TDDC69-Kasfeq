@@ -42,6 +42,10 @@ public class World implements GameComponent {
         gameObjectManager.spawnObject(obj);
     }
 
+    public void despawn(GameObject obj) {
+        gameObjectManager.despawnObject(obj);
+    }
+
     public PhysicsEngine getPhysicsEngine() {
         return physicsEngine;
     }
@@ -52,7 +56,7 @@ public class World implements GameComponent {
         mapComponent.init(gameContainer);
         inputManager.init(gameContainer);
 
-        Player player1 = new Player(2, 32, 64);
+        Player player1 = new Player(this, 2, 32, 64);
         player1.setPosition(new Vector2f(0,100));
         player1.setPlayerColor(Color.orange);
         gameObjectManager.spawnObject(player1);

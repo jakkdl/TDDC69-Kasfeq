@@ -12,15 +12,21 @@ import java.util.List;
 
 public class GameObjectManager implements GameComponent{
     private final List<GameObject> gameObjects;
+    private final List<GameObject> despawnedGameObjects;
     private final World world;
 
     public GameObjectManager(World world) {
         gameObjects = new ArrayList<GameObject>();
+        despawnedGameObjects = new ArrayList<GameObject>();
         this.world = world;
     }
 
     public void spawnObject(GameObject obj) {
         gameObjects.add(obj);
+    }
+
+    public void despawnObject(GameObject obj) {
+        despawnedGameObjects.add(obj);
     }
 
     @Override
@@ -33,6 +39,11 @@ public class GameObjectManager implements GameComponent{
             world.getPhysicsEngine().update(obj, i);
             //obj.update(gameContainer, i);
         }
+        for(GameObject obj : despawnedGameObjects) {
+            System.out.println("removed");
+            gameObjects.remove(obj);
+        }
+        despawnedGameObjects.clear();
     }
 
     @Override

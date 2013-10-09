@@ -1,20 +1,20 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public abstract class GameObject implements GameComponent {
-    private Vector2f position; //use a point?
+    private Vector2f position;
     private Vector2f velocity;
     private Vector2f continuousForce;
     private Vector2f instantaneousForce;
     private float mass;
-
     private float width;
     private float height;
+    private World world;
 
     public Vector2f getPosition() {
         return position;
@@ -39,7 +39,6 @@ public abstract class GameObject implements GameComponent {
     public float getHeight() {
         return height;
     }
-
 
 
     public Vector2f getInstantForce() {
@@ -67,8 +66,11 @@ public abstract class GameObject implements GameComponent {
         continuousForce.add(force);
     }
 
+    public abstract void collision();
 
-
+    public void despawn() {
+        world.despawn(this);
+    }
 
     public float getMass() {
         return mass;
@@ -78,7 +80,7 @@ public abstract class GameObject implements GameComponent {
         this.mass = mass;
     }
 
-    protected GameObject(float mass, float width, float height) {
+    protected GameObject(World world, float mass, float width, float height) {
         position = new Vector2f();
         velocity = new Vector2f();
         continuousForce = new Vector2f();
@@ -86,6 +88,7 @@ public abstract class GameObject implements GameComponent {
         this.mass = mass;
         this.width = width;
         this.height = height;
+        this.world = world;
     }
 
     @Override

@@ -24,12 +24,12 @@ public class PlayerCommand implements Command {
                 player.addContForce(new Vector2f(0.1f, 0));
                 break;
             case JUMP:
-                player.addInstantForce(new Vector2f(0, -0.5f));
+                player.addInstantForce(new Vector2f(0, -2f));
                 break;
             case SHOOT:
-                Projectile bullet = new Projectile();
+                Projectile bullet = new Projectile(world);
                 bullet.setPosition(player.getPosition().copy());
-                bullet.addInstantForce(player.getVelocity().copy().scale(0.00001f));
+                bullet.addInstantForce(new Vector2f(10f, 0));
                 world.spawn(bullet);
                 break;
         }

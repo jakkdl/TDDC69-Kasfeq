@@ -5,10 +5,11 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class Player extends GameObject {
     private Color playerColor;
-    private float health=1;
+    private float health=100;
 
     public Color getPlayerColor() {
         return playerColor;
@@ -26,8 +27,11 @@ public class Player extends GameObject {
         this.health *= healthMod;
     }
 
-    public Player(float mass, float height, float width) {
-        super(mass, height, width);
+    public Player(World world, float mass, float width, float height) {
+        super(world, mass, width, height);
+    }
+
+    public void collision() {
     }
 
     @Override
