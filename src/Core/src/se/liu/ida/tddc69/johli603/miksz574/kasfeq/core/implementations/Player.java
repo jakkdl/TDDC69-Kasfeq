@@ -82,7 +82,7 @@ public class Player extends GameObject {
         if(isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
             bullet.setPosition(getPosition().copy());
-            bullet.addInstantForce(new Vector2f(getFacing()));
+            bullet.addInstantForce(new Vector2f(Math.toDegrees(getFacing())));
             getWorld().spawn(bullet);
         }
         else {
