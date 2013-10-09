@@ -50,6 +50,45 @@ public class Player extends GameObject {
         graphics.fillRect(position.getX(), position.getY(),super.getWidth(),super.getHeight());
     }
 
+    public void moveLeft(boolean isKeyPressed) {
+        setFacing(Math.PI);
+        if(isKeyPressed) {
+            addContForce(new Vector2f(-0.1f, 0));
+        }
+        else {
+            addContForce(new Vector2f(0.1f, 0));
+        }
+    }
+
+    public void moveRight(boolean isKeyPressed) {
+        setFacing(0);
+        if(isKeyPressed) {
+            addContForce(new Vector2f(0.1f, 0));
+        }
+        else {
+            addContForce(new Vector2f(-0.1f, 0));
+        }
+    }
+
+    public void jump(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            addInstantForce(new Vector2f(0, -0.5f));
+        }
+        else {
+        }
+    }
+
+    public void shoot(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            Projectile bullet = new Projectile(getWorld());
+            bullet.setPosition(getPosition().copy());
+            bullet.addInstantForce(new Vector2f(getFacing()));
+            getWorld().spawn(bullet);
+        }
+        else {
+        }
+    }
+
     @Override
     public void dispose() throws Exception {
         super.dispose();
