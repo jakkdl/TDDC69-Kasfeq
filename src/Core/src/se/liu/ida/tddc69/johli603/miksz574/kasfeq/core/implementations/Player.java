@@ -10,6 +10,8 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 public class Player extends GameObject {
     private Color playerColor;
     private float health=100;
+    private float aimAngle = 0;
+    private float aimAngleSpeed = 0;
 
     public Color getPlayerColor() {
         return playerColor;
@@ -41,6 +43,7 @@ public class Player extends GameObject {
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
         super.update(gameContainer, i);
+        aimAngle += aimAngleSpeed;
     }
 
     @Override
@@ -48,6 +51,9 @@ public class Player extends GameObject {
         graphics.setColor(playerColor);
         Vector2f position = getPosition();
         graphics.fillRect(position.getX(), position.getY(),super.getWidth(),super.getHeight());
+        float aimRadius = getWidth();
+        graphics.setColor(Color.red);
+        graphics.drawLine(position.getX(),position.getY(),(float)(position.getX()+aimRadius*Math.cos(aimAngle)),(float)(position.getY()+aimRadius*Math.sin(aimAngle)));
     }
 
     public void moveLeft(boolean isKeyPressed) {
@@ -82,10 +88,28 @@ public class Player extends GameObject {
         if(isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
             bullet.setPosition(getPosition().copy());
-            bullet.addInstantForce(new Vector2f(Math.toDegrees(getFacing())));
+            bullet.addInstantForce(new Vector2f(Math.toDegrees(aimAngle)));
             getWorld().spawn(bullet);
         }
         else {
+        }
+    }
+
+    public void aimLeft(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            aimAngleSpeed += Math.PI/120;
+        }
+        else {
+            aimAngleSpeed -= Math.PI/120;
+        }
+    }
+
+    public void aimRight(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            aimAngleSpeed -= Math.PI/120;
+        }
+        else {
+            aimAngleSpeed += Math.PI/120;
         }
     }
 

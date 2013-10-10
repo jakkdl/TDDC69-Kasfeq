@@ -37,7 +37,7 @@ public class GameObjectManager implements GameComponent{
     public void update(GameContainer gameContainer, int i) throws SlickException {
         for(GameObject obj : gameObjects) {
             world.getPhysicsEngine().update(obj, i);
-            //obj.update(gameContainer, i);
+            obj.update(gameContainer, i);
         }
         for(GameObject obj : despawnedGameObjects) {
             System.out.println("removed");

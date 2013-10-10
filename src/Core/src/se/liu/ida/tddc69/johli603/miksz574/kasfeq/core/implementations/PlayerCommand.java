@@ -5,7 +5,7 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class PlayerCommand implements Command {
     public enum InputType {
-        LEFT, JUMP, RIGHT, SHOOT;
+        LEFT, JUMP, RIGHT, SHOOT, AIM_LEFT, AIM_RIGHT;
     }
 
     private World world;
@@ -28,6 +28,12 @@ public class PlayerCommand implements Command {
             case SHOOT:
                 player.shoot(true);
                 break;
+            case AIM_LEFT:
+                player.aimLeft(true);
+                break;
+            case AIM_RIGHT:
+                player.aimRight(true);
+                break;
         }
     }
 
@@ -46,6 +52,12 @@ public class PlayerCommand implements Command {
                 break;
             case SHOOT:
                 player.shoot(false);
+                break;
+            case AIM_LEFT:
+                player.aimLeft(false);
+                break;
+            case AIM_RIGHT:
+                player.aimRight(false);
                 break;
         }
     }

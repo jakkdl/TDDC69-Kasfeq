@@ -21,6 +21,8 @@ public class InputManager implements GameComponent, InputProviderListener {
         provider.bindCommand(new KeyControl(Input.KEY_LEFT), new PlayerCommand(world, 1, PlayerCommand.InputType.LEFT));
         provider.bindCommand(new KeyControl(Input.KEY_RIGHT), new PlayerCommand(world, 1, PlayerCommand.InputType.RIGHT));
         provider.bindCommand(new KeyControl(Input.KEY_SPACE), new PlayerCommand(world, 1, PlayerCommand.InputType.SHOOT));
+        provider.bindCommand(new KeyControl(Input.KEY_E), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_RIGHT));
+        provider.bindCommand(new KeyControl(Input.KEY_Q), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_LEFT));
     }
 
     @Override
