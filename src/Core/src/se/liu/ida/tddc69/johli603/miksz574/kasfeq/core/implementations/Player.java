@@ -29,8 +29,8 @@ public class Player extends GameObject {
         this.health *= healthMod;
     }
 
-    public Player(World world, float mass, float width, float height) {
-        super(world, mass, width, height);
+    public Player(World world) {
+        super(world, 2, 10, 20);
     }
 
     public void collision() {
@@ -78,7 +78,7 @@ public class Player extends GameObject {
 
     public void jump(boolean isKeyPressed) {
         if(isKeyPressed) {
-            addInstantForce(new Vector2f(0, -0.5f));
+            addInstantForce(new Vector2f(0, -2f));
         }
         else {
         }
@@ -88,7 +88,7 @@ public class Player extends GameObject {
         if(isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
             bullet.setPosition(getPosition().copy());
-            bullet.addInstantForce(new Vector2f(Math.toDegrees(aimAngle)));
+            bullet.addInstantForce(new Vector2f(Math.toDegrees(aimAngle)).scale(5));
             getWorld().spawn(bullet);
         }
         else {

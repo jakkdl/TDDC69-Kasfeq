@@ -1,7 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core;
 
 import org.newdawn.slick.*;
-import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
@@ -18,7 +17,7 @@ class Game implements org.newdawn.slick.Game {
 
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
-        gameContainer.setTargetFrameRate(60);
+        gameContainer.setTargetFrameRate(120);
         gameContainer.setVSync(true);
         gameContainer.setShowFPS(false);
 

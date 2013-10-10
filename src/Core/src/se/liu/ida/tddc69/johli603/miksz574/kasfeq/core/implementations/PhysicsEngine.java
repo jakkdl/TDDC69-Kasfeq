@@ -1,6 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.geom.Vector2f;
+import org.newdawn.slick.tiled.TiledMap;
 
 public class PhysicsEngine {
     private class MapCollisionResult {
@@ -23,10 +24,11 @@ public class PhysicsEngine {
             this.yCollision = yCollision;
         }
     }
-    private PlayingField playingField;
+    //private PlayingField playingField;
+    private TiledMap playingField;
 
 
-    public PhysicsEngine(PlayingField playingField) {
+    public PhysicsEngine(TiledMap playingField) {
         this.playingField = playingField;
     }
 
@@ -95,6 +97,26 @@ public class PhysicsEngine {
 
     }
 
+    private MapBlock.States getPixel(Point point) {
+        int layerID = playingField.getLayerIndex("Tile Layer 1");
+        int tileWidth = playingField.getTileWidth();
+        int tileHeight = playingField.getTileHeight();
+
+        int tileX = (int)Math.floor((double)point.getX()/(double)tileWidth);
+        int tileY = (int)Math.floor((double)point.getY()/(double)tileHeight);
+        int id = playingField.getTileId(tileX,tileY, layerID);
+
+        if(id == 2) {
+            return MapBlock.States.EMPTY;
+        }
+        else if(id == 3) {
+            return MapBlock.States.DESTRUCTABLE;
+        }
+        else {
+            return MapBlock.States.SOLID;
+        }
+    }
+
     private MapCollisionResult checkMapCollision(final GameObject obj) {
         Vector2f vel = obj.getVelocity().copy();
         MapCollisionResult result = new MapCollisionResult(vel.getX(), vel.getY());
@@ -116,9 +138,11 @@ public class PhysicsEngine {
                 for (int j=0; j<2; j++) {
                     Point point = new Point((int)Math.floor(obj.getPosition().getX() + obj.getWidth()  * i + dv),
                                             (int)Math.floor(obj.getPosition().getY() + obj.getHeight() * j));
-                    if (point.getX() < 0 || point.getX() >= playingField.getPixelWidth() ||
+                    //if (point.getX() < 0 || point.getX() >= playingField.getPixelWidth() ||
+                    if (point.getX() < 0 || point.getX() >= playingField.getWidth()*playingField.getTileWidth() ||
                             //point.getY() < 0 ||  point.getY() >= playingField.getPixelHeight() ||
-                            playingField.getPixel(point).getState() != MapBlock.States.EMPTY) {
+                            //playingField.getPixel(point).getState() != MapBlock.States.EMPTY) {
+                            getPixel(point) != MapBlock.States.EMPTY) {
                         result.xDistance = dv-deltav;
                         result.xCollision = true;
                         break loops;
@@ -142,8 +166,10 @@ public class PhysicsEngine {
                     Point point = new Point((int)Math.floor(obj.getPosition().getX() + obj.getWidth() * i),
                                             (int)Math.floor(obj.getPosition().getY() + obj.getHeight() * j + dv));
                     if (//point.getX() < 0 || point.getX() >= playingField.getPixelWidth() ||
-                            point.getY() < 0 ||  point.getY() >= playingField.getPixelHeight() ||
-                            playingField.getPixel(point).getState() != MapBlock.States.EMPTY) {
+                            //point.getY() < 0 ||  point.getY() >= playingField.getPixelHeight() ||
+                            point.getY() < 0 ||  point.getY() >= playingField.getHeight()*playingField.getTileHeight() ||
+                            //playingField.getPixel(point).getState() != MapBlock.States.EMPTY) {
+                            getPixel(point) != MapBlock.States.EMPTY) {
                         result.yDistance = dv-deltav;
                         result.yCollision = true;
                         return result;
