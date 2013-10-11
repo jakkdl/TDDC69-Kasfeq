@@ -72,6 +72,8 @@ public abstract class GameObject implements GameComponent {
 
     public abstract void collision();
 
+    public abstract void collision(GameObject obj);
+
     public void despawn() {
         world.despawn(this);
     }

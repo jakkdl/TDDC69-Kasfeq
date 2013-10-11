@@ -15,7 +15,10 @@ public class Projectile extends GameObject {
 
     @Override
     public void collision() {
-        System.out.println("boo");
+        despawn();
+    }
+
+    public void collision(GameObject obj) {
         despawn();
     }
 

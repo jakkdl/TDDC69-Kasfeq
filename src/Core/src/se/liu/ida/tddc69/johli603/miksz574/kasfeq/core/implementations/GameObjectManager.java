@@ -35,6 +35,7 @@ public class GameObjectManager implements GameComponent{
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
+        world.getPhysicsEngine().dumbCollisions(gameObjects, i);
         for(GameObject obj : gameObjects) {
             world.getPhysicsEngine().update(obj, i);
             obj.update(gameContainer, i);

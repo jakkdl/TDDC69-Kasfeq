@@ -9,7 +9,7 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class Player extends GameObject {
     private Color playerColor;
-    private float health=100;
+    private float health=10;
     private float aimAngle = 0;
     private float aimAngleSpeed = 0;
 
@@ -36,6 +36,13 @@ public class Player extends GameObject {
     public void collision() {
     }
 
+    public void collision(GameObject obj) {
+        health -= 1;
+        if (health == 0) {
+            despawn();
+        }
+    }
+
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
     }
@@ -53,7 +60,7 @@ public class Player extends GameObject {
         graphics.fillRect(position.getX(), position.getY(),super.getWidth(),super.getHeight());
         float aimRadius = getWidth();
         graphics.setColor(Color.red);
-        graphics.drawLine(position.getX(),position.getY(),(float)(position.getX()+aimRadius*Math.cos(aimAngle)),(float)(position.getY()+aimRadius*Math.sin(aimAngle)));
+        graphics.drawLine(position.getX()+getWidth()/2,position.getY()+getHeight()/2,(float)(position.getX()+getWidth()/2+aimRadius*Math.cos(aimAngle)),(float)(position.getY()+getHeight()/2+aimRadius*Math.sin(aimAngle)));
     }
 
     public void moveLeft(boolean isKeyPressed) {
@@ -87,12 +94,18 @@ public class Player extends GameObject {
     public void shoot(boolean isKeyPressed) {
         if(isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
-            bullet.setPosition(getPosition().copy());
-            bullet.addInstantForce(new Vector2f(Math.toDegrees(aimAngle)).scale(5));
+            bullet.setPosition(bulletPosition());
+            bullet.addInstantForce(new Vector2f(Math.toDegrees(aimAngle)).scale(1));
             getWorld().spawn(bullet);
         }
         else {
         }
+    }
+
+    private Vector2f bulletPosition() {
+        float x = getPosition().getX() + getWidth() / 2;
+        float y = getPosition().getY() + getHeight() / 2;
+        return new Vector2f(x, y).add(new Vector2f(Math.toDegrees(aimAngle)).scale(15));
     }
 
     public void aimLeft(boolean isKeyPressed) {

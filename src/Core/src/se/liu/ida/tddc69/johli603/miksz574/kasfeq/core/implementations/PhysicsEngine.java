@@ -3,6 +3,8 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.util.List;
+
 public class PhysicsEngine {
     private class MapCollisionResult {
         double xDistance;
@@ -32,10 +34,50 @@ public class PhysicsEngine {
         this.playingField = playingField;
     }
 
-    public void dumbCollisions(GameObject[] objects) {
+    public void dumbCollisions(List<GameObject> objects, int time) {
         for (GameObject obj : objects) {
+            for (GameObject obj2 : objects) {
+                if (obj.equals(obj2)) {
+                    continue;
+                }
+                if (collision(obj, obj2, time)) {
+                    obj.collision(obj2);
+                }
+            }
 
         }
+    }
+
+    private boolean collision(GameObject obj1, GameObject obj2, int time) {
+        final double deltat = 0.1;
+        double maxDist = maxDist(obj1, obj2);
+        for (double t=0; t <= time; t += 0.01) {
+            if (obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t)).length() - obj2.getPosition().copy().add(obj2.getInstantForce().copy().scale((float)t)).length() < maxDist) {
+                for (int dx = 0; dx <= obj1.getWidth(); dx++) {
+                    int x = (int)Math.floor(obj1.getPosition().getX()+dx);
+                    if ( x > (int)Math.floor(obj2.getPosition().getX()) && x < (int)Math.floor(obj2.getPosition().getX()) + obj2.getWidth()   )
+                    {
+                        for (int dy=0; dy <= obj1.getHeight(); dy++) {
+                            int y = (int)Math.floor(obj1.getPosition().getY()+dy);
+                            if ( y > (int)Math.floor(obj2.getPosition().getY()) && y < (int)Math.floor(obj2.getPosition().getY()) + obj2.getHeight()   ) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
+
+    private double maxDist(GameObject obj1, GameObject obj2) {
+        double diag1 = new Vector2f(obj1.getWidth(), obj1.getHeight()).length();
+        double diag2 = new Vector2f(obj2.getWidth(), obj2.getHeight()).length();
+        if (diag1 < diag2) {
+            return diag2;
+        }
+        return diag1;
     }
 
 
@@ -69,30 +111,20 @@ public class PhysicsEngine {
         if (result.xCollision || result.yCollision ) {
             object.collision();
 
-            //System.out.println(result.distance);
-            //System.out.println(object.getPosition());
 
             object.setPosition(move(object.getPosition(), new Vector2f((float)result.xDistance, (float)result.yDistance)));
-            //System.out.println(object.getPosition());
             if (result.xCollision && result.yCollision) {
-                System.out.println("XYcollision");
                 object.setVelocity(new Vector2f(0, 0));
             }
             else if (result.xCollision) {
-                System.out.println("Xcollision");
                 object.setVelocity(new Vector2f(0, object.getVelocity().getY()));
             }
             else {
-                System.out.println("Ycollision");
                 object.setVelocity(new Vector2f(object.getVelocity().getX(), 0));
             }
         }
         else {
-            System.out.println("No collision");
-            //System.out.println(result.istance);
-            //System.out.println(object.getPosition());
             object.setPosition(move(object.getPosition(), object.getVelocity()));
-            //System.out.println(object.getPosition());
         }
 
     }
@@ -104,7 +136,7 @@ public class PhysicsEngine {
 
         int tileX = (int)Math.floor((double)point.getX()/(double)tileWidth);
         int tileY = (int)Math.floor((double)point.getY()/(double)tileHeight);
-        int id = playingField.getTileId(tileX,tileY, layerID);
+        int id = playingField.getTileId(tileX, tileY, layerID);
 
         if(id == 2) {
             return MapBlock.States.EMPTY;
