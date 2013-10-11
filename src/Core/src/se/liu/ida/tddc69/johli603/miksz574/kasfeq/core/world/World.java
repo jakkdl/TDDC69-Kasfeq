@@ -11,28 +11,21 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class World implements GameComponent {
     private final GameObjectManager gameObjectManager;
     private final InputManager inputManager;
-    //private MapComponent mapComponent;
     private PhysicsEngine physicsEngine;
-    private List<Player> players;
+    private Map<Integer,Player> players;
     private TiledMap map;
 
     public World() {
-        players = new ArrayList<Player>();
+        players = new HashMap<Integer, Player>();
         gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
-        //mapComponent = null;
-
-        /*try {
-            mapComponent = new MapComponent((PlayingField)ResourceManager.INSTANCE.loadResource(PlayingField.class, "textMap.xml"));
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }*/
 
         try {
             map = ResourceManager.INSTANCE.loadResource(TiledMap.class, "untitled.tmx");
@@ -45,7 +38,7 @@ public class World implements GameComponent {
     }
 
     public Player getPlayer(int playerID) {
-        return players.get(playerID-1);
+        return players.get(playerID);
     }
 
     public void spawn(GameObject obj) {
@@ -56,6 +49,14 @@ public class World implements GameComponent {
         gameObjectManager.despawnObject(obj);
     }
 
+    public void spawnNewPlayer(Color playerColor) {
+        Player player = new Player(this);
+        player.setPosition(new Vector2f(20+20*players.size(),100));
+        player.setPlayerColor(playerColor);
+        players.put(players.size()+1, player);
+        spawn(player);
+    }
+
     public PhysicsEngine getPhysicsEngine() {
         return physicsEngine;
     }
@@ -63,20 +64,15 @@ public class World implements GameComponent {
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
         gameObjectManager.init(gameContainer);
-//        mapComponent.init(gameContainer);
         inputManager.init(gameContainer);
 
-        Player player1 = new Player(this);
-        player1.setPosition(new Vector2f(20,100));
-        player1.setPlayerColor(Color.orange);
-        gameObjectManager.spawnObject(player1);
-        players.add(player1);
+        spawnNewPlayer(Color.orange);
+        spawnNewPlayer(Color.magenta);
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
         gameObjectManager.update(gameContainer,i);
-        //mapComponent.update(gameContainer, i);
         inputManager.update(gameContainer, i);
     }
 
@@ -84,7 +80,6 @@ public class World implements GameComponent {
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         graphics.setColor(Color.white);
         graphics.drawString("Kasfeq",0,0);
-        //mapComponent.render(gameContainer, graphics);
         map.render(0,0);
         gameObjectManager.render(gameContainer, graphics);
     }
@@ -92,5 +87,6 @@ public class World implements GameComponent {
     @Override
     public void dispose() throws Exception {
         gameObjectManager.dispose();
+        inputManager.dispose();
     }
 }

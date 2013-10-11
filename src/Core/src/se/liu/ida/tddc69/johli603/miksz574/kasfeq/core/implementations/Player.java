@@ -97,8 +97,19 @@ public class Player extends GameObject {
             bullet.setPosition(bulletPosition());
             bullet.addInstantForce(new Vector2f(Math.toDegrees(aimAngle)).scale(1));
             getWorld().spawn(bullet);
+            //shotgun();
         }
         else {
+        }
+    }
+
+    public void shotgun() {
+        Projectile[] bullets = new Projectile[6];
+        for(int i = 0; i < bullets.length; i++) {
+            bullets[i] = new Projectile(getWorld());
+            bullets[i].setPosition(bulletPosition());
+            bullets[i].addInstantForce(new Vector2f(Math.toDegrees(aimAngle + Math.random())).scale(1));
+            getWorld().spawn(bullets[i]);
         }
     }
 

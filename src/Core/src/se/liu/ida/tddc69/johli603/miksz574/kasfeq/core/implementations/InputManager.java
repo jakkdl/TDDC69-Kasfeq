@@ -17,12 +17,19 @@ public class InputManager implements GameComponent, InputProviderListener {
         InputProvider provider = new InputProvider(input);
         provider.addListener(this);
 
-        provider.bindCommand(new KeyControl(Input.KEY_UP), new PlayerCommand(world, 1, PlayerCommand.InputType.JUMP));
-        provider.bindCommand(new KeyControl(Input.KEY_LEFT), new PlayerCommand(world, 1, PlayerCommand.InputType.LEFT));
-        provider.bindCommand(new KeyControl(Input.KEY_RIGHT), new PlayerCommand(world, 1, PlayerCommand.InputType.RIGHT));
-        provider.bindCommand(new KeyControl(Input.KEY_SPACE), new PlayerCommand(world, 1, PlayerCommand.InputType.SHOOT));
+        provider.bindCommand(new KeyControl(Input.KEY_W), new PlayerCommand(world, 1, PlayerCommand.InputType.JUMP));
+        provider.bindCommand(new KeyControl(Input.KEY_A), new PlayerCommand(world, 1, PlayerCommand.InputType.LEFT));
+        provider.bindCommand(new KeyControl(Input.KEY_D), new PlayerCommand(world, 1, PlayerCommand.InputType.RIGHT));
+        provider.bindCommand(new KeyControl(Input.KEY_S), new PlayerCommand(world, 1, PlayerCommand.InputType.SHOOT));
         provider.bindCommand(new KeyControl(Input.KEY_Q), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_RIGHT));
         provider.bindCommand(new KeyControl(Input.KEY_E), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_LEFT));
+
+        provider.bindCommand(new KeyControl(Input.KEY_I), new PlayerCommand(world, 2, PlayerCommand.InputType.JUMP));
+        provider.bindCommand(new KeyControl(Input.KEY_J), new PlayerCommand(world, 2, PlayerCommand.InputType.LEFT));
+        provider.bindCommand(new KeyControl(Input.KEY_L), new PlayerCommand(world, 2, PlayerCommand.InputType.RIGHT));
+        provider.bindCommand(new KeyControl(Input.KEY_K), new PlayerCommand(world, 2, PlayerCommand.InputType.SHOOT));
+        provider.bindCommand(new KeyControl(Input.KEY_U), new PlayerCommand(world, 2, PlayerCommand.InputType.AIM_RIGHT));
+        provider.bindCommand(new KeyControl(Input.KEY_O), new PlayerCommand(world, 2, PlayerCommand.InputType.AIM_LEFT));
     }
 
     @Override
