@@ -50,35 +50,21 @@ public class PhysicsEngine {
 
     private boolean collision(GameObject obj1, GameObject obj2, int time) {
         final double deltat = 0.1;
-        double maxDist = maxDist(obj1, obj2);
-        for (double t=0; t <= time; t += 0.01) {
-            if (obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t)).length() - obj2.getPosition().copy().add(obj2.getInstantForce().copy().scale((float)t)).length() < maxDist) {
-                for (int dx = 0; dx <= obj1.getWidth(); dx++) {
-                    int x = (int)Math.floor(obj1.getPosition().getX()+dx);
-                    if ( x > (int)Math.floor(obj2.getPosition().getX()) && x < (int)Math.floor(obj2.getPosition().getX()) + obj2.getWidth()   )
-                    {
-                        for (int dy=0; dy <= obj1.getHeight(); dy++) {
-                            int y = (int)Math.floor(obj1.getPosition().getY()+dy);
-                            if ( y > (int)Math.floor(obj2.getPosition().getY()) && y < (int)Math.floor(obj2.getPosition().getY()) + obj2.getHeight()   ) {
-                                return true;
-                            }
-                        }
-                    }
-                }
+        //for (double t=0; t <= time; t += 0.01) {
+        double t=1;
+            Vector2f pos1 = obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t));
+            Vector2f pos2 = obj2.getPosition().copy().add(obj2.getVelocity().copy().scale((float)t));
+            if (rectangle_collision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth()) ) {
+                return true;
             }
-
-        }
+        //}
         return false;
     }
 
-    private double maxDist(GameObject obj1, GameObject obj2) {
-        double diag1 = new Vector2f(obj1.getWidth(), obj1.getHeight()).length();
-        double diag2 = new Vector2f(obj2.getWidth(), obj2.getHeight()).length();
-        if (diag1 < diag2) {
-            return diag2;
-        }
-        return diag1;
+    private boolean rectangle_collision(float x1, float y1, float height1, float width1, float x2, float y2, float height2, float width2) {
+        return !(x1 > x2+width2 || x1+width1 < x2 || y1 > y2+height2 || y1+height1 < y2);
     }
+
 
 
     public void update(GameObject object, int time) {
