@@ -9,9 +9,9 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class Player extends GameObject {
     private Color playerColor;
-    private float health=10;
-    private float aimAngle = 0;
-    private float aimAngleSpeed = 0;
+    private double health=10;
+    private double aimAngle = 0;
+    private double aimAngleSpeed = 0;
 
     public Color getPlayerColor() {
         return playerColor;
@@ -21,16 +21,16 @@ public class Player extends GameObject {
         this.playerColor = playerColor;
     }
 
-    public float getHealth() {
+    public double getHealth() {
         return health;
     }
 
-    public void modHealth(float healthMod) {
+    public void modHealth(double healthMod) {
         this.health *= healthMod;
     }
 
-    public Player(World world) {
-        super(world, 2, 10, 20);
+    public Player(World world) throws NoSuchFieldException {
+        super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight());
     }
 
     public void collision() {
@@ -57,60 +57,60 @@ public class Player extends GameObject {
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         graphics.setColor(playerColor);
         Vector2f position = getPosition();
-        graphics.fillRect(position.getX(), position.getY(),super.getWidth(),super.getHeight());
-        float aimRadius = getWidth();
-        graphics.setColor(Color.red);
-        graphics.drawLine(position.getX()+getWidth()/2,position.getY()+getHeight()/2,(float)(position.getX()+getWidth()/2+aimRadius*Math.cos(aimAngle)),(float)(position.getY()+getHeight()/2+aimRadius*Math.sin(aimAngle)));
+        graphics.fillRect(position.getX(), position.getY(), (float)getWidth(), (float)getHeight());
+        double aimRadius = getWidth();
+        graphics.setColor(Color.white);
+        graphics.drawLine((float)(position.getX()+getWidth()/2),(float)(position.getY()+getHeight()/2),(float)(position.getX()+getWidth()/2+aimRadius*Math.cos(aimAngle)),(float)(position.getY()+getHeight()/2+aimRadius*Math.sin(aimAngle)));
     }
 
 
-    public void aimLeft(boolean isKeyPressed) {
+    public void aimLeft(boolean isKeyPressed) throws NoSuchFieldException {
         if(isKeyPressed) {
-            aimAngleSpeed += Math.PI/120;
+            aimAngleSpeed += getWorld().getPlayingField().getAimspeed();
         }
         else {
-            aimAngleSpeed -= Math.PI/120;
+            aimAngleSpeed -= getWorld().getPlayingField().getAimspeed();
         }
     }
 
-    public void aimRight(boolean isKeyPressed) {
+    public void aimRight(boolean isKeyPressed) throws NoSuchFieldException {
         if(isKeyPressed) {
-            aimAngleSpeed -= Math.PI/120;
+            aimAngleSpeed -= getWorld().getPlayingField().getAimspeed();
         }
         else {
-            aimAngleSpeed += Math.PI/120;
+            aimAngleSpeed += getWorld().getPlayingField().getAimspeed();
         }
     }
 
-    public void moveLeft(boolean isKeyPressed) {
+    public void moveLeft(boolean isKeyPressed) throws NoSuchFieldException {
         setFacing(Math.PI);
         if(isKeyPressed) {
-            addContForce(new Vector2f(-0.1f, 0));
+            addContForce(new Vector2f(-(float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
         }
         else {
-            addContForce(new Vector2f(0.1f, 0));
+            addContForce(new Vector2f((float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
         }
     }
 
-    public void moveRight(boolean isKeyPressed) {
+    public void moveRight(boolean isKeyPressed) throws NoSuchFieldException {
         setFacing(0);
         if(isKeyPressed) {
-            addContForce(new Vector2f(0.1f, 0));
+            addContForce(new Vector2f((float)getWorld().getPlayingField().getPlayerMoveForce(), 0));
         }
         else {
-            addContForce(new Vector2f(-0.1f, 0));
+            addContForce(new Vector2f(-(float)getWorld().getPlayingField().getPlayerMoveForce(), 0));
         }
     }
 
-    public void jump(boolean isKeyPressed) {
+    public void jump(boolean isKeyPressed) throws NoSuchFieldException {
         if(isKeyPressed) {
-            addInstantForce(new Vector2f(0, -2f));
+            addInstantForce(new Vector2f(0, (float)getWorld().getPlayingField().getPlayerJumpForce()));
         }
         else {
         }
     }
 
-    public void shoot(boolean isKeyPressed) {
+    public void shoot(boolean isKeyPressed) throws NoSuchFieldException {
         if(isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
             bullet.setPosition(bulletPosition());
@@ -122,7 +122,7 @@ public class Player extends GameObject {
         }
     }
 
-    public void shotgun() {
+    public void shotgun() throws NoSuchFieldException {
         Projectile[] bullets = new Projectile[6];
         for(int i = 0; i < bullets.length; i++) {
             bullets[i] = new Projectile(getWorld());
@@ -133,9 +133,9 @@ public class Player extends GameObject {
     }
 
     private Vector2f bulletPosition() {
-        float x = getPosition().getX() + getWidth() / 2;
-        float y = getPosition().getY() + getHeight() / 2;
-        return new Vector2f(x, y).add(new Vector2f(Math.toDegrees(aimAngle)).scale(15));
+        double x = getPosition().getX() + getWidth() / 2;
+        double y = getPosition().getY() + getHeight() / 2;
+        return new Vector2f((float)x, (float)y).add(new Vector2f(Math.toDegrees(aimAngle)).scale(15)); //TODO: replace with function that calculates where bullet can spawn
     }
 
     @Override

@@ -35,13 +35,23 @@ public class InputManager implements GameComponent, InputProviderListener {
     @Override
     public void controlPressed(Command command) {
         PlayerCommand playerCommand = (PlayerCommand)command;
-        playerCommand.pressKey();
+        try {
+            playerCommand.pressKey();
+        }
+        catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void controlReleased(Command command) {
         PlayerCommand playerCommand = (PlayerCommand)command;
-        playerCommand.releaseKey();
+        try {
+            playerCommand.releaseKey();
+        }
+        catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

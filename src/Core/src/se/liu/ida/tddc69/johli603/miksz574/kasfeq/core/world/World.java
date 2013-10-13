@@ -5,10 +5,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
-import org.newdawn.slick.tiled.TiledMap;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +19,7 @@ public class World implements GameComponent {
     private PlayingField playingField;
     //private TiledMap map;
 
-    public World() {
+    public World() throws NoSuchFieldException {
         players = new HashMap<Integer, Player>();
         gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
@@ -42,7 +40,7 @@ public class World implements GameComponent {
         gameObjectManager.despawnObject(obj);
     }
 
-    public void spawnNewPlayer(Color playerColor) {
+    public void spawnNewPlayer(Color playerColor) throws NoSuchFieldException {
         Player player = new Player(this);
         player.setPosition(new Vector2f(20+20*players.size(),100));
         player.setPlayerColor(playerColor);
@@ -54,8 +52,12 @@ public class World implements GameComponent {
         return physicsEngine;
     }
 
+    public PlayingField getPlayingField() {
+        return playingField;
+    }
+
     @Override
-    public void init(GameContainer gameContainer) throws SlickException {
+    public void init(GameContainer gameContainer) throws SlickException,NoSuchFieldException {
         gameObjectManager.init(gameContainer);
         inputManager.init(gameContainer);
 
@@ -64,7 +66,7 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException {
+    public void update(GameContainer gameContainer, int i) throws SlickException, NoSuchFieldException {
         gameObjectManager.update(gameContainer,i);
         inputManager.update(gameContainer, i);
     }

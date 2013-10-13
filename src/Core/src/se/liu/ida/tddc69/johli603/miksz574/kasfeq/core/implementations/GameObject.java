@@ -14,9 +14,9 @@ public abstract class GameObject implements GameComponent {
     private Vector2f instantaneousForce;
     private double facing;
 
-    private float mass;
-    private float width;
-    private float height;
+    private double mass;
+    private double width;
+    private double height;
 
     public World getWorld() {
         return world;
@@ -38,11 +38,11 @@ public abstract class GameObject implements GameComponent {
         this.velocity = velocity;
     }
 
-    public float getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public float getHeight() {
+    public double getHeight() {
         return height;
     }
 
@@ -78,11 +78,11 @@ public abstract class GameObject implements GameComponent {
         world.despawn(this);
     }
 
-    public float getMass() {
+    public double getMass() {
         return mass;
     }
 
-    public void setMass(float mass) {
+    public void setMass(double mass) {
         this.mass = mass;
     }
 
@@ -94,7 +94,7 @@ public abstract class GameObject implements GameComponent {
         this.facing = facing;
     }
 
-    protected GameObject(World world, float mass, float width, float height) {
+    protected GameObject(World world, double mass, double width, double height) {
         this.world = world;
         position = new Vector2f();
         velocity = new Vector2f();

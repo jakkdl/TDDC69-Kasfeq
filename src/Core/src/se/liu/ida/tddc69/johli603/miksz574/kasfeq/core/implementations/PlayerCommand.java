@@ -5,14 +5,14 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 public class PlayerCommand implements Command {
     public enum InputType {
-        LEFT, JUMP, RIGHT, SHOOT, AIM_LEFT, AIM_RIGHT;
+        LEFT, JUMP, RIGHT, SHOOT, AIM_LEFT, AIM_RIGHT
     }
 
     private World world;
     private int playerID;
     private InputType inputType;
 
-    public void pressKey() {
+    public void pressKey() throws NoSuchFieldException {
         Player player = world.getPlayer(playerID);
 
         switch (inputType) {
@@ -37,7 +37,7 @@ public class PlayerCommand implements Command {
         }
     }
 
-    public void releaseKey() {
+    public void releaseKey() throws NoSuchFieldException {
         Player player = world.getPlayer(playerID);
 
         switch (inputType) {

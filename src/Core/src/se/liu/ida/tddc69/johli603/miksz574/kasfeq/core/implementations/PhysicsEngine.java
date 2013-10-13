@@ -37,10 +37,7 @@ public class PhysicsEngine {
     public void dumbCollisions(List<GameObject> objects, int time) {
         for (GameObject obj : objects) {
             for (GameObject obj2 : objects) {
-                if (obj.equals(obj2)) {
-                    continue;
-                }
-                if (collision(obj, obj2, time)) {
+                if (!obj.equals(obj2) && collision(obj, obj2, time)) {
                     obj.collision(obj2);
                 }
             }
@@ -49,29 +46,26 @@ public class PhysicsEngine {
     }
 
     private boolean collision(GameObject obj1, GameObject obj2, int time) {
-        final double deltat = 0.1;
-        //for (double t=0; t <= time; t += 0.01) {
         double t=1;
-            Vector2f pos1 = obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t));
-            Vector2f pos2 = obj2.getPosition().copy().add(obj2.getVelocity().copy().scale((float)t));
-            if (rectangle_collision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth()) ) {
-                return true;
-            }
-        //}
+        Vector2f pos1 = obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t));
+        Vector2f pos2 = obj2.getPosition().copy().add(obj2.getVelocity().copy().scale((float)t));
+        if (rectangle_collision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth()) ) {
+            return true;
+        }
         return false;
     }
 
-    private boolean rectangle_collision(float x1, float y1, float height1, float width1, float x2, float y2, float height2, float width2) {
+    private boolean rectangle_collision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
         return !(x1 > x2+width2 || x1+width1 < x2 || y1 > y2+height2 || y1+height1 < y2);
     }
 
 
 
-    public void update(GameObject object, int time) {
+    public void update(GameObject object, int time) throws NoSuchFieldException {
         //calculate forces, acceleration and velocity
 
         //add gravity
-        object.addInstantForce(new Vector2f(0, 0.05f));
+        object.addInstantForce(new Vector2f(0, (float)playingField.getGravity()));
 
         //calculate acceleration from forces
         Vector2f totalForce = object.getContForce().copy().add(object.getInstantForce());
@@ -81,7 +75,7 @@ public class PhysicsEngine {
         addAcceleration(object.getVelocity(), acceleration);
 
         //add friction
-        object.setVelocity(object.getVelocity().scale(0.97f));
+        object.setVelocity(object.getVelocity().scale(1-(float)playingField.getFriction()));
 
         //remove all instant forces
         object.setInstantForce(new Vector2f(0,0));
@@ -115,39 +109,17 @@ public class PhysicsEngine {
 
     }
 
-    private MapBlock.States getPixel(Point point) {
-        int layerID = playingField.getLayerIndex("Tile Layer 1");
-        int tileWidth = playingField.getTileWidth();
-        int tileHeight = playingField.getTileHeight();
-
-        int tileX = (int)Math.floor((double)point.getX()/(double)tileWidth);
-        int tileY = (int)Math.floor((double)point.getY()/(double)tileHeight);
-        int id = playingField.getTileId(tileX, tileY, layerID);
-
-        if(id == 2) {
-            return MapBlock.States.EMPTY;
-        }
-        else if(id == 3) {
-            return MapBlock.States.DESTRUCTABLE;
-        }
-        else {
-            return MapBlock.States.SOLID;
-        }
-    }
-
     private MapCollisionResult checkMapCollision(final GameObject obj) {
         Vector2f vel = obj.getVelocity().copy();
         MapCollisionResult result = new MapCollisionResult(vel.getX(), vel.getY());
 
-        int velDir;
+        double absDeltaV = 0.01;
         double deltav;
         if (vel.getX() < 0) {
-            velDir = -1;
-            deltav = -0.01;
+            deltav = -absDeltaV;
         }
         else {
-            velDir = 1;
-            deltav = 0.01;
+            deltav = absDeltaV;
         }
 
         loops:
@@ -159,8 +131,7 @@ public class PhysicsEngine {
                     //if (point.getX() < 0 || point.getX() >= playingField.getPixelWidth() ||
                     if (point.getX() < 0 || point.getX() >= playingField.getWidth()*playingField.getTileWidth() ||
                             //point.getY() < 0 ||  point.getY() >= playingField.getPixelHeight() ||
-                            //playingField.getPixel(point).getState() != MapBlock.States.EMPTY) {
-                            getPixel(point) != MapBlock.States.EMPTY) {
+                            playingField.getPixel(point) != MapBlock.States.EMPTY) {
                         result.xDistance = dv-deltav;
                         result.xCollision = true;
                         break loops;
@@ -170,12 +141,10 @@ public class PhysicsEngine {
             }
         }
         if (vel.getY() < 0) {
-            velDir = -1;
-            deltav = -0.01;
+            deltav = -absDeltaV;
         }
         else {
-            velDir = 1;
-            deltav = 0.01;
+            deltav = absDeltaV;
         }
 
         for (double dv=deltav; Math.abs(dv) <= Math.abs(vel.getY()); dv+=deltav) {
@@ -186,8 +155,7 @@ public class PhysicsEngine {
                     if (//point.getX() < 0 || point.getX() >= playingField.getPixelWidth() ||
                             //point.getY() < 0 ||  point.getY() >= playingField.getPixelHeight() ||
                             point.getY() < 0 ||  point.getY() >= playingField.getHeight()*playingField.getTileHeight() ||
-                            //playingField.getPixel(point).getState() != MapBlock.States.EMPTY) {
-                            getPixel(point) != MapBlock.States.EMPTY) {
+                            playingField.getPixel(point) != MapBlock.States.EMPTY) {
                         result.yDistance = dv-deltav;
                         result.yCollision = true;
                         return result;
@@ -203,8 +171,8 @@ public class PhysicsEngine {
         return point;
     }
 
-    private Vector2f addForces(final Vector2f force, float mass) {
-        return force.scale(1/mass);
+    private Vector2f addForces(final Vector2f force, double mass) {
+        return force.scale(1/(float)mass);
     }
 
     private void addAcceleration(Vector2f velocity, Vector2f acceleration) {

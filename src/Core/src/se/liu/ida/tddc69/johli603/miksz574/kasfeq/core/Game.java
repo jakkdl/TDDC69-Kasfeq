@@ -22,13 +22,23 @@ class Game implements org.newdawn.slick.Game {
         gameContainer.setShowFPS(false);
 
         // Enter game initially(Testing purposes)
-        activeComponent = new World();
-        activeComponent.init(gameContainer);
+        try {
+            activeComponent = new World();
+            activeComponent.init(gameContainer);
+        }
+        catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws SlickException {
-        activeComponent.update(gameContainer, i);
+        try {
+            activeComponent.update(gameContainer, i);
+        }
+        catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

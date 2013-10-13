@@ -1,7 +1,5 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import org.newdawn.slick.Color;
-
 public class MapBlock {
     public enum States {
         EMPTY, //AIR
@@ -9,19 +7,13 @@ public class MapBlock {
         DESTRUCTABLE
     }
 
-    Color color;
     States state;
 
-    public Color getColor() {
-        return color;
-    }
-
-    public States getState() {
+    /*public States getState() {
         return state;
-    }
+    }*/
 
-    MapBlock(States state, Color color) {
+    MapBlock(States state) {
         this.state = state;
-        this.color = color;
     }
 }

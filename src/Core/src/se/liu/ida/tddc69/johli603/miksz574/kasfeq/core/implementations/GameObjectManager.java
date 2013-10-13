@@ -34,7 +34,7 @@ public class GameObjectManager implements GameComponent{
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException {
+    public void update(GameContainer gameContainer, int i) throws SlickException,NoSuchFieldException {
         world.getPhysicsEngine().dumbCollisions(gameObjects, i);
         for(GameObject obj : gameObjects) {
             world.getPhysicsEngine().update(obj, i);
