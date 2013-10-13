@@ -10,9 +10,7 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class World implements GameComponent {
@@ -20,21 +18,16 @@ public class World implements GameComponent {
     private final InputManager inputManager;
     private PhysicsEngine physicsEngine;
     private Map<Integer,Player> players;
-    private TiledMap map;
+    private PlayingField playingField;
+    //private TiledMap map;
 
     public World() {
         players = new HashMap<Integer, Player>();
         gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
+        playingField = new PlayingField();
 
-        try {
-            map = ResourceManager.INSTANCE.loadResource(TiledMap.class, "untitled.tmx");
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        physicsEngine = new PhysicsEngine(map);
+        physicsEngine = new PhysicsEngine(playingField);
     }
 
     public Player getPlayer(int playerID) {
@@ -80,7 +73,7 @@ public class World implements GameComponent {
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         graphics.setColor(Color.white);
         graphics.drawString("Kasfeq",0,0);
-        map.render(0,0);
+        playingField.render(0,0);
         gameObjectManager.render(gameContainer, graphics);
     }
 

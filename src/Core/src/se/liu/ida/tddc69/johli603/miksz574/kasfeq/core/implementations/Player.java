@@ -63,6 +63,25 @@ public class Player extends GameObject {
         graphics.drawLine(position.getX()+getWidth()/2,position.getY()+getHeight()/2,(float)(position.getX()+getWidth()/2+aimRadius*Math.cos(aimAngle)),(float)(position.getY()+getHeight()/2+aimRadius*Math.sin(aimAngle)));
     }
 
+
+    public void aimLeft(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            aimAngleSpeed += Math.PI/120;
+        }
+        else {
+            aimAngleSpeed -= Math.PI/120;
+        }
+    }
+
+    public void aimRight(boolean isKeyPressed) {
+        if(isKeyPressed) {
+            aimAngleSpeed -= Math.PI/120;
+        }
+        else {
+            aimAngleSpeed += Math.PI/120;
+        }
+    }
+
     public void moveLeft(boolean isKeyPressed) {
         setFacing(Math.PI);
         if(isKeyPressed) {
@@ -117,24 +136,6 @@ public class Player extends GameObject {
         float x = getPosition().getX() + getWidth() / 2;
         float y = getPosition().getY() + getHeight() / 2;
         return new Vector2f(x, y).add(new Vector2f(Math.toDegrees(aimAngle)).scale(15));
-    }
-
-    public void aimLeft(boolean isKeyPressed) {
-        if(isKeyPressed) {
-            aimAngleSpeed += Math.PI/120;
-        }
-        else {
-            aimAngleSpeed -= Math.PI/120;
-        }
-    }
-
-    public void aimRight(boolean isKeyPressed) {
-        if(isKeyPressed) {
-            aimAngleSpeed -= Math.PI/120;
-        }
-        else {
-            aimAngleSpeed += Math.PI/120;
-        }
     }
 
     @Override

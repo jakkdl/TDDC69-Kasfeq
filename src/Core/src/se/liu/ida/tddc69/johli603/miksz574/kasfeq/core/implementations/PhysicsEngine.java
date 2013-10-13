@@ -26,11 +26,11 @@ public class PhysicsEngine {
             this.yCollision = yCollision;
         }
     }
-    //private PlayingField playingField;
-    private TiledMap playingField;
+    private PlayingField playingField;
+    //private TiledMap playingField;
 
 
-    public PhysicsEngine(TiledMap playingField) {
+    public PhysicsEngine(PlayingField playingField) {
         this.playingField = playingField;
     }
 
