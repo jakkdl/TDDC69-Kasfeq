@@ -67,6 +67,9 @@ public class World implements GameComponent {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception {
+	if (players.size() <= 1) {
+	    gameContainer.exit();
+	}
         gameObjectManager.update(gameContainer, i);
         inputManager.update(gameContainer, i);
         playingField.update(gameContainer, i);
