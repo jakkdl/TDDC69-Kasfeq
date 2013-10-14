@@ -224,7 +224,7 @@ public class PlayingField implements GameComponent {
 	    case PLAYERLIVES:
 		return 3;
 	    case PLAYERHEALTH:
-		return 10;
+		return 10.0;
             case PLAYERMOVEFORCE:
                 return 0.1;
             case PLAYERJUMPFORCE:
