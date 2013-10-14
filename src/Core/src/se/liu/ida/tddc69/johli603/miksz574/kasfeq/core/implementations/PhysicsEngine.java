@@ -33,9 +33,12 @@ public class PhysicsEngine {
     }
 
     public void dumbCollisions(List<GameObject> objects, int time) {
-        for (GameObject obj : objects) {
-            for (GameObject obj2 : objects) {
-                if (!obj.equals(obj2) && collision(obj, obj2, time)) {
+
+        for (int i=0; i < objects.size(); i++) {
+	    GameObject obj = objects.get(i);
+            for (int j=i+1; j < objects.size(); j++) {
+		GameObject obj2 = objects.get(j);
+                if (collision(obj, obj2, time)) {
                     obj.collision(obj2);
                 }
             }
