@@ -23,7 +23,7 @@ public class Player extends GameObject {
      *
      * @param world The world that the player will be in in
      */
-    public Player(World world, int playerId) throws PlayingField.NoSuchOptionException {
+    public Player(World world, int playerId) {
         super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight());
 	this.playerId = playerId;
         playerColor = Color.transparent;
@@ -151,7 +151,7 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void aimLeft(boolean isKeyPressed) throws PlayingField.NoSuchOptionException {
+    public void aimLeft(boolean isKeyPressed) {
         if (isKeyPressed) {
             aimAngleSpeed += getWorld().getPlayingField().getAimspeed();
         } else {
@@ -164,7 +164,7 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void aimRight(boolean isKeyPressed) throws PlayingField.NoSuchOptionException {
+    public void aimRight(boolean isKeyPressed) {
         if (isKeyPressed) {
             aimAngleSpeed -= getWorld().getPlayingField().getAimspeed();
         } else {
@@ -177,7 +177,7 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void moveLeft(boolean isKeyPressed) throws PlayingField.NoSuchOptionException {
+    public void moveLeft(boolean isKeyPressed) {
         setFacing(Math.PI);
         if (isKeyPressed) {
             addContForce(new Vector2f(-(float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
@@ -191,7 +191,7 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void moveRight(boolean isKeyPressed) throws PlayingField.NoSuchOptionException {
+    public void moveRight(boolean isKeyPressed) {
         setFacing(0);
         if (isKeyPressed) {
             addContForce(new Vector2f((float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
@@ -205,7 +205,7 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void jump(boolean isKeyPressed) throws PlayingField.NoSuchOptionException {
+    public void jump(boolean isKeyPressed) {
         if (isKeyPressed) {
             addInstantForce(new Vector2f(0, (float) getWorld().getPlayingField().getPlayerJumpForce()));
         }
@@ -227,7 +227,7 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void shoot(boolean isKeyPressed) throws PlayingField.NoSuchOptionException {
+    public void shoot(boolean isKeyPressed) {
         if (isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
             bullet.setPosition(bulletPosition());
@@ -242,7 +242,7 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void shotgun() throws PlayingField.NoSuchOptionException {
+    public void shotgun() {
         Projectile[] bullets = new Projectile[6];
         for (int i = 0; i < bullets.length; i++) {
             bullets[i] = new Projectile(getWorld());

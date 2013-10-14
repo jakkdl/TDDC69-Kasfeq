@@ -18,7 +18,7 @@ public class World implements GameComponent {
     private final PlayingField playingField;
     private final Map<Integer, Player> players;
 
-    public World() throws PlayingField.NoSuchOptionException {
+    public World() {
         players = new HashMap<Integer, Player>();
         gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
@@ -44,7 +44,7 @@ public class World implements GameComponent {
 	players.remove(player.getPlayerId());
     }
 
-    public void spawnNewPlayer(Color playerColor) throws PlayingField.NoSuchOptionException {
+    public void spawnNewPlayer(Color playerColor) {
         Player player = new Player(this, players.size()+1);
 	player.setPosition(physicsEngine.getAvailablePosition(player));
         player.setPlayerColor(playerColor);
@@ -61,7 +61,7 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void init(GameContainer gameContainer) throws Exception, PlayingField.NoSuchOptionException, SlickException {
+    public void init(GameContainer gameContainer) throws Exception, SlickException {
         gameObjectManager.init(gameContainer);
         inputManager.init(gameContainer);
         playingField.init(gameContainer);

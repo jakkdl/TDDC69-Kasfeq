@@ -66,7 +66,7 @@ public class GameObjectManager implements GameComponent {
      * @throws Exception Thrown if something fails
      */
     @Override
-    public void update(GameContainer gameContainer, int i) throws Exception, PlayingField.NoSuchOptionException {
+    public void update(GameContainer gameContainer, int i) throws Exception {
         world.getPhysicsEngine().dumbCollisions(gameObjects, i);
         for (GameObject obj : gameObjects) {
             world.getPhysicsEngine().updateObject(obj, i);

@@ -40,7 +40,7 @@ class Game implements org.newdawn.slick.Game {
         gameContainer.setTargetFrameRate(VSYNC_FPS);
         gameContainer.setVSync(true);
         gameContainer.setShowFPS(false);
-        gameContainer.setFullscreen(true);
+        //gameContainer.setFullscreen(true);
 
         // Enter game initially(Testing purposes)
         try {

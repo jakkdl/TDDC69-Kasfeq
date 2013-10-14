@@ -6,45 +6,48 @@ import org.newdawn.slick.tiled.TiledMap;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 public class PlayingField implements GameComponent {
-    public class NoSuchOptionException extends RuntimeException {
-        private final String msg;
-
-        public NoSuchOptionException(String msg) {
-            this.msg = msg;
-        }
-
-        @Override
-        public String getMessage() {
-            return msg + "\n" + super.getMessage();
-        }
-    }
-
     public enum Options {
-        MAPNAME,
-        GRAVITY,
-        FRICTION,
-        AIMSPEED,
-        PLAYERMOVEFORCE,
-        PLAYERMASS,
-        PLAYERWIDTH,
-        PLAYERHEIGHT,
-        PLAYERJUMPFORCE,
-	PLAYERLIVES,
-	PLAYERHEALTH,
-        BULLETMASS,
-        BULLETWIDTH,
-        BULLETHEIGHT
+        MAPNAME("defaultMapName"),
+        GRAVITY(0.05),
+        FRICTION(0.03),
+        AIMSPEED(Math.PI / 120),
+        PLAYERMOVEFORCE(0.1),
+        PLAYERMASS(2.0),
+        PLAYERWIDTH(10.0),
+        PLAYERHEIGHT(20.0),
+        PLAYERJUMPFORCE(-2.0),
+        PLAYERLIVES(3),
+        PLAYERHEALTH(10.0),
+        BULLETMASS(0.1),
+        BULLETWIDTH(2.0),
+        BULLETHEIGHT(2.0);
+        private final Object defaultValue;
+        // Since java does not like non-final fields in enums and there is no specific supression for this "issue"
+        @SuppressWarnings("all")
+        private Object changedValue = null;
+
+        Options(Object defaultValue) {
+            this.defaultValue = defaultValue;
+        }
+
+        @SuppressWarnings("unchecked")
+        public <T> T getValue() {
+            return (T) (changedValue == null ? defaultValue : changedValue);
+        }
+
+        public <T> void setValue(T value) {
+            changedValue = value;
+        }
+
+        public Object getDefaultValue() {
+            return defaultValue;
+        }
     }
 
-    private Map<Options, Object> optionsDict;
     private TiledMap map;
 
-    public PlayingField(String filename) throws NoSuchOptionException {
-        optionsDict = new EnumMap<Options, Object>(Options.class);
+    public PlayingField(String filename) {
         try {
             map = ResourceManager.INSTANCE.loadResource(TiledMap.class, filename);
         } catch (Exception e) {
@@ -81,171 +84,79 @@ public class PlayingField implements GameComponent {
         }
     }
 
-    private int getOptionInt(Options option) throws NoSuchOptionException {
-        if (optionsDict.containsKey(option)) {
-            Object result = optionsDict.get(option);
-            if (result instanceof Integer) {
-                return (Integer) optionsDict.get(option);
-            } else {
-                return (Integer) getDefault(option);
-            }
-        }
-        throw new NoSuchOptionException("No such option.");
-    }
-
-    private double getOptionDouble(Options option) throws NoSuchOptionException {
-        if (optionsDict.containsKey(option)) {
-            Object result = optionsDict.get(option);
-            if (result instanceof Double) {
-                return (Double) optionsDict.get(option);
-            } else {
-                return (Double) getDefault(option);
-            }
-        } else {
-            throw new NoSuchOptionException("No such option.");
-        }
-    }
-
-    private String getOptionString(Options option) throws NoSuchOptionException {
-        if (optionsDict.containsKey(option)) {
-            Object result = optionsDict.get(option);
-            if (result instanceof String) {
-                return (String) optionsDict.get(option);
-            } else {
-                return (String) getDefault(option);
-            }
-        }
-        throw new NoSuchOptionException("No such option.");
-    }
-
-    private Boolean getOptionBoolean(Options option) throws NoSuchOptionException {
-        if (optionsDict.containsKey(option)) {
-            Object result = optionsDict.get(option);
-            if (result instanceof String) {
-                return (Boolean) optionsDict.get(option);
-            } else {
-                return (Boolean) getDefault(option);
-            }
-        }
-        throw new NoSuchOptionException("No such option.");
-    }
-
-    public void setOption(Options option, Object value) {
-        optionsDict.put(option, value); //overwrites old values with same key
-    }
-
-    public void setOptions() throws NoSuchOptionException {
+    public void setOptions() {
         for (Options option : Options.values()) {
             String mapProperty = map.getMapProperty(option.toString(), null);
-            Object def = getDefault(option);
+            Object def = option.getValue();
 
-            if (mapProperty == null) {
-                setOption(option, def);
-            } else {
+            if (mapProperty != null) {
                 try {
                     if (def instanceof Integer) {
-                        setOption(option, Integer.parseInt(mapProperty));
+                        option.setValue(Integer.parseInt(mapProperty));
                     } else if (def instanceof Double) {
-                        setOption(option, Double.parseDouble(mapProperty));
+                        option.setValue(Double.parseDouble(mapProperty));
                     } else if (def instanceof Boolean) {
-                        setOption(option, Boolean.parseBoolean(mapProperty));
+                        option.setValue(Boolean.parseBoolean(mapProperty));
                     } else if (def instanceof String) {
-                        setOption(option, mapProperty);
+                        option.setValue(mapProperty);
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Error when loading " + option.toString() + " incorrect type");
-                    setOption(option, def);
                 }
             }
-            setOption(option, map.getMapProperty(option.toString(), def.toString()));
         }
     }
 
     public double getAimspeed() {
-        return getOptionDouble(Options.AIMSPEED);
+        return Options.AIMSPEED.getValue();
     }
 
     public double getGravity() {
-        return getOptionDouble(Options.GRAVITY);
+        return Options.GRAVITY.getValue();
     }
 
     public double getFriction() {
-        return getOptionDouble(Options.FRICTION);
+        return Options.FRICTION.getValue();
     }
 
     public double getPlayerHealth() {
-	return getOptionDouble(Options.PLAYERHEALTH);
+        return Options.PLAYERHEALTH.getValue();
     }
 
     public int getPlayerLives() {
-	return getOptionInt(Options.PLAYERLIVES);
+        return Options.PLAYERLIVES.getValue();
     }
 
     public double getPlayerMass() {
-        return getOptionDouble(Options.PLAYERMASS);
+        return Options.PLAYERMASS.getValue();
     }
 
     public double getPlayerWidth() {
-        return getOptionDouble(Options.PLAYERWIDTH);
+        return Options.PLAYERWIDTH.getValue();
     }
 
     public double getPlayerHeight() {
-        return getOptionDouble(Options.PLAYERHEIGHT);
+        return Options.PLAYERHEIGHT.getValue();
     }
 
     public double getPlayerJumpForce() {
-        return getOptionDouble(Options.PLAYERJUMPFORCE);
+        return Options.PLAYERJUMPFORCE.getValue();
     }
 
     public double getPlayerMoveForce() {
-        return getOptionDouble(Options.PLAYERMOVEFORCE);
+        return Options.PLAYERMOVEFORCE.getValue();
     }
 
     public double getBulletMass() {
-        return getOptionDouble(Options.BULLETMASS);
+        return Options.BULLETMASS.getValue();
     }
 
     public double getBulletHeight() {
-        return getOptionDouble(Options.BULLETHEIGHT);
+        return Options.BULLETHEIGHT.getValue();
     }
 
     public double getBulletWidth() {
-        return getOptionDouble(Options.BULLETWIDTH);
-    }
-
-    private Object getDefault(Options option) throws NoSuchOptionException {
-        switch (option) {
-            case GRAVITY:
-                return 0.05;
-            case MAPNAME:
-                return "defaultMapName";
-            case AIMSPEED:
-                return Math.PI / 120;
-	    case PLAYERLIVES:
-		return 3;
-	    case PLAYERHEALTH:
-		return 10.0;
-            case PLAYERMOVEFORCE:
-                return 0.1;
-            case PLAYERJUMPFORCE:
-                return -2.0;
-            case FRICTION:
-                return 0.03;
-            case PLAYERMASS:
-                return 2.0;
-            case PLAYERWIDTH:
-                return 10.0;
-            case PLAYERHEIGHT:
-                return 20.0;
-            case BULLETMASS:
-                return 0.1;
-            case BULLETHEIGHT:
-                return 2.0;
-            case BULLETWIDTH:
-                return 2.0;
-            default:
-                throw new NoSuchOptionException("No default value");
-        }
+        return Options.BULLETWIDTH.getValue();
     }
 
     /**

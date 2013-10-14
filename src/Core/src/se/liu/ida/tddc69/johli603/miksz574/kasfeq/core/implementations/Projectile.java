@@ -16,7 +16,7 @@ public class Projectile extends GameObject {
      *
      * @param world The world that the projectile will be in in
      */
-    public Projectile(World world) throws PlayingField.NoSuchOptionException {
+    public Projectile(World world) {
         super(world, world.getPlayingField().getBulletMass(), world.getPlayingField().getBulletWidth(), world.getPlayingField().getBulletHeight());
     }
 
