@@ -33,6 +33,8 @@ public class PlayingField implements GameComponent {
         PLAYERWIDTH,
         PLAYERHEIGHT,
         PLAYERJUMPFORCE,
+	PLAYERLIVES,
+	PLAYERHEALTH,
         BULLETMASS,
         BULLETWIDTH,
         BULLETHEIGHT
@@ -155,7 +157,6 @@ public class PlayingField implements GameComponent {
                     setOption(option, def);
                 }
             }
-
             setOption(option, map.getMapProperty(option.toString(), def.toString()));
         }
     }
@@ -170,6 +171,14 @@ public class PlayingField implements GameComponent {
 
     public double getFriction() {
         return getOptionDouble(Options.FRICTION);
+    }
+
+    public double getPlayerHealth() {
+	return getOptionDouble(Options.PLAYERHEALTH);
+    }
+
+    public int getPlayerLives() {
+	return getOptionInt(Options.PLAYERLIVES);
     }
 
     public double getPlayerMass() {
@@ -212,6 +221,10 @@ public class PlayingField implements GameComponent {
                 return "defaultMapName";
             case AIMSPEED:
                 return Math.PI / 120;
+	    case PLAYERLIVES:
+		return 3;
+	    case PLAYERHEALTH:
+		return 10;
             case PLAYERMOVEFORCE:
                 return 0.1;
             case PLAYERJUMPFORCE:

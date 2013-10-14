@@ -27,6 +27,8 @@ public class Player extends GameObject {
         super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight());
 	this.playerId = playerId;
         playerColor = Color.transparent;
+	health = world.getPlayingField().getPlayerHealth();
+	lives = world.getPlayingField().getPlayerLives();
     }
 
     /**
@@ -113,7 +115,7 @@ public class Player extends GameObject {
 		lives--;
 	    }
 	    else {
-		despawn();
+		getWorld().despawn(this);
 	    }
 	}
     }

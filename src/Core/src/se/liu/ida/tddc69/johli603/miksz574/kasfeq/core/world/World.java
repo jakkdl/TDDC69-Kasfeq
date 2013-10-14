@@ -39,6 +39,11 @@ public class World implements GameComponent {
         gameObjectManager.despawnObject(obj);
     }
 
+    public void despawn(Player player) {
+	gameObjectManager.despawnObject(player);
+	players.remove(player.getPlayerId());
+    }
+
     public void spawnNewPlayer(Color playerColor) throws PlayingField.NoSuchOptionException {
         Player player = new Player(this, players.size()+1);
 	player.setPosition(physicsEngine.getAvailablePosition(player));
