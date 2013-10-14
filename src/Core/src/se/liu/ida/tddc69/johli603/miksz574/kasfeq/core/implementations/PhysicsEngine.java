@@ -169,4 +169,8 @@ public class PhysicsEngine {
     private void addAcceleration(Vector2f velocity, Vector2f acceleration) {
         velocity.add(acceleration);
     }
+
+    public Vector2f getAvailablePosition(Player player) {
+	return new Vector2f(20 + 20 * player.getPlayerId(), 100);
+    }
 }

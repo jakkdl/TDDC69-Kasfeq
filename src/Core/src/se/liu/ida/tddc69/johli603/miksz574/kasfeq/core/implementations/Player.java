@@ -13,17 +13,27 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 public class Player extends GameObject {
     private Color playerColor;
     private double health = 10;
+    private int lives = 3;
     private double aimAngle = 0;
     private double aimAngleSpeed = 0;
+    private int playerId;
 
     /**
      * \brief Player constructor
      *
      * @param world The world that the player will be in in
      */
-    public Player(World world) throws PlayingField.NoSuchOptionException {
+    public Player(World world, int playerId) throws PlayingField.NoSuchOptionException {
         super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight());
+	this.playerId = playerId;
         playerColor = Color.transparent;
+    }
+
+    /**
+     * @return Returns the id of the player
+     */
+    public int getPlayerId() {
+	return playerId;
     }
 
     /**
@@ -73,9 +83,7 @@ public class Player extends GameObject {
     @Override
     public void collision(GameObject obj) {
         health -= 1;
-        if (health == 0) {
-            despawn();
-        }
+
     }
 
     /**
@@ -98,6 +106,16 @@ public class Player extends GameObject {
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception {
         aimAngle += aimAngleSpeed;
+	if (health <= 0) {
+	    if (lives > 0) {
+	        setPosition(getWorld().getPhysicsEngine().getAvailablePosition(this));
+	        health=10;
+		lives--;
+	    }
+	    else {
+		despawn();
+	    }
+	}
     }
 
     /**

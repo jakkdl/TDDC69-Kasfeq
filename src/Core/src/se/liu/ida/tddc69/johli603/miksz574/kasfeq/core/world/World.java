@@ -40,8 +40,8 @@ public class World implements GameComponent {
     }
 
     public void spawnNewPlayer(Color playerColor) throws PlayingField.NoSuchOptionException {
-        Player player = new Player(this);
-        player.setPosition(new Vector2f(20 + 20 * players.size(), 100));
+        Player player = new Player(this, players.size()+1);
+	player.setPosition(physicsEngine.getAvailablePosition(player));
         player.setPlayerColor(playerColor);
         players.put(players.size() + 1, player);
         spawn(player);
