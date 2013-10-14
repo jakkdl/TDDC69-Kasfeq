@@ -14,17 +14,16 @@ import java.util.Map;
 public class World implements GameComponent {
     private final GameObjectManager gameObjectManager;
     private final InputManager inputManager;
-    private PhysicsEngine physicsEngine;
-    private Map<Integer,Player> players;
-    private PlayingField playingField;
-    //private TiledMap map;
+    private final PhysicsEngine physicsEngine;
+    private final PlayingField playingField;
+    private final Map<Integer, Player> players;
 
-    public World() throws NoSuchFieldException {
+    public World() throws PlayingField.NoSuchOptionException {
         players = new HashMap<Integer, Player>();
         gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
-        playingField = new PlayingField();
 
+        playingField = new PlayingField("untitled.tmx");
         physicsEngine = new PhysicsEngine(playingField);
     }
 
@@ -40,11 +39,11 @@ public class World implements GameComponent {
         gameObjectManager.despawnObject(obj);
     }
 
-    public void spawnNewPlayer(Color playerColor) throws NoSuchFieldException {
+    public void spawnNewPlayer(Color playerColor) throws PlayingField.NoSuchOptionException {
         Player player = new Player(this);
-        player.setPosition(new Vector2f(20+20*players.size(),100));
+        player.setPosition(new Vector2f(20 + 20 * players.size(), 100));
         player.setPlayerColor(playerColor);
-        players.put(players.size()+1, player);
+        players.put(players.size() + 1, player);
         spawn(player);
     }
 
@@ -57,25 +56,28 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void init(GameContainer gameContainer) throws SlickException,NoSuchFieldException {
+    public void init(GameContainer gameContainer) throws Exception, PlayingField.NoSuchOptionException, SlickException {
         gameObjectManager.init(gameContainer);
         inputManager.init(gameContainer);
+        playingField.init(gameContainer);
 
         spawnNewPlayer(Color.orange);
         spawnNewPlayer(Color.magenta);
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException, NoSuchFieldException {
-        gameObjectManager.update(gameContainer,i);
+    public void update(GameContainer gameContainer, int i) throws Exception {
+        gameObjectManager.update(gameContainer, i);
         inputManager.update(gameContainer, i);
+        playingField.update(gameContainer, i);
     }
 
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
         graphics.setColor(Color.white);
-        graphics.drawString("Kasfeq",0,0);
-        playingField.render(0,0);
+        graphics.drawString("Kasfeq", 0, 0);
+
+        playingField.render(gameContainer, graphics);
         gameObjectManager.render(gameContainer, graphics);
     }
 
@@ -83,5 +85,6 @@ public class World implements GameComponent {
     public void dispose() throws Exception {
         gameObjectManager.dispose();
         inputManager.dispose();
+        playingField.dispose();
     }
 }

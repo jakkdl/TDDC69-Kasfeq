@@ -3,17 +3,36 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import org.newdawn.slick.command.Command;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
+/**
+ * \class PlayerCommand
+ * \brief This class is used when binding a keyboard key to a certain action for a player
+ */
 public class PlayerCommand implements Command {
-    public enum InputType {
-        LEFT, JUMP, RIGHT, SHOOT, AIM_LEFT, AIM_RIGHT
+    private final World world;
+    private final int playerID;
+    private final InputType inputType;
+
+    /**
+     * \brief PlayerCommand constructor
+     *
+     * @param world     The World instance where the player is
+     * @param playerID  The PlayerID for which this command should be bound to
+     * @param inputType The type of action that this command represents
+     */
+    public PlayerCommand(World world, int playerID, InputType inputType) {
+        this.world = world;
+        this.playerID = playerID;
+        this.inputType = inputType;
     }
 
-    private World world;
-    private int playerID;
-    private InputType inputType;
-
-    public void pressKey() throws NoSuchFieldException {
+    /**
+     * \brief Inherited from org.newdawn.slick.command.Command
+     */
+    public void pressKey() {
         Player player = world.getPlayer(playerID);
+
+        if (player == null)
+            return;
 
         switch (inputType) {
             case LEFT:
@@ -37,8 +56,14 @@ public class PlayerCommand implements Command {
         }
     }
 
-    public void releaseKey() throws NoSuchFieldException {
+    /**
+     * \brief Inherited from org.newdawn.slick.command.Command
+     */
+    public void releaseKey() {
         Player player = world.getPlayer(playerID);
+
+        if (player == null)
+            return;
 
         switch (inputType) {
             case LEFT:
@@ -62,9 +87,11 @@ public class PlayerCommand implements Command {
         }
     }
 
-    public PlayerCommand(World world, int playerID, InputType inputType) {
-        this.world = world;
-        this.playerID = playerID;
-        this.inputType = inputType;
+    /**
+     * \enum InputType
+     * \brief Represents the different actions for a player
+     */
+    public enum InputType {
+        LEFT, JUMP, RIGHT, SHOOT, AIM_LEFT, AIM_RIGHT
     }
 }

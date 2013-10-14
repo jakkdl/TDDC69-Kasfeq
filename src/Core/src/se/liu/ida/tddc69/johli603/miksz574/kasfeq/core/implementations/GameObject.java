@@ -1,7 +1,5 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
@@ -23,9 +21,10 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief GameObject constructor
-     * @param world The world that the gameobject is to be in
-     * @param mass  The mass of the object
-     * @param width The width of the object
+     *
+     * @param world  The world that the gameobject will be in
+     * @param mass   The mass of the object
+     * @param width  The width of the object
      * @param height The height of the object
      */
     protected GameObject(World world, double mass, double width, double height) {
@@ -55,6 +54,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Sets the position vector of the GameObject instance
+     *
      * @param position The new position vector of the game object, (0,0) = top left
      */
     public void setPosition(Vector2f position) {
@@ -70,6 +70,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Sets the current velocity vector for the game object
+     *
      * @param velocity The new velocity vector
      */
     public void setVelocity(Vector2f velocity) {
@@ -85,6 +86,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Sets the continious force applied on the game object
+     *
      * @param force The new continious force vector
      */
     public void setContForce(Vector2f force) {
@@ -93,6 +95,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Adds a continious force to the game object
+     *
      * @param force The continious force vector to be added
      */
     public void addContForce(Vector2f force) {
@@ -108,6 +111,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Sets the instant force applied on the game object
+     *
      * @param force The new instant force vector
      */
     public void setInstantForce(Vector2f force) {
@@ -116,6 +120,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Adds a instant force on the game object
+     *
      * @param force The instant force vector to be added
      */
     public void addInstantForce(Vector2f force) {
@@ -131,6 +136,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Sets the facing angle of the game object
+     *
      * @param facing The new facing angle in radians
      */
     public void setFacing(double facing) {
@@ -146,6 +152,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Sets the mass of the game object
+     *
      * @param mass The new mass of the object
      */
     public void setMass(double mass) {
@@ -173,6 +180,7 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Abstract function that is called when a game object collides with another game object
+     *
      * @param obj The game object that we collided with
      */
     public abstract void collision(GameObject obj);
@@ -182,27 +190,5 @@ public abstract class GameObject implements GameComponent {
      */
     public void despawn() {
         world.despawn(this);
-    }
-
-    /**
-     * \brief The update function is called before every frame is rendered
-     *
-     * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @param i             The time in ms since the last update call
-     * @throws org.newdawn.slick.SlickException
-     *                              Thrown by functions related to the Slick2D update
-     * @throws NoSuchFieldException Thrown by the PlayingField class
-     */
-    @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException, NoSuchFieldException {
-    }
-
-    /**
-     * \brief The dispose function is called before a component is destoryed
-     *
-     * @throws Exception Thrown is something fails
-     */
-    @Override
-    public void dispose() throws Exception {
     }
 }

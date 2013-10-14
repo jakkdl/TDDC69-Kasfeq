@@ -5,13 +5,19 @@ import org.newdawn.slick.tiled.TiledMap;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * \enum ResourceManager
+ * \brief The ResourceManager class is responsible for managing all the resources for the game
+ */
 public enum ResourceManager {
+    /**
+     * \brief The Singleton instance of the ResourceManager
+     */
     INSTANCE;
-
-    private final Map<Class,ResourceLoader> resourceLoaders;
+    private final Map<Class, ResourceLoader> resourceLoaders;
     private final Map<String, Object> cachedResources;
 
-    private ResourceManager() {
+    ResourceManager() {
         resourceLoaders = new HashMap<Class, ResourceLoader>();
         resourceLoaders.put(TiledMap.class, new TiledMapLoader());
         cachedResources = new HashMap<String, Object>();
@@ -27,11 +33,11 @@ public enum ResourceManager {
     public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) throws Exception {
         Object resource = cachedResources.get(filename);
 
-        if(resource == null) {
+        if (resource == null) {
             resource = resourceLoaders.get(resourceClass).loadResource("resources/" + filename);
             cachedResources.put(filename, resource);
         }
 
-        return (LoadedType)resource;
+        return (LoadedType) resource;
     }
 }

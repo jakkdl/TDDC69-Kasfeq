@@ -21,6 +21,7 @@ public class GameObjectManager implements GameComponent {
 
     /**
      * \brief GameObjectManager constructor
+     *
      * @param world The world that the game object manager should manage objects for
      */
     public GameObjectManager(World world) {
@@ -31,6 +32,7 @@ public class GameObjectManager implements GameComponent {
 
     /**
      * \brief Adds a GameObject instance to the world
+     *
      * @param obj The GameObject instance to add
      */
     public void spawnObject(GameObject obj) {
@@ -39,6 +41,7 @@ public class GameObjectManager implements GameComponent {
 
     /**
      * \brief Removes a GameObject instance from the world
+     *
      * @param obj The GameObject instance to remove
      */
     public void despawnObject(GameObject obj) {
@@ -47,9 +50,9 @@ public class GameObjectManager implements GameComponent {
 
     /**
      * \brief The init function is called when the game component is initialized
+     *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @throws SlickException Thrown by functions related to the Slick2D initialization
-     * @throws NoSuchFieldException Thrown by the PlayingField class
+     * @throws Exception Thrown is something fails
      */
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
@@ -57,16 +60,16 @@ public class GameObjectManager implements GameComponent {
 
     /**
      * \brief The update function is called before every frame is rendered
+     *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @param i The time in ms since the last update call
-     * @throws SlickException Thrown by functions related to the Slick2D update
-     * @throws NoSuchFieldException Thrown by the PlayingField class
+     * @param i             The time in ms since the last update call
+     * @throws Exception Thrown is something fails
      */
     @Override
-    public void update(GameContainer gameContainer, int i) throws SlickException, NoSuchFieldException {
+    public void update(GameContainer gameContainer, int i) throws Exception, PlayingField.NoSuchOptionException {
         world.getPhysicsEngine().dumbCollisions(gameObjects, i);
         for (GameObject obj : gameObjects) {
-            world.getPhysicsEngine().update(obj, i);
+            world.getPhysicsEngine().updateObject(obj, i);
             obj.update(gameContainer, i);
         }
         for (GameObject obj : despawnedGameObjects) {
@@ -78,13 +81,13 @@ public class GameObjectManager implements GameComponent {
 
     /**
      * \brief The update function is called before every frame is rendered
+     *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @param i The time in ms since the last update call
-     * @throws SlickException Thrown by functions related to the Slick2D update
-     * @throws NoSuchFieldException Thrown by the PlayingField class
+     * @param i             The time in ms since the last update call
+     * @throws Exception Thrown is something fails
      */
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
+    public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
         for (GameObject obj : gameObjects) {
             obj.render(gameContainer, graphics);
         }
@@ -92,6 +95,7 @@ public class GameObjectManager implements GameComponent {
 
     /**
      * \brief The dispose function is called before a component is destoryed
+     *
      * @throws Exception Thrown is something fails
      */
     @Override
