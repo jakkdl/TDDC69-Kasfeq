@@ -239,7 +239,7 @@ public class PlayingField implements GameComponent {
      * \brief The init function is called when the game component is initialized
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void init(GameContainer gameContainer) throws Exception {
@@ -250,7 +250,7 @@ public class PlayingField implements GameComponent {
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @param i             The time in ms since the last update call
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception {
@@ -261,7 +261,7 @@ public class PlayingField implements GameComponent {
      *
      * @param gamecontainer the org.newdawn.slick.gamecontainer instance of the game
      * @param graphics      the org.newdawn.slick.graphics instance used for drawing
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
@@ -271,7 +271,7 @@ public class PlayingField implements GameComponent {
     /**
      * \brief The dispose function is called before a component is destoryed
      *
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void dispose() throws Exception {

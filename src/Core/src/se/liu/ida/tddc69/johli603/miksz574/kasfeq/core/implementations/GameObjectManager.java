@@ -52,7 +52,7 @@ public class GameObjectManager implements GameComponent {
      * \brief The init function is called when the game component is initialized
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void init(GameContainer gameContainer) throws SlickException {
@@ -63,7 +63,7 @@ public class GameObjectManager implements GameComponent {
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @param i             The time in ms since the last update call
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception, PlayingField.NoSuchOptionException {
@@ -84,7 +84,7 @@ public class GameObjectManager implements GameComponent {
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @param i             The time in ms since the last update call
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
@@ -96,7 +96,7 @@ public class GameObjectManager implements GameComponent {
     /**
      * \brief The dispose function is called before a component is destoryed
      *
-     * @throws Exception Thrown is something fails
+     * @throws Exception Thrown if something fails
      */
     @Override
     public void dispose() throws Exception {
