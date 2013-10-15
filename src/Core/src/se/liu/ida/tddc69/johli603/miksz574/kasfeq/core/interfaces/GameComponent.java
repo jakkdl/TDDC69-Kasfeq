@@ -13,7 +13,7 @@ public interface GameComponent {
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @throws Exception Thrown if something fails
      */
-    public void init(GameContainer gameContainer) throws  Exception;
+    public void init(GameContainer gameContainer) throws Exception;
 
     /**
      * \brief The update function is called before every frame is rendered

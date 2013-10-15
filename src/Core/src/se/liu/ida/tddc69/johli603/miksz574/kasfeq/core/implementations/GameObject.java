@@ -28,10 +28,10 @@ public abstract class GameObject implements GameComponent {
      */
     protected GameObject(World world, double mass, double width, double height) {
         this.world = world;
-        position = new Vector2f();
-        velocity = new Vector2f();
-        continuousForce = new Vector2f();
-        instantaneousForce = new Vector2f();
+        position = new Vector2d();
+        velocity = new Vector2d();
+        continuousForce = new Vector2d();
+        instantaneousForce = new Vector2d();
         this.mass = mass;
         this.width = width;
         this.height = height;
@@ -76,36 +76,14 @@ public abstract class GameObject implements GameComponent {
         this.velocity = velocity;
     }
 
-    /**
-     * @return Returns the continious force applied on the game object
-     */
-    public Vector2f getContForce() {
-        return continuousForce;
-    }
-
-    /**
-     * \brief Sets the continious force applied on the game object
-     *
-     * @param force The new continious force vector
-     */
-    public void setContForce(Vector2f force) {
-        this.continuousForce = force;
-    }
-
-    /**
-     * \brief Adds a continious force to the game object
-     *
-     * @param force The continious force vector to be added
-     */
-    public void addContForce(Vector2f force) {
-        continuousForce.add(force);
-    }
 
     /**
      * @return Returns the facing angle of the game object in radians
      */
     public double getFacing() {
         return facing;
+    }
+
     /**
      * @return Returns the instant force applied on the game object
      */
@@ -148,7 +126,7 @@ public abstract class GameObject implements GameComponent {
     }
 
     /**
-     * \brief Adds an continuous force on the game object
+     * \brief Adds a continuous force on the game object
      *
      * @param force The continuous force vector to be added
      */

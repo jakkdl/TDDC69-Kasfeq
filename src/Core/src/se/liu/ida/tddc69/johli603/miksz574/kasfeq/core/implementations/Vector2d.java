@@ -18,7 +18,7 @@ public class Vector2d {
     }
 
     public Vector2d(double theta) {
-        this.vector = new Vector2f((float) theta);
+        this.vector = new Vector2f((float) Math.toDegrees(theta));
     }
 
     public Vector2d add(Vector2d v) {

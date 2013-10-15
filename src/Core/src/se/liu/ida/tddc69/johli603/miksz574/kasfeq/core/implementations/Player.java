@@ -105,7 +105,7 @@ public class Player extends GameObject {
      * @throws Exception Thrown if something fails
      */
     @Override
-    public void update(GameContainer gameContainer, int i) throws Exception {
+    public void update(GameContainer gameContainer, int i) {
         aimAngle += aimAngleSpeed;
 	if (health <= 0) {
 	    if (lives > 0) {
@@ -127,7 +127,7 @@ public class Player extends GameObject {
      * @throws Exception Thrown if something fails
      */
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
+    public void render(GameContainer gameContainer, Graphics graphics) {
         graphics.setColor(playerColor);
         Vector2d position = getPosition();
         graphics.fillRect((float)position.getX(), (float)position.getY(), (float)getWidth(), (float)getHeight());
@@ -206,11 +206,9 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void jump(boolean isKeyPressed) throws NoSuchFieldException {
+    public void jump(boolean isKeyPressed) {
         if(isKeyPressed) {
             addInstantForce(new Vector2d(0, (float)getWorld().getPlayingField().getPlayerJumpForce()));
-        }
-        else {
         }
     }
 
@@ -219,10 +217,10 @@ public class Player extends GameObject {
      *
      * @return The position vector for the spawn position
      */
-    private Vector2f bulletPosition() {
+    private Vector2d bulletPosition() {
         double x = getPosition().getX() + getWidth() / 2;
         double y = getPosition().getY() + getHeight() / 2;
-        return new Vector2f((float) x, (float) y).add(new Vector2f(Math.toDegrees(aimAngle)).scale(15)); //TODO: replace with function that calculates where bullet can spawn
+        return new Vector2d(x, y).add(new Vector2d((aimAngle)).scale(15)); //TODO: replace with function that calculates where bullet can spawn
     }
 
     /**
@@ -234,7 +232,7 @@ public class Player extends GameObject {
         if (isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
             bullet.setPosition(bulletPosition());
-            bullet.addInstantForce(new Vector2d(Math.toDegrees(aimAngle)).scale(1));
+            bullet.addInstantForce(new Vector2d(aimAngle).scale(1));
             getWorld().spawn(bullet);
             //shotgun();
         }
@@ -250,7 +248,7 @@ public class Player extends GameObject {
         for (int i = 0; i < bullets.length; i++) {
             bullets[i] = new Projectile(getWorld());
             bullets[i].setPosition(bulletPosition());
-            bullets[i].addInstantForce(new Vector2d(Math.toDegrees(aimAngle + Math.random())).scale(1));
+            bullets[i].addInstantForce(new Vector2d((aimAngle + Math.random())).scale(1));
             getWorld().spawn(bullets[i]);
         }
     }

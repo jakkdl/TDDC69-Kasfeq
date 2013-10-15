@@ -48,13 +48,13 @@ public class PhysicsEngine {
         double t=1;
         Vector2d pos1 = obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t));
         Vector2d pos2 = obj2.getPosition().copy().add(obj2.getVelocity().copy().scale((float)t));
-        if (rectangle_collision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
+        if (rectangleCollision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
             return true;
         }
         return false;
     }
 
-    private boolean rectangle_collision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
+    private boolean rectangleCollision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
         return !(x1 > x2 + width2 || x1 + width1 < x2 || y1 > y2 + height2 || y1 + height1 < y2);
     }
 
@@ -170,7 +170,7 @@ public class PhysicsEngine {
         return velocity.add(acceleration);
     }
 
-    public Vector2f getAvailablePosition(Player player) {
-	return new Vector2f(20 + 20 * player.getPlayerId(), 100);
+    public Vector2d getAvailablePosition(Player player) {
+	return new Vector2d(20 + 20 * player.getPlayerId(), 100);
     }
 }
