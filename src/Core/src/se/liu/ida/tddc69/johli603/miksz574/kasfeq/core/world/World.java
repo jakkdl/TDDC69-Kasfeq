@@ -4,7 +4,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 
@@ -40,13 +39,13 @@ public class World implements GameComponent {
     }
 
     public void despawn(Player player) {
-	gameObjectManager.despawnObject(player);
-	players.remove(player.getPlayerId());
+        gameObjectManager.despawnObject(player);
+        players.remove(player.getPlayerId());
     }
 
     public void spawnNewPlayer(Color playerColor) {
         Player player = new Player(this, players.size()+1);
-	player.setPosition(physicsEngine.getAvailablePosition(player));
+        player.setPosition(physicsEngine.getAvailablePosition(player));
         player.setPlayerColor(playerColor);
         players.put(players.size() + 1, player);
         spawn(player);
@@ -72,9 +71,9 @@ public class World implements GameComponent {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception {
-	if (players.size() <= 1) {
-	    gameContainer.exit();
-	}
+        if (players.size() <= 1) {
+            gameContainer.exit();
+        }
         gameObjectManager.update(gameContainer, i);
         inputManager.update(gameContainer, i);
         playingField.update(gameContainer, i);

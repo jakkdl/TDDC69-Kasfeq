@@ -1,6 +1,5 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
@@ -10,10 +9,10 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
  */
 public abstract class GameObject implements GameComponent {
     private final World world;
-    private Vector2f position;
-    private Vector2f velocity;
-    private Vector2f continuousForce;
-    private Vector2f instantaneousForce;
+    private Vector2d position;
+    private Vector2d velocity;
+    private Vector2d continuousForce;
+    private Vector2d instantaneousForce;
     private double facing;
     private double mass;
     private double width;
@@ -48,7 +47,7 @@ public abstract class GameObject implements GameComponent {
     /**
      * @return Returns the position vector of the object in the world, (0,0)=top left
      */
-    public Vector2f getPosition() {
+    public Vector2d getPosition() {
         return position;
     }
 
@@ -57,14 +56,14 @@ public abstract class GameObject implements GameComponent {
      *
      * @param position The new position vector of the game object, (0,0) = top left
      */
-    public void setPosition(Vector2f position) {
+    public void setPosition(Vector2d position) {
         this.position = position;
     }
 
     /**
      * @return Returns the current velocity vector for the game object
      */
-    public Vector2f getVelocity() {
+    public Vector2d getVelocity() {
         return velocity;
     }
 
@@ -73,7 +72,7 @@ public abstract class GameObject implements GameComponent {
      *
      * @param velocity The new velocity vector
      */
-    public void setVelocity(Vector2f velocity) {
+    public void setVelocity(Vector2d velocity) {
         this.velocity = velocity;
     }
 
@@ -103,35 +102,58 @@ public abstract class GameObject implements GameComponent {
     }
 
     /**
+     * @return Returns the facing angle of the game object in radians
+     */
+    public double getFacing() {
+        return facing;
+    /**
      * @return Returns the instant force applied on the game object
      */
-    public Vector2f getInstantForce() {
+    public Vector2d getInstantForce() {
         return instantaneousForce;
     }
 
+    /**
+      * \brief Sets the instant force on the game object
+      *
+      * @param force The instant force vector to be set
+      */
+    public void setInstantForce(Vector2d force) {
+        this.instantaneousForce = force;
+    }
+
+    /**
+     * \brief Adds an instant force on the game object
+     *
+     * @param force The instant force vector to be added
+     */
+    public void addInstantForce(Vector2d force) {
+        instantaneousForce = instantaneousForce.add(force);
+    }
+
+    /**
+      * @return Returns the continuous force applied on the game object
+      */
+    public Vector2d getContForce() {
+        return continuousForce;
+    }
+    
     /**
      * \brief Sets the instant force applied on the game object
      *
      * @param force The new instant force vector
      */
-    public void setInstantForce(Vector2f force) {
-        this.instantaneousForce = force;
+    public void setContForce(Vector2d force) {
+        this.continuousForce = force;
     }
 
     /**
-     * \brief Adds a instant force on the game object
+     * \brief Adds an continuous force on the game object
      *
-     * @param force The instant force vector to be added
+     * @param force The continuous force vector to be added
      */
-    public void addInstantForce(Vector2f force) {
-        instantaneousForce.add(force);
-    }
-
-    /**
-     * @return Returns the facing angle of the game object in radians
-     */
-    public double getFacing() {
-        return facing;
+    public void addContForce(Vector2d force) {
+        continuousForce = continuousForce.add(force);
     }
 
     /**

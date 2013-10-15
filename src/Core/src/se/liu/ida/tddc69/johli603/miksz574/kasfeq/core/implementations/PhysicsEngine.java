@@ -1,7 +1,5 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import org.newdawn.slick.geom.Vector2f;
-
 import java.util.List;
 
 public class PhysicsEngine {
@@ -47,9 +45,9 @@ public class PhysicsEngine {
     }
 
     private boolean collision(GameObject obj1, GameObject obj2, int time) {
-        double t = 1;
-        Vector2f pos1 = obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float) t));
-        Vector2f pos2 = obj2.getPosition().copy().add(obj2.getVelocity().copy().scale((float) t));
+        double t=1;
+        Vector2d pos1 = obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t));
+        Vector2d pos2 = obj2.getPosition().copy().add(obj2.getVelocity().copy().scale((float)t));
         if (rectangle_collision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
             return true;
         }
@@ -64,21 +62,20 @@ public class PhysicsEngine {
         //calculate forces, acceleration and velocity
 
         //add gravity
-        object.addInstantForce(new Vector2f(0, (float) playingField.getGravity()));
+        object.addInstantForce(new Vector2d(0, playingField.getGravity()));
 
         //calculate acceleration from forces
-        Vector2f totalForce = object.getContForce().copy().add(object.getInstantForce());
-        Vector2f acceleration = addForces(totalForce, object.getMass());
+        Vector2d totalForce = object.getContForce().add(object.getInstantForce());
+        Vector2d acceleration = addForces(totalForce, object.getMass());
 
         //update velocities according to acceleration
-        addAcceleration(object.getVelocity(), acceleration);
+        object.setVelocity(addAcceleration(object.getVelocity(), acceleration));
 
         //add friction
-        object.setVelocity(object.getVelocity().scale(1 - (float) playingField.getFriction()));
+        object.setVelocity(object.getVelocity().scale(1-playingField.getFriction()));
 
         //remove all instant forces
-        object.setInstantForce(new Vector2f(0, 0));
-
+        object.setInstantForce(new Vector2d(0,0));
 
         //then see how far the object can travel
         MapCollisionResult result = checkMapCollision(object);
@@ -91,22 +88,23 @@ public class PhysicsEngine {
             object.collision();
 
 
-            object.setPosition(move(object.getPosition(), new Vector2f((float) result.xDistance, (float) result.yDistance)));
+            object.setPosition(move(object.getPosition(), new Vector2d(result.xDistance, result.yDistance)));
             if (result.xCollision && result.yCollision) {
-                object.setVelocity(new Vector2f(0, 0));
-            } else if (result.xCollision) {
-                object.setVelocity(new Vector2f(0, object.getVelocity().getY()));
-            } else {
-                object.setVelocity(new Vector2f(object.getVelocity().getX(), 0));
+                object.setVelocity(new Vector2d(0, 0));
+            }
+            else if (result.xCollision) {
+                object.setVelocity(new Vector2d(0, object.getVelocity().getY()));
+            }
+            else {
+                object.setVelocity(new Vector2d(object.getVelocity().getX(), 0));
             }
         } else {
             object.setPosition(move(object.getPosition(), object.getVelocity()));
         }
-
     }
 
     private MapCollisionResult checkMapCollision(final GameObject obj) {
-        Vector2f vel = obj.getVelocity().copy();
+        Vector2d vel = obj.getVelocity().copy();
         MapCollisionResult result = new MapCollisionResult(vel.getX(), vel.getY());
 
         double absDeltaV = 0.01;
@@ -160,17 +158,16 @@ public class PhysicsEngine {
         return result;
     }
 
-    private Vector2f move(final Vector2f point, final Vector2f velocity) {
-        point.add(velocity);
-        return point;
+    private Vector2d move(final Vector2d point, final Vector2d velocity) {
+        return point.add(velocity);
     }
 
-    private Vector2f addForces(final Vector2f force, double mass) {
-        return force.scale(1 / (float) mass);
+    private Vector2d addForces(final Vector2d force, double mass) {
+        return force.scale(1/(float)mass);
     }
 
-    private void addAcceleration(Vector2f velocity, Vector2f acceleration) {
-        velocity.add(acceleration);
+    private Vector2d addAcceleration(Vector2d velocity, Vector2d acceleration) {
+        return velocity.add(acceleration);
     }
 
     public Vector2f getAvailablePosition(Player player) {

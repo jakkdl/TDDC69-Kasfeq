@@ -3,7 +3,6 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 /**
@@ -130,8 +129,8 @@ public class Player extends GameObject {
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
         graphics.setColor(playerColor);
-        Vector2f position = getPosition();
-        graphics.fillRect(position.getX(), position.getY(), (float) getWidth(), (float) getHeight());
+        Vector2d position = getPosition();
+        graphics.fillRect((float)position.getX(), (float)position.getY(), (float)getWidth(), (float)getHeight());
         double aimRadius = getWidth();
         graphics.setColor(Color.white);
         graphics.drawLine((float) (position.getX() + getWidth() / 2), (float) (position.getY() + getHeight() / 2), (float) (position.getX() + getWidth() / 2 + aimRadius * Math.cos(aimAngle)), (float) (position.getY() + getHeight() / 2 + aimRadius * Math.sin(aimAngle)));
@@ -179,10 +178,11 @@ public class Player extends GameObject {
      */
     public void moveLeft(boolean isKeyPressed) {
         setFacing(Math.PI);
-        if (isKeyPressed) {
-            addContForce(new Vector2f(-(float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
-        } else {
-            addContForce(new Vector2f((float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
+        if(isKeyPressed) {
+            addContForce(new Vector2d(-(float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
+        }
+        else {
+            addContForce(new Vector2d((float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
         }
     }
 
@@ -193,10 +193,11 @@ public class Player extends GameObject {
      */
     public void moveRight(boolean isKeyPressed) {
         setFacing(0);
-        if (isKeyPressed) {
-            addContForce(new Vector2f((float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
-        } else {
-            addContForce(new Vector2f(-(float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
+        if(isKeyPressed) {
+            addContForce(new Vector2d(getWorld().getPlayingField().getPlayerMoveForce(), 0));
+        }
+        else {
+            addContForce(new Vector2d(-getWorld().getPlayingField().getPlayerMoveForce(), 0));
         }
     }
 
@@ -205,9 +206,11 @@ public class Player extends GameObject {
      *
      * @param isKeyPressed Is the key pressed
      */
-    public void jump(boolean isKeyPressed) {
-        if (isKeyPressed) {
-            addInstantForce(new Vector2f(0, (float) getWorld().getPlayingField().getPlayerJumpForce()));
+    public void jump(boolean isKeyPressed) throws NoSuchFieldException {
+        if(isKeyPressed) {
+            addInstantForce(new Vector2d(0, (float)getWorld().getPlayingField().getPlayerJumpForce()));
+        }
+        else {
         }
     }
 
@@ -231,7 +234,7 @@ public class Player extends GameObject {
         if (isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
             bullet.setPosition(bulletPosition());
-            bullet.addInstantForce(new Vector2f(Math.toDegrees(aimAngle)).scale(1));
+            bullet.addInstantForce(new Vector2d(Math.toDegrees(aimAngle)).scale(1));
             getWorld().spawn(bullet);
             //shotgun();
         }
@@ -247,7 +250,7 @@ public class Player extends GameObject {
         for (int i = 0; i < bullets.length; i++) {
             bullets[i] = new Projectile(getWorld());
             bullets[i].setPosition(bulletPosition());
-            bullets[i].addInstantForce(new Vector2f(Math.toDegrees(aimAngle + Math.random())).scale(1));
+            bullets[i].addInstantForce(new Vector2d(Math.toDegrees(aimAngle + Math.random())).scale(1));
             getWorld().spawn(bullets[i]);
         }
     }

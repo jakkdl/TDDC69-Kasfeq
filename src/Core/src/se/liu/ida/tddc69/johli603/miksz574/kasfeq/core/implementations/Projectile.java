@@ -3,7 +3,6 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 /**
@@ -68,9 +67,9 @@ public class Projectile extends GameObject {
      */
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
-        Vector2f position = getPosition();
+        Vector2d position = getPosition();
         graphics.setColor(Color.white);
-        graphics.fillRect(position.getX(), position.getY(), 5, 5);
+        graphics.fillRect((float)position.getX(), (float)position.getY(), 5, 5);
     }
 
     /**
