@@ -3,7 +3,6 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 
@@ -45,7 +44,7 @@ public class World implements GameComponent {
 
     public void spawnNewPlayer(Color playerColor) {
         Player player = new Player(this, players.size()+1);
-        player.setPosition(physicsEngine.getAvailablePosition(player));
+        player.setPosition(playingField.getAvailablePosition(player));
         player.setPlayerColor(playerColor);
         players.put(players.size() + 1, player);
         spawn(player);
@@ -60,7 +59,7 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void init(GameContainer gameContainer) throws Exception, SlickException {
+    public void init(GameContainer gameContainer) {
         gameObjectManager.init(gameContainer);
         inputManager.init(gameContainer);
         playingField.init(gameContainer);
@@ -70,7 +69,7 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void update(GameContainer gameContainer, int i) throws Exception {
+    public void update(GameContainer gameContainer, int i) {
         if (players.size() <= 1) {
             gameContainer.exit();
         }
@@ -80,7 +79,7 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
+    public void render(GameContainer gameContainer, Graphics graphics) {
         graphics.setColor(Color.white);
         graphics.drawString("Kasfeq", 0, 0);
 
@@ -89,7 +88,7 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void dispose() throws Exception {
+    public void dispose() {
         gameObjectManager.dispose();
         inputManager.dispose();
         playingField.dispose();

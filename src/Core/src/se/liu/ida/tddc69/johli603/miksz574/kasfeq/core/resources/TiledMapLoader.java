@@ -21,9 +21,9 @@ public class TiledMapLoader implements ResourceLoader<TiledMap> {
      */
     @Override
     public TiledMap loadResource(String filename) throws FileNotFoundException, IOException, SlickException {
-        FileInputStream fileInputStream = new FileInputStream(new File(filename));
         TiledMap loadedMap;
 
+        FileInputStream fileInputStream = new FileInputStream(new File(filename));
         try {
             loadedMap = new TiledMap(fileInputStream, "resources");
         }

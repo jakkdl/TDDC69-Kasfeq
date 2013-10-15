@@ -31,7 +31,7 @@ class Game implements org.newdawn.slick.Game {
         }
     }
 
-    private void Game() {
+    private Game() {
         activeComponent = null;
     }
 
@@ -46,8 +46,8 @@ class Game implements org.newdawn.slick.Game {
         try {
             activeComponent = new World();
             activeComponent.init(gameContainer);
-        } catch (SlickException e) {
-            throw e;
+        /*} catch (SlickException e) {
+            throw e;*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,8 +57,8 @@ class Game implements org.newdawn.slick.Game {
     public void update(GameContainer gameContainer, int i) throws SlickException {
         try {
             activeComponent.update(gameContainer, i);
-        } catch (SlickException e) {
-            throw e;
+        /*} catch (SlickException e) {
+            throw e;*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,8 +68,8 @@ class Game implements org.newdawn.slick.Game {
     public void render(GameContainer gameContainer, Graphics graphics) throws SlickException {
         try {
             activeComponent.render(gameContainer, graphics);
-        } catch (SlickException e) {
-            throw e;
+        /*} catch (SlickException e) {
+            throw e;*/
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,7 +2,6 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
@@ -52,10 +51,9 @@ public class GameObjectManager implements GameComponent {
      * \brief The init function is called when the game component is initialized
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @throws Exception Thrown if something fails
      */
     @Override
-    public void init(GameContainer gameContainer) throws SlickException {
+    public void init(GameContainer gameContainer) {
     }
 
     /**
@@ -63,10 +61,9 @@ public class GameObjectManager implements GameComponent {
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @param i             The time in ms since the last update call
-     * @throws Exception Thrown if something fails
      */
     @Override
-    public void update(GameContainer gameContainer, int i) throws Exception {
+    public void update(GameContainer gameContainer, int i) {
         world.getPhysicsEngine().dumbCollisions(gameObjects, i);
         for (GameObject obj : gameObjects) {
             world.getPhysicsEngine().updateObject(obj, i);
@@ -84,10 +81,9 @@ public class GameObjectManager implements GameComponent {
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @param i             The time in ms since the last update call
-     * @throws Exception Thrown if something fails
      */
     @Override
-    public void render(GameContainer gameContainer, Graphics graphics) throws Exception {
+    public void render(GameContainer gameContainer, Graphics graphics){
         for (GameObject obj : gameObjects) {
             obj.render(gameContainer, graphics);
         }
@@ -96,10 +92,9 @@ public class GameObjectManager implements GameComponent {
     /**
      * \brief The dispose function is called before a component is destoryed
      *
-     * @throws Exception Thrown if something fails
      */
     @Override
-    public void dispose() throws Exception {
+    public void dispose() {
         Iterator<GameObject> iterator = gameObjects.iterator();
         while (iterator.hasNext()) {
             GameObject obj = iterator.next();

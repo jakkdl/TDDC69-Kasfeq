@@ -16,6 +16,7 @@ public class Player extends GameObject {
     private double aimAngle = 0;
     private double aimAngleSpeed = 0;
     private int playerId;
+    private final static double BULLETOFFSET = 1.2;
 
     /**
      * \brief Player constructor
@@ -91,10 +92,9 @@ public class Player extends GameObject {
      * \brief The init function is called when the game component is initialized
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @throws Exception Thrown if something fails
      */
     @Override
-    public void init(GameContainer gameContainer) throws Exception {
+    public void init(GameContainer gameContainer) {
     }
 
     /**
@@ -102,14 +102,13 @@ public class Player extends GameObject {
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @param i             The time in ms since the last update call
-     * @throws Exception Thrown if something fails
      */
     @Override
     public void update(GameContainer gameContainer, int i) {
         aimAngle += aimAngleSpeed;
 	if (health <= 0) {
 	    if (lives > 0) {
-	        setPosition(getWorld().getPhysicsEngine().getAvailablePosition(this));
+	        setPosition(getWorld().getPlayingField().getAvailablePosition(this));
 	        health=10;
 		lives--;
 	    }
@@ -124,7 +123,6 @@ public class Player extends GameObject {
      *
      * @param gamecontainer the org.newdawn.slick.gamecontainer instance of the game
      * @param graphics      the org.newdawn.slick.graphics instance used for drawing
-     * @throws Exception Thrown if something fails
      */
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
@@ -139,10 +137,9 @@ public class Player extends GameObject {
     /**
      * \brief The dispose function is called before a component is destoryed
      *
-     * @throws Exception Thrown if something fails
      */
     @Override
-    public void dispose() throws Exception {
+    public void dispose() {
     }
 
     /**
@@ -220,7 +217,8 @@ public class Player extends GameObject {
     private Vector2d bulletPosition() {
         double x = getPosition().getX() + getWidth() / 2;
         double y = getPosition().getY() + getHeight() / 2;
-        return new Vector2d(x, y).add(new Vector2d((aimAngle)).scale(15)); //TODO: replace with function that calculates where bullet can spawn
+        double distance = Math.sqrt(Math.pow(getWidth()/2,2) + Math.pow(getHeight()/2,2));
+        return new Vector2d(x, y).add(new Vector2d((aimAngle)).scale(distance*BULLETOFFSET));
     }
 
     /**

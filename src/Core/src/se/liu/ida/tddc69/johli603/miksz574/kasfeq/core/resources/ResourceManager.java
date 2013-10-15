@@ -1,7 +1,10 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources;
 
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +33,7 @@ public enum ResourceManager {
      * @param <LoadedType> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
-    public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) throws Exception {
+    public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
         Object resource = cachedResources.get(filename);
 
         if (resource == null) {
