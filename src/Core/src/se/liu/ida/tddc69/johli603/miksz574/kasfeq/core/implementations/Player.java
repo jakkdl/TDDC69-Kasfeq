@@ -25,17 +25,17 @@ public class Player extends GameObject {
      */
     public Player(World world, int playerId) {
         super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight());
-	this.playerId = playerId;
+        this.playerId = playerId;
         playerColor = Color.transparent;
-	health = world.getPlayingField().getPlayerHealth();
-	lives = world.getPlayingField().getPlayerLives();
+        health = world.getPlayingField().getPlayerHealth();
+        lives = world.getPlayingField().getPlayerLives();
     }
 
     /**
      * @return Returns the id of the player
      */
     public int getPlayerId() {
-	return playerId;
+        return playerId;
     }
 
     /**
@@ -108,16 +108,17 @@ public class Player extends GameObject {
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception {
         aimAngle += aimAngleSpeed;
-	if (health <= 0) {
-	    if (lives > 0) {
-	        setPosition(getWorld().getPhysicsEngine().getAvailablePosition(this));
-	        health=10;
-		lives--;
-	    }
-	    else {
-		getWorld().despawn(this);
-	    }
-	}
+        if (health <= 0) {
+            if (lives > 0) {
+                setPosition(getWorld().getPhysicsEngine().getAvailablePosition(this));
+                health=10;
+                lives--;
+            }
+            else {
+                getWorld().despawn(this);
+                getWorld().playerDied(this);
+            }
+        }
     }
 
     /**

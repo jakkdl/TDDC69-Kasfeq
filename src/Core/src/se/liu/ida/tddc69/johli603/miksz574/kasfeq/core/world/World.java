@@ -7,9 +7,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.logic.AbstractGameLogic;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.logic.DeathmatchLogic;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class World implements GameComponent {
     private final GameObjectManager gameObjectManager;
@@ -17,6 +18,7 @@ public class World implements GameComponent {
     private final PhysicsEngine physicsEngine;
     private final PlayingField playingField;
     private final Map<Integer, Player> players;
+    private final List<AbstractGameLogic> gameLogicHandlers;
 
     public World() {
         players = new HashMap<Integer, Player>();
@@ -25,6 +27,8 @@ public class World implements GameComponent {
 
         playingField = new PlayingField("untitled.tmx");
         physicsEngine = new PhysicsEngine(playingField);
+        gameLogicHandlers = new ArrayList<AbstractGameLogic>();
+        gameLogicHandlers.add(new DeathmatchLogic(this));
     }
 
     public Player getPlayer(int playerID) {
@@ -40,16 +44,31 @@ public class World implements GameComponent {
     }
 
     public void despawn(Player player) {
-	gameObjectManager.despawnObject(player);
-	players.remove(player.getPlayerId());
+        gameObjectManager.despawnObject(player);
+        players.remove(player.getPlayerId());
     }
 
     public void spawnNewPlayer(Color playerColor) {
         Player player = new Player(this, players.size()+1);
-	player.setPosition(physicsEngine.getAvailablePosition(player));
+        player.setPosition(physicsEngine.getAvailablePosition(player));
         player.setPlayerColor(playerColor);
         players.put(players.size() + 1, player);
         spawn(player);
+    }
+
+    public void playerDied(Player player) {
+        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
+            gameLogic.onPlayerDeath(player);
+
+            if(players.size() == 1) {
+                for(Player winningPlayer : players.values()) {
+                    gameLogic.onPlayerWon(winningPlayer);
+                }
+            }
+            else if(players.size() < 1) {
+                gameLogic.onPlayerDraw();
+            }
+        }
     }
 
     public PhysicsEngine getPhysicsEngine() {
@@ -68,16 +87,21 @@ public class World implements GameComponent {
 
         spawnNewPlayer(Color.orange);
         spawnNewPlayer(Color.magenta);
+
+        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
+            gameLogic.init(gameContainer);
+        }
     }
 
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception {
-	if (players.size() <= 1) {
-	    gameContainer.exit();
-	}
         gameObjectManager.update(gameContainer, i);
         inputManager.update(gameContainer, i);
         playingField.update(gameContainer, i);
+
+        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
+            gameLogic.update(gameContainer, i);
+        }
     }
 
     @Override
@@ -87,6 +111,10 @@ public class World implements GameComponent {
 
         playingField.render(gameContainer, graphics);
         gameObjectManager.render(gameContainer, graphics);
+
+        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
+            gameLogic.render(gameContainer, graphics);
+        }
     }
 
     @Override
@@ -94,5 +122,13 @@ public class World implements GameComponent {
         gameObjectManager.dispose();
         inputManager.dispose();
         playingField.dispose();
+
+        Iterator<AbstractGameLogic> iterator = gameLogicHandlers.iterator();
+        while (iterator.hasNext()) {
+            AbstractGameLogic logic = iterator.next();
+            logic.dispose();
+
+            iterator.remove();
+        }
     }
 }
