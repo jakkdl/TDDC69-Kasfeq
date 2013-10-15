@@ -16,7 +16,7 @@ public class Player extends GameObject {
     private double aimAngle = 0;
     private double aimAngleSpeed = 0;
     private int playerId;
-    private final static double BULLETOFFSET = 1.2;
+    private final static double BULLETOFFSET = 1.3;
 
     /**
      * \brief Player constructor
@@ -25,17 +25,17 @@ public class Player extends GameObject {
      */
     public Player(World world, int playerId) {
         super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight());
-	this.playerId = playerId;
+        this.playerId = playerId;
         playerColor = Color.transparent;
-	health = world.getPlayingField().getPlayerHealth();
-	lives = world.getPlayingField().getPlayerLives();
+        health = world.getPlayingField().getPlayerHealth();
+        lives = world.getPlayingField().getPlayerLives();
     }
 
     /**
      * @return Returns the id of the player
      */
     public int getPlayerId() {
-	return playerId;
+        return playerId;
     }
 
     /**
@@ -72,9 +72,12 @@ public class Player extends GameObject {
 
     /**
      * \brief Abstract function that is called when a game object collides with the terrain
+     *
+     * @param x x coordinate of collision
+     * @param y y coordinate of collision
      */
     @Override
-    public void collision() {
+    public void collision(double x, double y) {
     }
 
     /**
@@ -85,7 +88,6 @@ public class Player extends GameObject {
     @Override
     public void collision(GameObject obj) {
         health -= 1;
-
     }
 
     /**
@@ -106,16 +108,16 @@ public class Player extends GameObject {
     @Override
     public void update(GameContainer gameContainer, int i) {
         aimAngle += aimAngleSpeed;
-	if (health <= 0) {
-	    if (lives > 0) {
-	        setPosition(getWorld().getPlayingField().getAvailablePosition(this));
-	        health=10;
-		lives--;
-	    }
-	    else {
-		getWorld().despawn(this);
-	    }
-	}
+        if (health <= 0) {
+            if (lives > 0) {
+                setPosition(getWorld().getPlayingField().getAvailablePosition(this));
+                health=10;
+                lives--;
+            }
+            else {
+                getWorld().despawn(this);
+            }
+        }
     }
 
     /**
@@ -205,7 +207,9 @@ public class Player extends GameObject {
      */
     public void jump(boolean isKeyPressed) {
         if(isKeyPressed) {
-            addInstantForce(new Vector2d(0, (float)getWorld().getPlayingField().getPlayerJumpForce()));
+            if (getWorld().getPhysicsEngine().isOnGround(this)) {
+                addInstantForce(new Vector2d(0, (float)getWorld().getPlayingField().getPlayerJumpForce()));
+            }
         }
     }
 

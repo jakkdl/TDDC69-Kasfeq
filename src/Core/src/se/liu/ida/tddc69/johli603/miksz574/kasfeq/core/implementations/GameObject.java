@@ -175,8 +175,11 @@ public abstract class GameObject implements GameComponent {
 
     /**
      * \brief Abstract function that is called when a game object collides with the terrain
+     *
+     * @param x x coordinate of collision
+     * @param y y coordinate of collision
      */
-    public abstract void collision();
+    public abstract void collision(double x, double y);
 
     /**
      * \brief Abstract function that is called when a game object collides with another game object

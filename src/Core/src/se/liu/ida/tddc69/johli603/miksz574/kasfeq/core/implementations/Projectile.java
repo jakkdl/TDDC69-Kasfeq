@@ -21,9 +21,18 @@ public class Projectile extends GameObject {
 
     /**
      * \brief Abstract function that is called when a game object collides with the terrain
+     *
+     * @param x x coordinate for collision
+     * @param y y coordinate for collision
      */
     @Override
-    public void collision() {
+    public void collision(double x, double y) {
+        //TODO: Broken collision handling makes destroying terrain very buggy
+        /*for (int dx = -1; dx < getWidth()+1; dx ++) {
+            for (int dy = -1; dy < getHeight()+1; dy++) {
+                getWorld().getPlayingField().destroyPixel(x+dx, y+dy);
+            }
+        }*/
         despawn();
     }
 

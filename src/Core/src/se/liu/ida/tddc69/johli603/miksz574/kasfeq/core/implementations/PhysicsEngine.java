@@ -1,20 +1,23 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsEngine {
     private class MapCollisionResult {
         double xDistance;
         double yDistance;
+        double xPoint;
+        double yPoint;
         boolean xCollision;
         boolean yCollision;
 
-        MapCollisionResult(double xDistance, double yDistance) {
+        MapCollisionResult(double xDistance, double yDistance, Vector2d target) {
             this.xDistance = xDistance;
             this.yDistance = yDistance;
             xCollision = false;
             yCollision = false;
+            this.xPoint = target.getX();
+            this.yPoint = target.getY();
         }
 
         MapCollisionResult(double xDistance, double yDistance, boolean xCollision, boolean yCollision) {
@@ -24,6 +27,7 @@ public class PhysicsEngine {
             this.yCollision = yCollision;
         }
     }
+    final static double ABSDELTAV = 0.01;
 
     private PlayingField playingField;
 
@@ -38,6 +42,7 @@ public class PhysicsEngine {
             for (int j=i+1; j < objects.size(); j++) {
                 GameObject obj2 = objects.get(j);
                 if (collision(obj, obj2, time)) {
+                    obj2.collision(obj);
                     obj.collision(obj2);
                 }
             }
@@ -63,7 +68,7 @@ public class PhysicsEngine {
         //calculate forces, acceleration and velocity
 
         //add gravity
-        object.addInstantForce(new Vector2d(0, playingField.getGravity()));
+        object.addInstantForce(new Vector2d(0, playingField.getGravity()*object.getMass()));
 
         //calculate acceleration from forces
         Vector2d totalForce = object.getContForce().add(object.getInstantForce());
@@ -86,17 +91,18 @@ public class PhysicsEngine {
 
         //if we collided
         if (result.xCollision || result.yCollision) {
-            object.collision();
-
 
             object.setPosition(move(object.getPosition(), new Vector2d(result.xDistance, result.yDistance)));
             if (result.xCollision && result.yCollision) {
+                object.collision(result.xPoint, result.yPoint);
                 object.setVelocity(new Vector2d(0, 0));
             }
             else if (result.xCollision) {
+                object.collision(result.xPoint, result.yPoint);
                 object.setVelocity(new Vector2d(0, object.getVelocity().getY()));
             }
             else {
+                object.collision(result.xPoint, result.yPoint);
                 object.setVelocity(new Vector2d(object.getVelocity().getX(), 0));
             }
         } else {
@@ -106,50 +112,48 @@ public class PhysicsEngine {
 
     private MapCollisionResult checkMapCollision(final GameObject obj) {
         Vector2d vel = obj.getVelocity().copy();
-        MapCollisionResult result = new MapCollisionResult(vel.getX(), vel.getY());
+        MapCollisionResult result = new MapCollisionResult(vel.getX(), vel.getY(),
+                obj.getPosition().add(obj.getVelocity()));
 
-        double absDeltaV = 0.01;
         double deltav;
         if (vel.getX() < 0) {
-            deltav = -absDeltaV;
+            deltav = -ABSDELTAV;
         } else {
-            deltav = absDeltaV;
+            deltav = ABSDELTAV;
         }
 
-        loops:
-        for (double dv = deltav; Math.abs(dv) < Math.abs(vel.getX()); dv += deltav) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 2; j++) {
-                    double x = obj.getPosition().getX() + obj.getWidth() * i + dv;
+        for (double dv = deltav; Math.abs(dv) < Math.abs(vel.getX()) && !result.xCollision; dv += deltav) {
+            for (int i = 0; i < 2 && !result.xCollision; i++) {
+                double x = obj.getPosition().getX() + obj.getWidth() * i + dv;
+                for (int j = 0; j < 2 && !result.xCollision; j++) {
                     double y = obj.getPosition().getY() + obj.getHeight() * j;
-                    //if (point.getX() < 0 || point.getX() >= playingField.getPixelWidth() ||
                     if (x < 0 || x >= playingField.getWidth() ||
-                            //point.getY() < 0 ||  point.getY() >= playingField.getPixelHeight() ||
-                            playingField.getPixel(x, y) != MapBlock.States.EMPTY) {
+                            y < 0 ||  y >= playingField.getHeight() ||
+                            playingField.getPixel(x, y) != MapTile.EMPTY) {
                         result.xDistance = dv - deltav;
+                        result.xPoint = x;
                         result.xCollision = true;
-                        break loops;
                     }
 
                 }
             }
         }
         if (vel.getY() < 0) {
-            deltav = -absDeltaV;
+            deltav = -ABSDELTAV;
         } else {
-            deltav = absDeltaV;
+            deltav = ABSDELTAV;
         }
 
         for (double dv = deltav; Math.abs(dv) <= Math.abs(vel.getY()); dv += deltav) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < 2; j++) {
+                double y = obj.getPosition().getY() + obj.getHeight() * j + dv;
+                for (int i = 0; i < 2; i++) {
                     double x = obj.getPosition().getX() + obj.getWidth() * i;
-                    double y = obj.getPosition().getY() + obj.getHeight() * j + dv;
-                    if (//point.getX() < 0 || point.getX() >= playingField.getPixelWidth() ||
-                        //point.getY() < 0 ||  point.getY() >= playingField.getPixelHeight() ||
-                            x < 0 || y >= playingField.getHeight() ||
-                                    playingField.getPixel(x, y) != MapBlock.States.EMPTY) {
+                    if (x < 0 || x >= playingField.getWidth() ||
+                            y < 0 || y >= playingField.getHeight() ||
+                            playingField.getPixel(x, y) != MapTile.EMPTY) {
                         result.yDistance = dv - deltav;
+                        result.yPoint = y;
                         result.yCollision = true;
                         return result;
                     }
@@ -169,5 +173,14 @@ public class PhysicsEngine {
 
     private Vector2d addAcceleration(Vector2d velocity, Vector2d acceleration) {
         return velocity.add(acceleration);
+    }
+
+    public boolean isOnGround(GameObject object) {
+        for (int x=0; x < object.getWidth(); x++) {
+            if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()+object.getHeight()+1) != MapTile.EMPTY) {
+                return true;
+            }
+        }
+        return false;
     }
 }

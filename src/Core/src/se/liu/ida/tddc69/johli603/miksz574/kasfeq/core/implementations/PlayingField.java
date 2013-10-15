@@ -19,7 +19,7 @@ public class PlayingField implements GameComponent {
         PLAYERMASS(2.0),
         PLAYERWIDTH(10.0),
         PLAYERHEIGHT(20.0),
-        PLAYERJUMPFORCE(-2.0),
+        PLAYERJUMPFORCE(-12.0),
         PLAYERLIVES(3),
         PLAYERHEALTH(10.0),
         BULLETMASS(0.1),
@@ -77,24 +77,38 @@ public class PlayingField implements GameComponent {
         return map.getTileHeight();
     }
 
-    public MapBlock.States getPixel(double x, double y) {
+    private void setPixel(double x, double y, int type) {
+        int layerID = map.getLayerIndex("Tile Layer 1");
+        int tileX = (int) Math.floor(x);
+        int tileY = (int) Math.floor(y);
+        map.setTileId(tileX/map.getTileWidth(), tileY/map.getTileHeight(), layerID, type);
+
+    }
+
+    public MapTile getPixel(double x, double y) {
         return getTile(x/map.getTileWidth(), y/map.getTileHeight());
     }
 
-    public MapBlock.States getTile(double x, double y) {
+    public MapTile getTile(double x, double y) {
         int layerID = map.getLayerIndex("Tile Layer 1");
         int tileX = (int) Math.floor(x);
         int tileY = (int) Math.floor(y);
         switch( map.getTileId(tileX, tileY, layerID)) {
             case 1:
-                return MapBlock.States.SOLID;
+                return MapTile.SOLID;
             case 2:
-                return MapBlock.States.EMPTY;
+                return MapTile.EMPTY;
             case 3:
-                return MapBlock.States.DESTRUCTABLE;
+                return MapTile.DESTRUCTABLE;
             default:
                 System.out.println("Unknown tile ID");
                 return null;
+        }
+    }
+
+    public void destroyPixel(double x, double y) {
+        if (getPixel(x, y) == MapTile.DESTRUCTABLE) {
+            setPixel(x, y, 2);
         }
     }
 
@@ -112,7 +126,7 @@ public class PlayingField implements GameComponent {
                 boolean collision = false;
                 for (int playerX=0; playerX < playerTileWidth; playerX++) {
                     for (int playerY=0; playerY < playerTileHeight; playerY++) {
-                        if (getTile(x+playerX, y+playerY) != MapBlock.States.EMPTY) {
+                        if (getTile(x+playerX, y+playerY) != MapTile.EMPTY) {
                             collision = true;
                         }
                     }

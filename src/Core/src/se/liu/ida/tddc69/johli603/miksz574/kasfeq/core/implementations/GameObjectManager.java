@@ -70,7 +70,6 @@ public class GameObjectManager implements GameComponent {
             obj.update(gameContainer, i);
         }
         for (GameObject obj : despawnedGameObjects) {
-            System.out.println("removed");
             gameObjects.remove(obj);
         }
         despawnedGameObjects.clear();
