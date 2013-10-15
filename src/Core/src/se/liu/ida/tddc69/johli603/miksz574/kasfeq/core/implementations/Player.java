@@ -116,6 +116,7 @@ public class Player extends GameObject {
             }
             else {
                 getWorld().despawn(this);
+                getWorld().playerDied(this);
             }
         }
     }
