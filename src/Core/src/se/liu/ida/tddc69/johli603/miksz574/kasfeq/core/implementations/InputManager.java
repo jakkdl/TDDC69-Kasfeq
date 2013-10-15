@@ -67,8 +67,8 @@ public class InputManager implements GameComponent {
         inputProvider.bindCommand(new KeyControl(Input.KEY_RIGHT), new PlayerCommand(world, 2, PlayerCommand.InputType.RIGHT));
         inputProvider.bindCommand(new KeyControl(Input.KEY_UP), new PlayerCommand(world, 2, PlayerCommand.InputType.AIM_RIGHT));
         inputProvider.bindCommand(new KeyControl(Input.KEY_DOWN), new PlayerCommand(world, 2, PlayerCommand.InputType.AIM_LEFT));
-        inputProvider.bindCommand(new KeyControl(Input.KEY_NUMPAD0), new PlayerCommand(world, 2, PlayerCommand.InputType.SHOOT));
-        inputProvider.bindCommand(new KeyControl(Input.KEY_DECIMAL), new PlayerCommand(world, 2, PlayerCommand.InputType.JUMP));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_M), new PlayerCommand(world, 2, PlayerCommand.InputType.SHOOT));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_COMMA), new PlayerCommand(world, 2, PlayerCommand.InputType.JUMP));
     }
 
     /**

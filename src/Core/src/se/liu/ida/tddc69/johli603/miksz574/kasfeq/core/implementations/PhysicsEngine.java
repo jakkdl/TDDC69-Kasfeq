@@ -33,9 +33,12 @@ public class PhysicsEngine {
     }
 
     public void dumbCollisions(List<GameObject> objects, int time) {
-        for (GameObject obj : objects) {
-            for (GameObject obj2 : objects) {
-                if (!obj.equals(obj2) && collision(obj, obj2, time)) {
+
+        for (int i=0; i < objects.size(); i++) {
+	    GameObject obj = objects.get(i);
+            for (int j=i+1; j < objects.size(); j++) {
+		GameObject obj2 = objects.get(j);
+                if (collision(obj, obj2, time)) {
                     obj.collision(obj2);
                 }
             }
@@ -57,7 +60,7 @@ public class PhysicsEngine {
         return !(x1 > x2 + width2 || x1 + width1 < x2 || y1 > y2 + height2 || y1 + height1 < y2);
     }
 
-    public void updateObject(GameObject object, int time) throws PlayingField.NoSuchOptionException {
+    public void updateObject(GameObject object, int time) {
         //calculate forces, acceleration and velocity
 
         //add gravity
@@ -168,5 +171,9 @@ public class PhysicsEngine {
 
     private void addAcceleration(Vector2f velocity, Vector2f acceleration) {
         velocity.add(acceleration);
+    }
+
+    public Vector2f getAvailablePosition(Player player) {
+	return new Vector2f(20 + 20 * player.getPlayerId(), 100);
     }
 }

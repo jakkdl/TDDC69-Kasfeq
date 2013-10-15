@@ -18,7 +18,7 @@ public class World implements GameComponent {
     private final PlayingField playingField;
     private final Map<Integer, Player> players;
 
-    public World() throws PlayingField.NoSuchOptionException {
+    public World() {
         players = new HashMap<Integer, Player>();
         gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
@@ -39,9 +39,14 @@ public class World implements GameComponent {
         gameObjectManager.despawnObject(obj);
     }
 
-    public void spawnNewPlayer(Color playerColor) throws PlayingField.NoSuchOptionException {
-        Player player = new Player(this);
-        player.setPosition(new Vector2f(20 + 20 * players.size(), 100));
+    public void despawn(Player player) {
+	gameObjectManager.despawnObject(player);
+	players.remove(player.getPlayerId());
+    }
+
+    public void spawnNewPlayer(Color playerColor) {
+        Player player = new Player(this, players.size()+1);
+	player.setPosition(physicsEngine.getAvailablePosition(player));
         player.setPlayerColor(playerColor);
         players.put(players.size() + 1, player);
         spawn(player);
@@ -56,7 +61,7 @@ public class World implements GameComponent {
     }
 
     @Override
-    public void init(GameContainer gameContainer) throws Exception, PlayingField.NoSuchOptionException, SlickException {
+    public void init(GameContainer gameContainer) throws Exception, SlickException {
         gameObjectManager.init(gameContainer);
         inputManager.init(gameContainer);
         playingField.init(gameContainer);
@@ -67,6 +72,9 @@ public class World implements GameComponent {
 
     @Override
     public void update(GameContainer gameContainer, int i) throws Exception {
+	if (players.size() <= 1) {
+	    gameContainer.exit();
+	}
         gameObjectManager.update(gameContainer, i);
         inputManager.update(gameContainer, i);
         playingField.update(gameContainer, i);
