@@ -6,6 +6,10 @@ import org.newdawn.slick.Graphics;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
+/**
+ * \class DeathmatchLogic
+ * \brief A game logic implementation describing a deathmatch game logic
+ */
 public class DeathmatchLogic extends AbstractGameLogic {
     private int winningPlayerID = -1;
     private int waitTime = 0;
@@ -22,6 +26,8 @@ public class DeathmatchLogic extends AbstractGameLogic {
      */
     @Override
     public void onPlayerDeath(Player player) {
+
+        player.reduceLife();
     }
 
     /**

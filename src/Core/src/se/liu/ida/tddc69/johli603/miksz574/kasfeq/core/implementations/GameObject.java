@@ -16,6 +16,7 @@ public abstract class GameObject implements GameComponent {
     private Vector2d velocity;
     private Vector2d continuousForce;
     private Vector2d instantaneousForce;
+    @SuppressWarnings("UnusedDeclaration")
     private double facing;
     private double mass;
     private int width;
@@ -83,14 +84,6 @@ public abstract class GameObject implements GameComponent {
         this.velocity = velocity;
     }
 
-
-    /**
-     * @return Returns the facing angle of the game object in radians
-     */
-    public double getFacing() {
-        return facing;
-    }
-
     /**
      * @return Returns the instant force applied on the game object
      */
@@ -128,6 +121,7 @@ public abstract class GameObject implements GameComponent {
      *
      * @param force The new instant force vector
      */
+    @SuppressWarnings("UnusedDeclaration")
     public void setContForce(Vector2d force) {
         this.continuousForce = force;
     }
@@ -162,6 +156,7 @@ public abstract class GameObject implements GameComponent {
      *
      * @param mass The new mass of the object
      */
+    @SuppressWarnings("UnusedDeclaration")
     public void setMass(double mass) {
         this.mass = mass;
     }

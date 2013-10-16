@@ -92,6 +92,34 @@ public class PlayerCommand implements Command {
      * \brief Represents the different actions for a player
      */
     public enum InputType {
-        LEFT, JUMP, RIGHT, SHOOT, AIM_LEFT, AIM_RIGHT
+        /**
+         * Input describing the left input
+         */
+        LEFT,
+
+        /**
+         * Input describing the jump input
+         */
+        JUMP,
+
+        /**
+         * Input describing the right input
+         */
+        RIGHT,
+
+        /**
+         * Input describing the shoot input
+         */
+        SHOOT,
+
+        /**
+         * Input describing the left aiming
+         */
+        AIM_LEFT,
+
+        /**
+         * Input describing the right aiming
+         */
+        AIM_RIGHT
     }
 }

@@ -2,7 +2,30 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import java.util.List;
 
+/**
+ * \class PhysicsEngine
+ * \brief A physics engine implementation for the game
+ */
 public class PhysicsEngine {
+    /**
+     * \enum Direction
+     * \brief Used by the PhysicsEngine
+     */
+    public enum Direction {
+        /** \brief Describes the left direction */
+        LEFT,
+
+        /** \brief Describes the right direction */
+        RIGHT,
+
+        /** \brief Describes the up direction */
+        @SuppressWarnings("EnumeratedConstantNamingConvention")
+        UP,
+
+        /** \brief Describes the down direction */
+        DOWN
+    }
+
     private class CollisionResult {
         double distance;
         Vector2d point;
@@ -20,6 +43,7 @@ public class PhysicsEngine {
         this.playingField = playingField;
     }
 
+    @SuppressWarnings("UnusedParameters")
     public void dumbCollisions(List<GameObject> objects, int time) {
 
         for (int i=0; i < objects.size(); i++) {
@@ -60,13 +84,13 @@ public class PhysicsEngine {
 
         //account for newton's third law
         boolean collision = false;
-        if ((totalForce.getX() > 0 && touchesSolid(object, Direction.RIGHT)) ||
-                (totalForce.getX() < 0 && touchesSolid(object, Direction.LEFT))) {
+        if ((totalForce.getX() > 0 && checkSolidCollision(object, Direction.RIGHT)) ||
+                (totalForce.getX() < 0 && checkSolidCollision(object, Direction.LEFT))) {
             totalForce.setX(0);
             collision = true;
         }
-        if ((totalForce.getY() > 0 && touchesSolid(object, Direction.DOWN)) ||
-                (totalForce.getY() < 0 && touchesSolid(object, Direction.UP))) {
+        if ((totalForce.getY() > 0 && checkSolidCollision(object, Direction.DOWN)) ||
+                (totalForce.getY() < 0 && checkSolidCollision(object, Direction.UP))) {
             totalForce.setY(0);
             collision = true;
         }
@@ -116,7 +140,7 @@ public class PhysicsEngine {
         for (double dv = DELTAV; dv <= vel.length(); dv += DELTAV) {
             for (Vector2d point : border) {
                 Vector2d pointToCheck = obj.getPosition().add(point).add(vel.scale(dv / vel.length()));
-                if (playingField.getPixel(pointToCheck) != MapTile.EMPTY) {
+                if (playingField.getPixel(pointToCheck) != PlayingField.MapTile.EMPTY) {
                     result.collision = true;
                     result.distance = dv - DELTAV;
                     result.point = pointToCheck;
@@ -140,32 +164,32 @@ public class PhysicsEngine {
         return velocity.add(acceleration);
     }
 
-    public boolean touchesSolid(GameObject object, Direction direction) {
+    public boolean checkSolidCollision(GameObject object, Direction direction) {
         switch (direction) {
             case LEFT:
                 for (int y=0; y <= object.getHeight(); y++) {
-                    if (playingField.getPixel(object.getPosition().getX() - 1, object.getPosition().getY() + y) != MapTile.EMPTY) {
+                    if (playingField.getPixel(object.getPosition().getX() - 1, object.getPosition().getY() + y) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }
                 }
                 break;
             case RIGHT:
                 for (int y=0; y <= object.getHeight(); y++) {
-                    if (playingField.getPixel(object.getPosition().getX()+object.getWidth()+1, object.getPosition().getY()+y) != MapTile.EMPTY) {
+                    if (playingField.getPixel(object.getPosition().getX()+object.getWidth()+1, object.getPosition().getY()+y) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }
                 }
                 break;
             case UP:
                 for (int x=0; x <= object.getWidth(); x++) {
-                    if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()-1) != MapTile.EMPTY) {
+                    if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()-1) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }
                 }
                 break;
             case DOWN:
                 for (int x=0; x <= object.getWidth(); x++) {
-                    if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()+object.getHeight()+1) != MapTile.EMPTY) {
+                    if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()+object.getHeight()+1) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }
                 }

@@ -4,6 +4,10 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
+/**
+ * \class AbstractGameLogic
+ * \brief Base class for game logics
+ */
 public abstract class AbstractGameLogic implements GameComponent {
     private final World world;
 

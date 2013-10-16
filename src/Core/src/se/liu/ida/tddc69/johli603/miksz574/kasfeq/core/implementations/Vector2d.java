@@ -2,6 +2,10 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.geom.Vector2f;
 
+/**
+ * \class Vector2d
+ * \brief A wrapper for the org.newdawn.slick.geom.Vector2f that uses doubles in function parameters
+ */
 public class Vector2d {
     private Vector2f vector;
 

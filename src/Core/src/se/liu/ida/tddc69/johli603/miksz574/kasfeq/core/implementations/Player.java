@@ -38,6 +38,7 @@ public class Player extends GameObject {
     /**
      * @return Returns the color of the player
      */
+    @SuppressWarnings("UnusedDeclaration")
     public Color getPlayerColor() {
         return playerColor;
     }
@@ -54,6 +55,7 @@ public class Player extends GameObject {
     /**
      * @return Returns the health of the player
      */
+    @SuppressWarnings("UnusedDeclaration")
     public double getHealth() {
         return health;
     }
@@ -63,8 +65,17 @@ public class Player extends GameObject {
      *
      * @param healthMod The factor to multiply the health with
      */
+    @SuppressWarnings("UnusedDeclaration")
     public void modHealth(double healthMod) {
         this.health *= healthMod;
+    }
+
+    /**
+     * \brief Sacrifices a life giving the player full health
+     */
+    public void reduceLife() {
+        health = getWorld().getPlayingField().getPlayerHealth();
+        this.lives--;
     }
 
     /**
@@ -106,14 +117,14 @@ public class Player extends GameObject {
     public void update(GameContainer gameContainer, int i) {
         aimAngle += aimAngleSpeed;
         if (health <= 0) {
+            getWorld().playerDied(this);
+
             if (lives > 0) {
                 setPosition(getWorld().getPlayingField().getAvailablePosition(this));
-                health=10;
-                lives--;
             }
             else {
                 getWorld().despawn(this);
-                getWorld().playerDied(this);
+
             }
         }
     }
@@ -224,9 +235,9 @@ public class Player extends GameObject {
      */
     public void jump(boolean isKeyPressed) {
         if(isKeyPressed) {
-            if (getWorld().getPhysicsEngine().touchesSolid(this, Direction.DOWN) ||
-                    (getWorld().getPhysicsEngine().touchesSolid(this, Direction.LEFT) && getContForce().getX() > 0) ||
-            (getWorld().getPhysicsEngine().touchesSolid(this, Direction.RIGHT) && getContForce().getX() < 0 )){
+            if (getWorld().getPhysicsEngine().checkSolidCollision(this, PhysicsEngine.Direction.DOWN) ||
+                    (getWorld().getPhysicsEngine().checkSolidCollision(this, PhysicsEngine.Direction.LEFT) && getContForce().getX() > 0) ||
+            (getWorld().getPhysicsEngine().checkSolidCollision(this, PhysicsEngine.Direction.RIGHT) && getContForce().getX() < 0 )){
                 addInstantForce(new Vector2d(0, getWorld().getPlayingField().getPlayerJumpForce()));
             }
         }
@@ -263,11 +274,7 @@ public class Player extends GameObject {
         }
     }
 
-    /**
-     * Function used by the InputManager class
-     *
-     * @param isKeyPressed Is the key pressed
-     */
+    @SuppressWarnings("UnusedDeclaration")
     public void shotgun() {
         Projectile[] bullets = new Projectile[6];
         for (int i = 0; i < bullets.length; i++) {

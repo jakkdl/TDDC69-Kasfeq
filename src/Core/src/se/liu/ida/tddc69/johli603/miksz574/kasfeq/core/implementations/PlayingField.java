@@ -12,24 +12,49 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * \class PlayingField
+ * \brief Describes the map of the game
+ */
 public class PlayingField implements GameComponent {
+    /**
+     * \enum Options
+     * \brief Enum map options
+     */
     public enum Options {
+        /** \brief The name of the map */
         MAPNAME("defaultMapName"),
+        /** \brief The gravity of the map */
         GRAVITY(0.05),
+        /** \brief The friction of the map */
         FRICTION(0.03),
+        /** \brief The aimspeed for the map */
         AIMSPEED(Math.PI / 120),
+        /** \brief The player move force for the map */
         PLAYERMOVEFORCE(0.1),
+        /** \brief The player mass for the map */
         PLAYERMASS(2.0),
+        /** \brief The player width for the map */
         PLAYERWIDTH(10),
+        /** \brief The player height for the map */
         PLAYERHEIGHT(20),
+        /** \brief The player jump force for the map */
         PLAYERJUMPFORCE(-12.0),
+        /** \brief The player lives for the map */
         PLAYERLIVES(3),
+        /** \brief The player health for the map */
         PLAYERHEALTH(10.0),
+        /** \brief The player damage for the map */
         PLAYERDAMAGE(0.5),
+        /** \brief The bullet mass for the map */
         BULLETMASS(0.1),
+        /** \brief The bullet width for the map */
         BULLETWIDTH(5),
+        /** \brief The bullet height for the map */
         BULLETHEIGHT(5),
+        /** \brief The bullet damage for the map */
         BULLETDAMAGE(1.0);
+
         private final Object defaultValue;
 
         @SuppressWarnings("NonFinalFieldInEnum")
@@ -46,6 +71,19 @@ public class PlayingField implements GameComponent {
         public <T> void setValue(T value) {
             changedValue = value;
         }
+    }
+
+    /**
+     * \enum MapTile
+     * \brief Enum describing the types of tiles
+     */
+    public enum MapTile {
+        /** \brief Describes a empty tile */
+        EMPTY, //AIR
+        /** \brief Describes a solid tile */
+        SOLID,
+        /** \brief Describes a destructable tile */
+        DESTRUCTABLE
     }
 
     private TiledMap map = null;
