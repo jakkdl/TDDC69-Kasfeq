@@ -185,15 +185,15 @@ public abstract class GameObject implements GameComponent {
 
     private List<Vector2d> generateBorder() {
         List<Vector2d> result = new ArrayList<Vector2d>();
-        for (int x=0; x <= width; x++) {
-            if (x==0 || x == width) {
-                for (double y=0; y <= height; y++) {
+        for (int x=0; x < width; x++) {
+            if (x==0 || x == width-1) {
+                for (double y=0; y < height; y++) {
                     result.add(new Vector2d(x, y));
                 }
             }
             else {
                 result.add(new Vector2d(x, 0));
-                result.add(new Vector2d(x, height));
+                result.add(new Vector2d(x, height-1));
             }
         }
         return result;

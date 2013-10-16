@@ -55,19 +55,19 @@ public class InputManager implements GameComponent {
 
         inputProvider.addListener(inputProviderListener);
 
-        inputProvider.bindCommand(new KeyControl(Input.KEY_W), new PlayerCommand(world, 1, PlayerCommand.InputType.JUMP));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_H), new PlayerCommand(world, 1, PlayerCommand.InputType.JUMP));
         inputProvider.bindCommand(new KeyControl(Input.KEY_A), new PlayerCommand(world, 1, PlayerCommand.InputType.LEFT));
         inputProvider.bindCommand(new KeyControl(Input.KEY_D), new PlayerCommand(world, 1, PlayerCommand.InputType.RIGHT));
-        inputProvider.bindCommand(new KeyControl(Input.KEY_S), new PlayerCommand(world, 1, PlayerCommand.InputType.SHOOT));
-        inputProvider.bindCommand(new KeyControl(Input.KEY_Q), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_RIGHT));
-        inputProvider.bindCommand(new KeyControl(Input.KEY_E), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_LEFT));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_G), new PlayerCommand(world, 1, PlayerCommand.InputType.SHOOT));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_W), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_RIGHT));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_S), new PlayerCommand(world, 1, PlayerCommand.InputType.AIM_LEFT));
 
         inputProvider.bindCommand(new KeyControl(Input.KEY_LEFT), new PlayerCommand(world, 2, PlayerCommand.InputType.LEFT));
         inputProvider.bindCommand(new KeyControl(Input.KEY_RIGHT), new PlayerCommand(world, 2, PlayerCommand.InputType.RIGHT));
         inputProvider.bindCommand(new KeyControl(Input.KEY_UP), new PlayerCommand(world, 2, PlayerCommand.InputType.AIM_RIGHT));
         inputProvider.bindCommand(new KeyControl(Input.KEY_DOWN), new PlayerCommand(world, 2, PlayerCommand.InputType.AIM_LEFT));
-        inputProvider.bindCommand(new KeyControl(Input.KEY_M), new PlayerCommand(world, 2, PlayerCommand.InputType.SHOOT));
-        inputProvider.bindCommand(new KeyControl(Input.KEY_COMMA), new PlayerCommand(world, 2, PlayerCommand.InputType.JUMP));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_INSERT), new PlayerCommand(world, 2, PlayerCommand.InputType.SHOOT));
+        inputProvider.bindCommand(new KeyControl(Input.KEY_DELETE), new PlayerCommand(world, 2, PlayerCommand.InputType.JUMP));
     }
 
     /**

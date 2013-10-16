@@ -74,7 +74,7 @@ public class Projectile extends GameObject {
     public void render(GameContainer gameContainer, Graphics graphics) {
         Vector2d position = getPosition();
         graphics.setColor(Color.white);
-        graphics.fillRect((float)position.getX(), (float)position.getY(), getWidth(), getHeight());
+        graphics.fillRect((float)Math.floor(position.getX()), (float)Math.floor(position.getY()), getWidth(), getHeight());
     }
 
     /**

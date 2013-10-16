@@ -35,7 +35,7 @@ public class PhysicsEngine {
             point = new Vector2d();
         }
     }
-    final static double DELTAV = 0.01;
+    final static double DELTAV = 0.5;
 
     private PlayingField playingField;
 
@@ -137,7 +137,7 @@ public class PhysicsEngine {
 
         List<Vector2d> border = obj.getBorder();
 
-        for (double dv = DELTAV; dv <= vel.length(); dv += DELTAV) {
+        for (double dv = DELTAV; dv < vel.length() + DELTAV; dv += DELTAV) {
             for (Vector2d point : border) {
                 Vector2d pointToCheck = obj.getPosition().add(point).add(vel.scale(dv / vel.length()));
                 if (playingField.getPixel(pointToCheck) != PlayingField.MapTile.EMPTY) {
@@ -167,28 +167,28 @@ public class PhysicsEngine {
     public boolean checkSolidCollision(GameObject object, Direction direction) {
         switch (direction) {
             case LEFT:
-                for (int y=0; y <= object.getHeight(); y++) {
+                for (int y=0; y < object.getHeight(); y++) {
                     if (playingField.getPixel(object.getPosition().getX() - 1, object.getPosition().getY() + y) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }
                 }
                 break;
             case RIGHT:
-                for (int y=0; y <= object.getHeight(); y++) {
+                for (int y=0; y < object.getHeight(); y++) {
                     if (playingField.getPixel(object.getPosition().getX()+object.getWidth()+1, object.getPosition().getY()+y) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }
                 }
                 break;
             case UP:
-                for (int x=0; x <= object.getWidth(); x++) {
+                for (int x=0; x < object.getWidth(); x++) {
                     if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()-1) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }
                 }
                 break;
             case DOWN:
-                for (int x=0; x <= object.getWidth(); x++) {
+                for (int x=0; x < object.getWidth(); x++) {
                     if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()+object.getHeight()+1) != PlayingField.MapTile.EMPTY) {
                         return true;
                     }

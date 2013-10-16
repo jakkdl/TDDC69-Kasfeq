@@ -139,19 +139,21 @@ public class Player extends GameObject {
     public void render(GameContainer gameContainer, Graphics graphics) {
         graphics.setColor(playerColor);
         Vector2d position = getPosition();
-        graphics.fillRect((float)position.getX(), (float)position.getY(), getWidth(), getHeight());
+        int floorX = (int)Math.floor(position.getX());
+        int floorY = (int)Math.floor(position.getY());
+        graphics.fillRect(floorX, floorY, getWidth(), getHeight());
 
         //draw weapon
         graphics.setColor(Color.white);
-        double aimRadius = getWidth();
-        double xMid = position.getX() + (double)getWidth()  / 2;
-        double yMid = position.getY() + (double)getHeight()  / 2;
-        graphics.drawLine((float) xMid, (float) yMid, (float) (xMid + aimRadius * Math.cos(aimAngle)), (float)(yMid + aimRadius * Math.sin(aimAngle)));
+        double aimRadius = length((double)getWidth()/2, (double)getHeight()/2);
+        int xMid = floorX + getWidth()  / 2;
+        int yMid = floorY + getHeight()  / 2;
+        graphics.drawLine(xMid, yMid, (float) (xMid + aimRadius * Math.cos(aimAngle)), (float)(yMid + aimRadius * Math.sin(aimAngle)));
 
         // Draw healthbar
-        graphics.drawString(((Integer)lives).toString(), (float)position.getX()-10, (float)position.getY()-10);
+        graphics.drawString(((Integer)lives).toString(), floorX-10, floorY-10);
         graphics.setColor(Color.green);
-        graphics.fillRect((float)position.getX(), (float)position.getY()-6, (float)((health/getWorld().getPlayingField().getPlayerHealth())*getWidth()), 3);
+        graphics.fillRect(floorX, floorY-6, (float)((health/getWorld().getPlayingField().getPlayerHealth())*getWidth()), 3);
     }
 
     /**

@@ -101,7 +101,7 @@ public class PlayingField implements GameComponent {
         return map.getTileHeight();
     }
 
-    private void setPixel(double x, double y, int type) {
+    public void setPixel(double x, double y, int type) {
         int layerID = map.getLayerIndex("Tile Layer 1");
         int tileX = (int) Math.floor(x);
         int tileY = (int) Math.floor(y);
