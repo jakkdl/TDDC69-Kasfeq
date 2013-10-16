@@ -133,5 +133,13 @@ public class World implements GameComponent {
 
             iterator.remove();
         }
+
+        Iterator<Map.Entry<Integer, Player>> playerIterator = players.entrySet().iterator();
+        while(playerIterator.hasNext()) {
+            Map.Entry<Integer, Player> playerEntry = playerIterator.next();
+            playerEntry.getValue().dispose();
+
+            playerIterator.remove();
+        }
     }
 }

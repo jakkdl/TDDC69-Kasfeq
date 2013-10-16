@@ -47,21 +47,10 @@ public class PlayingField implements GameComponent {
     }
 
     private TiledMap map = null;
+    private String filename = null;
 
     public PlayingField(String filename) {
-        try {
-            map = ResourceManager.INSTANCE.loadResource(TiledMap.class, filename);
-        } catch (FileNotFoundException ignored) {
-            System.out.println("Could not find map file");
-        } catch(IOException e) {
-            e.printStackTrace();
-            map = null;
-        } catch(SlickException e) {
-            e.printStackTrace();
-            map = null;
-        }
-
-        setOptions();
+        this.filename = filename;
     }
 
     public int getWidth() {
@@ -227,6 +216,18 @@ public class PlayingField implements GameComponent {
      */
     @Override
     public void init(GameContainer gameContainer) {
+        try {
+            map = ResourceManager.INSTANCE.loadResource(TiledMap.class, filename);
+            setOptions();
+        } catch (FileNotFoundException ignored) {
+            System.out.println("Could not find map file");
+        } catch(IOException e) {
+            e.printStackTrace();
+            map = null;
+        } catch(SlickException e) {
+            e.printStackTrace();
+            map = null;
+        }
     }
 
     /**
@@ -256,5 +257,6 @@ public class PlayingField implements GameComponent {
      */
     @Override
     public void dispose() {
+        map = null;
     }
 }
