@@ -16,7 +16,7 @@ public class Player extends GameObject {
     private double aimAngle = 0;
     private double aimAngleSpeed = 0;
     private int playerId;
-    private final static double BULLETOFFSET = 1.3;
+    private final static double BULLETOFFSET = 1.7;
 
     /**
      * \brief Player constructor
@@ -132,9 +132,12 @@ public class Player extends GameObject {
         graphics.setColor(playerColor);
         Vector2d position = getPosition();
         graphics.fillRect((float)position.getX(), (float)position.getY(), (float)getWidth(), (float)getHeight());
-        double aimRadius = getWidth();
+
         graphics.setColor(Color.white);
-        graphics.drawLine((float) (position.getX() + getWidth() / 2), (float) (position.getY() + getHeight() / 2), (float) (position.getX() + getWidth() / 2 + aimRadius * Math.cos(aimAngle)), (float) (position.getY() + getHeight() / 2 + aimRadius * Math.sin(aimAngle)));
+        double aimRadius = getWidth();
+        double xMid = position.getX() + getWidth()  / 2;
+        double yMid = position.getY() + getHeight()  / 2;
+        graphics.drawLine((float) xMid, (float) yMid, (float) (xMid + aimRadius * Math.cos(aimAngle)), (float)(yMid + aimRadius * Math.sin(aimAngle)));
     }
 
     /**
@@ -179,10 +182,10 @@ public class Player extends GameObject {
     public void moveLeft(boolean isKeyPressed) {
         setFacing(Math.PI);
         if(isKeyPressed) {
-            addContForce(new Vector2d(-(float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(Math.PI);
         }
         else {
-            addContForce(new Vector2d((float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(0);
         }
     }
 
@@ -194,11 +197,21 @@ public class Player extends GameObject {
     public void moveRight(boolean isKeyPressed) {
         setFacing(0);
         if(isKeyPressed) {
-            addContForce(new Vector2d(getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(0);
         }
         else {
-            addContForce(new Vector2d(-getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(Math.PI);
         }
+    }
+
+    /**
+     * * Internal function used my moveLeft and moveRight
+     *
+     * @param direction direction of movement
+     */
+    private void move(double direction) {
+        double moveForce = getWorld().getPlayingField().getPlayerMoveForce();
+        addContForce(new Vector2d(Math.cos(direction)*moveForce, Math.sin(direction)*moveForce));
     }
 
     /**
@@ -208,8 +221,10 @@ public class Player extends GameObject {
      */
     public void jump(boolean isKeyPressed) {
         if(isKeyPressed) {
-            if (getWorld().getPhysicsEngine().isOnGround(this)) {
-                addInstantForce(new Vector2d(0, (float)getWorld().getPlayingField().getPlayerJumpForce()));
+            if (getWorld().getPhysicsEngine().touchesSolid(this, Direction.DOWN) ||
+                    (getWorld().getPhysicsEngine().touchesSolid(this, Direction.LEFT) && getContForce().getX() > 0) ||
+            (getWorld().getPhysicsEngine().touchesSolid(this, Direction.RIGHT) && getContForce().getX() < 0 )){
+                addInstantForce(new Vector2d(0, getWorld().getPlayingField().getPlayerJumpForce()));
             }
         }
     }

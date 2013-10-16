@@ -23,8 +23,8 @@ public class PlayingField implements GameComponent {
         PLAYERLIVES(3),
         PLAYERHEALTH(10.0),
         BULLETMASS(0.1),
-        BULLETWIDTH(2.0),
-        BULLETHEIGHT(2.0);
+        BULLETWIDTH(5.0),
+        BULLETHEIGHT(5.0);
         private final Object defaultValue;
         // Since java does not like non-final fields in enums and there is no specific supression for this "issue"
         @SuppressWarnings("all")
@@ -93,6 +93,11 @@ public class PlayingField implements GameComponent {
         int layerID = map.getLayerIndex("Tile Layer 1");
         int tileX = (int) Math.floor(x);
         int tileY = (int) Math.floor(y);
+
+        if (tileX < 0 || tileX >= map.getWidth() || tileY < 0 || tileY >= map.getHeight()) {
+            return MapTile.SOLID;
+        }
+
         switch( map.getTileId(tileX, tileY, layerID)) {
             case 1:
                 return MapTile.SOLID;

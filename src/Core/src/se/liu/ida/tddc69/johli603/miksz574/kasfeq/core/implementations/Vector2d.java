@@ -25,8 +25,8 @@ public class Vector2d {
         return new Vector2d(vector.copy().add(v.vector));
     }
 
-    public void set(float x, float y) {
-        vector = vector.set(x, y);
+    public void set(double x, double y) {
+        vector = vector.set((float)x, (float)y);
     }
 
     public Vector2d copy() {
@@ -43,6 +43,14 @@ public class Vector2d {
 
     public double getX() {
         return vector.getX();
+    }
+
+    public void setX(double x) {
+        vector.set((float)x, vector.getY());
+    }
+
+    public void setY(double y) {
+        vector.set(vector.getX(), (float)y);
     }
 
     public Vector2d scale(double a) {
@@ -65,9 +73,15 @@ public class Vector2d {
         vector.set(other.vector);
     }
 
-    /*public void projectOntoUnit(Vector2f b, Vector2f result) {
-        vector.projectOntoUnit(b, result);
-    }*/
+    public Vector2d projectOntoUnit(Vector2d target) {
+        Vector2d result = new Vector2d();
+        vector.projectOntoUnit(target.vector, result.vector);
+        return result;
+    }
+
+    public Vector2d negate() {
+        return new Vector2d(vector.negate());
+    }
 
     /*public float dot(Vector2f other) {
         return vector.dot(other);
@@ -113,9 +127,6 @@ public class Vector2d {
         return vector.negateLocal();
     }*/
 
-    /*public Vector2f negate() {
-        return vector.negate();
-    }*/
 
 /*
     @Override

@@ -27,12 +27,11 @@ public class Projectile extends GameObject {
      */
     @Override
     public void collision(double x, double y) {
-        //TODO: Broken collision handling makes destroying terrain very buggy
-        /*for (int dx = -1; dx < getWidth()+1; dx ++) {
+        for (int dx = -1; dx < getWidth()+1; dx ++) {
             for (int dy = -1; dy < getHeight()+1; dy++) {
                 getWorld().getPlayingField().destroyPixel(x+dx, y+dy);
             }
-        }*/
+        }
         despawn();
     }
 
@@ -75,7 +74,7 @@ public class Projectile extends GameObject {
     public void render(GameContainer gameContainer, Graphics graphics) {
         Vector2d position = getPosition();
         graphics.setColor(Color.white);
-        graphics.fillRect((float)position.getX(), (float)position.getY(), 5, 5);
+        graphics.fillRect((float)position.getX(), (float)position.getY(), (float)getWidth(), (float)getHeight());
     }
 
     /**
