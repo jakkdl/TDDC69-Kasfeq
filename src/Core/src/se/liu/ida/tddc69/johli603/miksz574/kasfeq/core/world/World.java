@@ -26,7 +26,6 @@ public class World implements GameComponent {
         playingField = new PlayingField("untitled.tmx");
         physicsEngine = new PhysicsEngine(playingField);
         gameLogicHandlers = new ArrayList<AbstractGameLogic>();
-        gameLogicHandlers.add(new DeathmatchLogic(this));
     }
 
     public Player getPlayer(int playerID) {
@@ -76,6 +75,11 @@ public class World implements GameComponent {
         return playingField;
     }
 
+    public void restartGame(GameContainer gameContainer) {
+        dispose();
+        init(gameContainer);
+    }
+
     @Override
     public void init(GameContainer gameContainer) {
         gameObjectManager.init(gameContainer);
@@ -84,6 +88,8 @@ public class World implements GameComponent {
 
         spawnNewPlayer(Color.orange);
         spawnNewPlayer(Color.magenta);
+
+        gameLogicHandlers.add(new DeathmatchLogic(this));
 
         for(AbstractGameLogic gameLogic : gameLogicHandlers) {
             gameLogic.init(gameContainer);
