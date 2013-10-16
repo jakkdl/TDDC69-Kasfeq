@@ -41,7 +41,7 @@ public class PhysicsEngine {
             GameObject obj = objects.get(i);
             for (int j=i+1; j < objects.size(); j++) {
                 GameObject obj2 = objects.get(j);
-                if (collision(obj, obj2, time)) {
+                if (checkCollision(obj, obj2, time)) {
                     obj2.collision(obj);
                     obj.collision(obj2);
                 }
@@ -50,17 +50,17 @@ public class PhysicsEngine {
         }
     }
 
-    private boolean collision(GameObject obj1, GameObject obj2, int time) {
+    private boolean checkCollision(GameObject obj1, GameObject obj2, int time) {
         double t=1;
         Vector2d pos1 = obj1.getPosition().copy().add(obj1.getVelocity().copy().scale((float)t));
         Vector2d pos2 = obj2.getPosition().copy().add(obj2.getVelocity().copy().scale((float)t));
-        if (rectangleCollision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
+        if (checkRectangleCollision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
             return true;
         }
         return false;
     }
 
-    private boolean rectangleCollision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
+    private boolean checkRectangleCollision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
         return !(x1 > x2 + width2 || x1 + width1 < x2 || y1 > y2 + height2 || y1 + height1 < y2);
     }
 

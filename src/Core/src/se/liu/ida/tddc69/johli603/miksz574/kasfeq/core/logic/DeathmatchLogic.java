@@ -9,6 +9,7 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 public class DeathmatchLogic extends AbstractGameLogic {
     private int winningPlayerID = -1;
     private int waitTime = 0;
+    private static final int SCORE_SCREEN_TIME = 5000;
 
     public DeathmatchLogic(World world) {
         super(world);
@@ -63,7 +64,7 @@ public class DeathmatchLogic extends AbstractGameLogic {
         if(winningPlayerID >= 0) {
             waitTime += i;
 
-            if(waitTime > 5000) {
+            if(waitTime > SCORE_SCREEN_TIME) {
                 gameContainer.exit();
             }
         }
@@ -81,12 +82,12 @@ public class DeathmatchLogic extends AbstractGameLogic {
         if(winningPlayerID > 0) {
             graphics.clear();
             graphics.setColor(Color.green);
-            graphics.drawString(String.format("Player %s won", winningPlayerID), gameContainer.getWidth()/2.0f, gameContainer.getHeight()/2.0f);
+            graphics.drawString(String.format("Player %s won", winningPlayerID), gameContainer.getWidth()/(float)2, gameContainer.getHeight()/(float)2);
         }
         else if(winningPlayerID == 0) {
             graphics.clear();
             graphics.setColor(Color.white);
-            graphics.drawString("Draw", gameContainer.getWidth()/2.0f, gameContainer.getHeight()/2.0f);
+            graphics.drawString("Draw", gameContainer.getWidth()/(float)2, gameContainer.getHeight()/(float)2);
         }
     }
 

@@ -44,10 +44,6 @@ public class PlayingField implements GameComponent {
         public <T> void setValue(T value) {
             changedValue = value;
         }
-
-        public Object getDefaultValue() {
-            return defaultValue;
-        }
     }
 
     private TiledMap map = null;
