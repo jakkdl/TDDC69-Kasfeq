@@ -39,11 +39,10 @@ public class World implements GameComponent {
 
     public void despawn(GameObject obj) {
         gameObjectManager.despawnObject(obj);
-    }
 
-    public void despawn(Player player) {
-        gameObjectManager.despawnObject(player);
-        players.remove(player.getPlayerId());
+        if(obj instanceof Player) {
+            players.remove(Player.class.cast(obj).getPlayerId());
+        }
     }
 
     public void spawnNewPlayer(Color playerColor) {

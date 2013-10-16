@@ -7,13 +7,13 @@ import java.io.IOException;
 
 /**
  * \interface ResourceLoader
- * @param <LoadedType> The type representing the resource to be loaded
+ * @param <T></T> The type representing the resource to be loaded
  */
-public interface ResourceLoader<LoadedType> {
+public interface ResourceLoader<T> {
     /**
      * \brief Loads a resource from the resource directory
      * @param filename The filename of the resource to be loaded
      * @return Returns a object representing the loaded resource
      */
-    public LoadedType loadResource(String filename) throws FileNotFoundException, IOException, SlickException;
+    public T loadResource(String filename) throws FileNotFoundException, IOException, SlickException;
 }

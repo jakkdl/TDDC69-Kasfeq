@@ -1,8 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.*;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 /**
@@ -133,11 +131,17 @@ public class Player extends GameObject {
         Vector2d position = getPosition();
         graphics.fillRect((float)position.getX(), (float)position.getY(), (float)getWidth(), (float)getHeight());
 
+        //draw weapon
         graphics.setColor(Color.white);
         double aimRadius = getWidth();
         double xMid = position.getX() + getWidth()  / 2;
         double yMid = position.getY() + getHeight()  / 2;
         graphics.drawLine((float) xMid, (float) yMid, (float) (xMid + aimRadius * Math.cos(aimAngle)), (float)(yMid + aimRadius * Math.sin(aimAngle)));
+
+        // Draw healthbar
+        graphics.drawString(((Integer)lives).toString(), (float)position.getX()-10, (float)position.getY()-10);
+        graphics.setColor(Color.green);
+        graphics.fillRect((float)position.getX(), (float)position.getY(), (float)((health/getWorld().getPlayingField().getPlayerHealth())*getWidth()), 3);
     }
 
     /**

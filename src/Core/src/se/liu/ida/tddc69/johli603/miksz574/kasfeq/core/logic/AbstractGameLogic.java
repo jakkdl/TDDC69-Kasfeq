@@ -8,6 +8,13 @@ public abstract class AbstractGameLogic implements GameComponent {
     private final World world;
 
     /**
+     * @return Returns the World object that the game logic applies to
+     */
+    public World getWorld() {
+        return world;
+    }
+
+    /**
      * \brief AbstractGameLogic constructor
      * @param world  The world that the game logic applies to
      */

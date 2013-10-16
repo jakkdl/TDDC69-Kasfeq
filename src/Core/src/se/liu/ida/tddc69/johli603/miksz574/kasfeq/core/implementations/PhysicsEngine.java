@@ -3,16 +3,16 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import java.util.List;
 
 public class PhysicsEngine {
-    private class collisionResult {
+    private class CollisionResult {
         double distance;
         Vector2d point;
         boolean collision;
 
-        collisionResult() {
+        CollisionResult() {
             point = new Vector2d();
         }
 
-        collisionResult(double distance, Vector2d point) {
+        CollisionResult(double distance, Vector2d point) {
             this.distance = distance;
             this.point = point;
         }
@@ -31,7 +31,7 @@ public class PhysicsEngine {
             GameObject obj = objects.get(i);
             for (int j=i+1; j < objects.size(); j++) {
                 GameObject obj2 = objects.get(j);
-                if (collision(obj, obj2, time)) {
+                if (checkCollision(obj, obj2, time)) {
                     obj2.collision(obj);
                     obj.collision(obj2);
                 }
@@ -40,17 +40,17 @@ public class PhysicsEngine {
         }
     }
 
-    private boolean collision(GameObject obj1, GameObject obj2, int time) {
+    private boolean checkCollision(GameObject obj1, GameObject obj2, int time) {
         double t=1;
         Vector2d pos1 = obj1.getPosition().add(obj1.getVelocity().copy().scale(t));
         Vector2d pos2 = obj2.getPosition().add(obj2.getVelocity().copy().scale(t));
-        if (rectangleCollision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
+        if (checkRectangleCollision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
             return true;
         }
         return false;
     }
 
-    private boolean rectangleCollision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
+    private boolean checkRectangleCollision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
         return !(x1 > x2 + width2 || x1 + width1 < x2 || y1 > y2 + height2 || y1 + height1 < y2);
     }
 
@@ -89,7 +89,7 @@ public class PhysicsEngine {
 
         //then see how far the object can travel
         //MapCollisionResult result = checkMapCollision(object);
-        collisionResult result = mapCollision(object, object.getVelocity().getTheta(), 0, 0);
+        CollisionResult result = mapCollision(object, object.getVelocity().getTheta(), 0, 0);
 
 
 
@@ -108,12 +108,12 @@ public class PhysicsEngine {
         }
     }
 
-    private collisionResult mapCollision(GameObject obj, double direction, double xOffset, double yOffset) {
+    private CollisionResult mapCollision(GameObject obj, double direction, double xOffset, double yOffset) {
         double theta= obj.getVelocity().getTheta();
         double deltav;
         Vector2d directionVector = new Vector2d(direction);
         Vector2d vel = obj.getVelocity().add(new Vector2d(xOffset,yOffset).negate());
-        collisionResult result = new collisionResult();
+        CollisionResult result = new CollisionResult();
 
         if (Math.atan2(Math.sin(direction-theta), Math.cos(direction-theta)) > Math.PI/2) {
             deltav = -ABSDELTAV;
@@ -148,20 +148,11 @@ public class PhysicsEngine {
     }
 
     private Vector2d addForces(final Vector2d force, double mass) {
-        return force.scale(1/mass);
+        return force.scale(1 / mass);
     }
 
     private Vector2d addAcceleration(Vector2d velocity, Vector2d acceleration) {
         return velocity.add(acceleration);
-    }
-
-    public boolean isOnGround(GameObject object) {
-        for (int x=0; x < object.getWidth(); x++) {
-            if (playingField.getPixel(object.getPosition().getX()+x, object.getPosition().getY()+object.getHeight()+1) != MapTile.EMPTY) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean touchesSolid(GameObject object, Direction direction) {

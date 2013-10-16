@@ -17,11 +17,11 @@ public enum ResourceManager {
      * \brief The Singleton instance of the ResourceManager
      */
     INSTANCE;
-    private final Map<Class, ResourceLoader> resourceLoaders;
+    private final Map<Class<?>, ResourceLoader<?>> resourceLoaders;
     private final Map<String, Object> cachedResources;
 
     ResourceManager() {
-        resourceLoaders = new HashMap<Class, ResourceLoader>();
+        resourceLoaders = new HashMap<Class<?>, ResourceLoader<?>>();
         resourceLoaders.put(TiledMap.class, new TiledMapLoader());
         cachedResources = new HashMap<String, Object>();
     }
@@ -30,17 +30,17 @@ public enum ResourceManager {
      * \brief Loads a resource of the specified type from a specified file
      *
      * @param filename     The filename of the resource to load
-     * @param <LoadedType> The type of the resource to load
+     * @param <T> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
-    public <LoadedType> LoadedType loadResource(Class resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
-        Object resource = cachedResources.get(filename);
+    public <T> T loadResource(Class<T> resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
+        T resource = resourceClass.cast(cachedResources.get(filename));
 
         if (resource == null) {
-            resource = resourceLoaders.get(resourceClass).loadResource("resources/" + filename);
+            resource = resourceClass.cast(resourceLoaders.get(resourceClass).loadResource("resources/" + filename));
             cachedResources.put(filename, resource);
         }
 
-        return (LoadedType) resource;
+        return resource;
     }
 }
