@@ -2,10 +2,13 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +30,15 @@ public class PlayingField implements GameComponent {
         BULLETHEIGHT(2.0);
         private final Object defaultValue;
         // Since java does not like non-final fields in enums and there is no specific supression for this "issue"
-        @SuppressWarnings("all")
+        @SuppressWarnings("NonFinalFieldInEnum")
         private Object changedValue = null;
 
         Options(Object defaultValue) {
             this.defaultValue = defaultValue;
         }
 
-        @SuppressWarnings("unchecked")
-        public <T> T getValue() {
-            return (T) (changedValue == null ? defaultValue : changedValue);
+        public <T> T getValue(Class<T> valueType) {
+            return valueType.cast(changedValue == null ? defaultValue : changedValue);
         }
 
         public <T> void setValue(T value) {
@@ -48,12 +50,17 @@ public class PlayingField implements GameComponent {
         }
     }
 
-    private TiledMap map;
+    private TiledMap map = null;
 
     public PlayingField(String filename) {
         try {
             map = ResourceManager.INSTANCE.loadResource(TiledMap.class, filename);
-        } catch (Exception e) {
+        } catch (FileNotFoundException ignored) {
+            System.out.println("Could not find map file");
+        } catch(IOException e) {
+            e.printStackTrace();
+            map = null;
+        } catch(SlickException e) {
             e.printStackTrace();
             map = null;
         }
@@ -145,20 +152,20 @@ public class PlayingField implements GameComponent {
     public void setOptions() {
         for (Options option : Options.values()) {
             String mapProperty = map.getMapProperty(option.toString(), null);
-            Object def = option.getValue();
+            Object def = option.getValue(Object.class);
 
             if (mapProperty != null) {
                 try {
-                    if (def instanceof Integer) {
+                    if(def.getClass() == Integer.class) {
                         option.setValue(Integer.parseInt(mapProperty));
-                    } else if (def instanceof Double) {
+                    } else if(def.getClass() == Double.class) {
                         option.setValue(Double.parseDouble(mapProperty));
-                    } else if (def instanceof Boolean) {
+                    } else if (def.getClass() == Boolean.class) {
                         option.setValue(Boolean.parseBoolean(mapProperty));
-                    } else if (def instanceof String) {
+                    } else if (def.getClass() == String.class) {
                         option.setValue(mapProperty);
                     }
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException ignored) {
                     System.out.println("Error when loading " + option.toString() + " incorrect type");
                 }
             }
@@ -166,55 +173,55 @@ public class PlayingField implements GameComponent {
     }
 
     public double getAimspeed() {
-        return Options.AIMSPEED.getValue();
+        return Options.AIMSPEED.getValue(Double.class);
     }
 
     public double getGravity() {
-        return Options.GRAVITY.getValue();
+        return Options.GRAVITY.getValue(Double.class);
     }
 
     public double getFriction() {
-        return Options.FRICTION.getValue();
+        return Options.FRICTION.getValue(Double.class);
     }
 
     public double getPlayerHealth() {
-        return Options.PLAYERHEALTH.getValue();
+        return Options.PLAYERHEALTH.getValue(Double.class);
     }
 
     public int getPlayerLives() {
-        return Options.PLAYERLIVES.getValue();
+        return Options.PLAYERLIVES.getValue(Integer.class);
     }
 
     public double getPlayerMass() {
-        return Options.PLAYERMASS.getValue();
+        return Options.PLAYERMASS.getValue(Double.class);
     }
 
     public double getPlayerWidth() {
-        return Options.PLAYERWIDTH.getValue();
+        return Options.PLAYERWIDTH.getValue(Double.class);
     }
 
     public double getPlayerHeight() {
-        return Options.PLAYERHEIGHT.getValue();
+        return Options.PLAYERHEIGHT.getValue(Double.class);
     }
 
     public double getPlayerJumpForce() {
-        return Options.PLAYERJUMPFORCE.getValue();
+        return Options.PLAYERJUMPFORCE.getValue(Double.class);
     }
 
     public double getPlayerMoveForce() {
-        return Options.PLAYERMOVEFORCE.getValue();
+        return Options.PLAYERMOVEFORCE.getValue(Double.class);
     }
 
     public double getBulletMass() {
-        return Options.BULLETMASS.getValue();
+        return Options.BULLETMASS.getValue(Double.class);
     }
 
     public double getBulletHeight() {
-        return Options.BULLETHEIGHT.getValue();
+        return Options.BULLETHEIGHT.getValue(Double.class);
     }
 
     public double getBulletWidth() {
-        return Options.BULLETWIDTH.getValue();
+        return Options.BULLETWIDTH.getValue(Double.class);
     }
 
     /**

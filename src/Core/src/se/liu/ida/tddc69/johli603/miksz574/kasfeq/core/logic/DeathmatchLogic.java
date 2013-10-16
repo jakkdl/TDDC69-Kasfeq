@@ -1,5 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.logic;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
@@ -79,11 +80,13 @@ public class DeathmatchLogic extends AbstractGameLogic {
     public void render(GameContainer gameContainer, Graphics graphics) {
         if(winningPlayerID > 0) {
             graphics.clear();
-            graphics.drawString(String.format("Player %s won", winningPlayerID), gameContainer.getWidth()/2, gameContainer.getHeight()/2);
+            graphics.setColor(Color.green);
+            graphics.drawString(String.format("Player %s won", winningPlayerID), gameContainer.getWidth()/2.0f, gameContainer.getHeight()/2.0f);
         }
         else if(winningPlayerID == 0) {
             graphics.clear();
-            graphics.drawString("Draw", gameContainer.getWidth()/2, gameContainer.getHeight()/2);
+            graphics.setColor(Color.white);
+            graphics.drawString("Draw", gameContainer.getWidth()/2.0f, gameContainer.getHeight()/2.0f);
         }
     }
 

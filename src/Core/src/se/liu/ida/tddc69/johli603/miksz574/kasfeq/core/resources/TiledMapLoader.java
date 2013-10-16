@@ -27,9 +27,6 @@ public class TiledMapLoader implements ResourceLoader<TiledMap> {
         try {
             loadedMap = new TiledMap(fileInputStream, "resources");
         }
-        catch (SlickException e) {
-            throw e;
-        }
         finally {
             fileInputStream.close();
         }
