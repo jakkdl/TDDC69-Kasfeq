@@ -29,7 +29,7 @@ public enum ResourceManager {
     /**
      * \brief Loads a resource of the specified type from a specified file
      *
-     * @param filename     The filename of the resource to load
+     * @param filename The filename of the resource to load
      * @param <T> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
@@ -40,6 +40,20 @@ public enum ResourceManager {
             resource = resourceClass.cast(resourceLoaders.get(resourceClass).loadResource("resources/" + filename));
             cachedResources.put(filename, resource);
         }
+
+        return resource;
+    }
+
+    /**
+     * \brief Reloads a resource replacing the one in cache
+     *
+     * @param filename The filename of the resource to load
+     * @param <T> The type of the resource to load
+     * @return The loaded object returned by a ResourceLoader
+     */
+    public <T> T reloadResource(Class<T> resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
+        T resource = resourceClass.cast(resourceLoaders.get(resourceClass).loadResource("resources/" + filename));
+        cachedResources.put(filename, resource);
 
         return resource;
     }

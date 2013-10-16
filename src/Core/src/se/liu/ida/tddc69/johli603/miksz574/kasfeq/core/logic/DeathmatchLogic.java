@@ -63,7 +63,7 @@ public class DeathmatchLogic extends AbstractGameLogic {
             waitTime += i;
 
             if(waitTime > SCORE_SCREEN_TIME) {
-                gameContainer.exit();
+                getWorld().restartGame(gameContainer);
             }
         }
     }
