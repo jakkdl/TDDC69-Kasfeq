@@ -14,7 +14,6 @@ public class Player extends GameObject {
     private double aimAngle = 0;
     private double aimAngleSpeed = 0;
     private int playerId;
-    private final static double BULLETOFFSET = 1.3;
 
     /**
      * \brief Player constructor
@@ -22,7 +21,7 @@ public class Player extends GameObject {
      * @param world The world that the player will be in in
      */
     public Player(World world, int playerId) {
-        super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight());
+        super(world, world.getPlayingField().getPlayerMass(), world.getPlayingField().getPlayerWidth(), world.getPlayingField().getPlayerHeight(), world.getPlayingField().getPlayerDamage());
         this.playerId = playerId;
         playerColor = Color.transparent;
         health = world.getPlayingField().getPlayerHealth();
@@ -85,7 +84,7 @@ public class Player extends GameObject {
      */
     @Override
     public void collision(GameObject obj) {
-        health -= 1;
+        health -= obj.getDamage();
     }
 
     /**
@@ -129,15 +128,19 @@ public class Player extends GameObject {
     public void render(GameContainer gameContainer, Graphics graphics) {
         graphics.setColor(playerColor);
         Vector2d position = getPosition();
-        graphics.fillRect((float)position.getX(), (float)position.getY(), (float)getWidth(), (float)getHeight());
-        double aimRadius = getWidth();
+        graphics.fillRect((float)position.getX(), (float)position.getY(), getWidth(), getHeight());
+
+        //draw weapon
         graphics.setColor(Color.white);
-        graphics.drawLine((float) (position.getX() + getWidth() / 2), (float) (position.getY() + getHeight() / 2), (float) (position.getX() + getWidth() / 2 + aimRadius * Math.cos(aimAngle)), (float) (position.getY() + getHeight() / 2 + aimRadius * Math.sin(aimAngle)));
+        double aimRadius = getWidth();
+        double xMid = position.getX() + (double)getWidth()  / 2;
+        double yMid = position.getY() + (double)getHeight()  / 2;
+        graphics.drawLine((float) xMid, (float) yMid, (float) (xMid + aimRadius * Math.cos(aimAngle)), (float)(yMid + aimRadius * Math.sin(aimAngle)));
 
         // Draw healthbar
         graphics.drawString(((Integer)lives).toString(), (float)position.getX()-10, (float)position.getY()-10);
         graphics.setColor(Color.green);
-        graphics.fillRect((float)position.getX(), (float)position.getY(), (float)((health/getWorld().getPlayingField().getPlayerHealth())*getWidth()), 3);
+        graphics.fillRect((float)position.getX(), (float)position.getY()-6, (float)((health/getWorld().getPlayingField().getPlayerHealth())*getWidth()), 3);
     }
 
     /**
@@ -182,10 +185,10 @@ public class Player extends GameObject {
     public void moveLeft(boolean isKeyPressed) {
         setFacing(Math.PI);
         if(isKeyPressed) {
-            addContForce(new Vector2d(-(float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(Math.PI);
         }
         else {
-            addContForce(new Vector2d((float) getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(0);
         }
     }
 
@@ -197,11 +200,21 @@ public class Player extends GameObject {
     public void moveRight(boolean isKeyPressed) {
         setFacing(0);
         if(isKeyPressed) {
-            addContForce(new Vector2d(getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(0);
         }
         else {
-            addContForce(new Vector2d(-getWorld().getPlayingField().getPlayerMoveForce(), 0));
+            move(Math.PI);
         }
+    }
+
+    /**
+     * * Internal function used my moveLeft and moveRight
+     *
+     * @param direction direction of movement
+     */
+    private void move(double direction) {
+        double moveForce = getWorld().getPlayingField().getPlayerMoveForce();
+        addContForce(new Vector2d(Math.cos(direction)*moveForce, Math.sin(direction)*moveForce));
     }
 
     /**
@@ -211,8 +224,10 @@ public class Player extends GameObject {
      */
     public void jump(boolean isKeyPressed) {
         if(isKeyPressed) {
-            if (getWorld().getPhysicsEngine().isOnGround(this)) {
-                addInstantForce(new Vector2d(0, (float)getWorld().getPlayingField().getPlayerJumpForce()));
+            if (getWorld().getPhysicsEngine().touchesSolid(this, Direction.DOWN) ||
+                    (getWorld().getPhysicsEngine().touchesSolid(this, Direction.LEFT) && getContForce().getX() > 0) ||
+            (getWorld().getPhysicsEngine().touchesSolid(this, Direction.RIGHT) && getContForce().getX() < 0 )){
+                addInstantForce(new Vector2d(0, getWorld().getPlayingField().getPlayerJumpForce()));
             }
         }
     }
@@ -222,11 +237,15 @@ public class Player extends GameObject {
      *
      * @return The position vector for the spawn position
      */
-    private Vector2d bulletPosition() {
-        double x = getPosition().getX() + getWidth() / 2;
-        double y = getPosition().getY() + getHeight() / 2;
-        double distance = Math.sqrt(Math.pow(getWidth()/2,2) + Math.pow(getHeight()/2,2));
-        return new Vector2d(x, y).add(new Vector2d((aimAngle)).scale(distance*BULLETOFFSET));
+    private Vector2d bulletPosition(Projectile bullet) {
+        double x = getPosition().getX() + (double)getWidth() / 2;
+        double y = getPosition().getY() + (double)getHeight() / 2;
+        double distance = length((double)getWidth()/2+bullet.getWidth(), (double)getHeight()/2+bullet.getHeight());
+        return new Vector2d(x, y).add(new Vector2d((aimAngle)).scale(distance));
+    }
+
+    private double length (double x, double y) {
+        return Math.sqrt(x*x+y*y);
     }
 
     /**
@@ -237,7 +256,7 @@ public class Player extends GameObject {
     public void shoot(boolean isKeyPressed) {
         if (isKeyPressed) {
             Projectile bullet = new Projectile(getWorld());
-            bullet.setPosition(bulletPosition());
+            bullet.setPosition(bulletPosition(bullet));
             bullet.addInstantForce(new Vector2d(aimAngle).scale(1));
             getWorld().spawn(bullet);
             //shotgun();
@@ -253,7 +272,7 @@ public class Player extends GameObject {
         Projectile[] bullets = new Projectile[6];
         for (int i = 0; i < bullets.length; i++) {
             bullets[i] = new Projectile(getWorld());
-            bullets[i].setPosition(bulletPosition());
+            bullets[i].setPosition(bulletPosition(bullets[i]));
             bullets[i].addInstantForce(new Vector2d((aimAngle + Math.random())).scale(1));
             getWorld().spawn(bullets[i]);
         }

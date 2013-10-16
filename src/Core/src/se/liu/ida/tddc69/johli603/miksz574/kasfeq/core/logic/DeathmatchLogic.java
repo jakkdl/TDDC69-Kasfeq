@@ -46,7 +46,6 @@ public class DeathmatchLogic extends AbstractGameLogic {
      * \brief The init function is called when the game component is initialized
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @throws Exception Thrown if something fails
      */
     @Override
     public void init(GameContainer gameContainer) {
