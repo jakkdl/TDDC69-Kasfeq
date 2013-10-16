@@ -141,7 +141,7 @@ public class Player extends GameObject {
         // Draw healthbar
         graphics.drawString(((Integer)lives).toString(), (float)position.getX()-10, (float)position.getY()-10);
         graphics.setColor(Color.green);
-        graphics.fillRect((float)position.getX(), (float)position.getY(), (float)((health/getWorld().getPlayingField().getPlayerHealth())*getWidth()), 3);
+        graphics.fillRect((float)position.getX(), (float)position.getY()-6, (float)((health/getWorld().getPlayingField().getPlayerHealth())*getWidth()), 3);
     }
 
     /**

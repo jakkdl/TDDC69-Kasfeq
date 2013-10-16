@@ -3,6 +3,9 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * \class GameObject
  * \brief The base class that all objects in the game world inherit
@@ -15,8 +18,9 @@ public abstract class GameObject implements GameComponent {
     private Vector2d instantaneousForce;
     private double facing;
     private double mass;
-    private double width;
-    private double height;
+    private int width;
+    private int height;
+    private List<Vector2d> borderPoints;
 
     /**
      * \brief GameObject constructor
@@ -26,7 +30,7 @@ public abstract class GameObject implements GameComponent {
      * @param width  The width of the object
      * @param height The height of the object
      */
-    protected GameObject(World world, double mass, double width, double height) {
+    protected GameObject(World world, double mass, int width, int height) {
         this.world = world;
         position = new Vector2d();
         velocity = new Vector2d();
@@ -35,6 +39,7 @@ public abstract class GameObject implements GameComponent {
         this.mass = mass;
         this.width = width;
         this.height = height;
+        this.borderPoints = generateBorder();
     }
 
     /**
@@ -162,15 +167,35 @@ public abstract class GameObject implements GameComponent {
     /**
      * @return Returns the width of the game object
      */
-    public double getWidth() {
+    public int getWidth() {
         return width;
     }
 
     /**
      * @return Returns the height of the game object
      */
-    public double getHeight() {
+    public int getHeight() {
         return height;
+    }
+
+    private List<Vector2d> generateBorder() {
+        List<Vector2d> result = new ArrayList<Vector2d>();
+        for (int x=0; x <= width; x++) {
+            if (x==0 || x == width) {
+                for (double y=0; y <= height; y++) {
+                    result.add(new Vector2d(x, y));
+                }
+            }
+            else {
+                result.add(new Vector2d(x, 0));
+                result.add(new Vector2d(x, height));
+            }
+        }
+        return result;
+    }
+
+    public List<Vector2d> getBorder() {
+        return this.borderPoints;
     }
 
     /**

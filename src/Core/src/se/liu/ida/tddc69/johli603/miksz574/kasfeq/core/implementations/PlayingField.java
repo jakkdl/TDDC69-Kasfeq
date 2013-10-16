@@ -20,16 +20,16 @@ public class PlayingField implements GameComponent {
         AIMSPEED(Math.PI / 120),
         PLAYERMOVEFORCE(0.1),
         PLAYERMASS(2.0),
-        PLAYERWIDTH(10.0),
-        PLAYERHEIGHT(20.0),
+        PLAYERWIDTH(10),
+        PLAYERHEIGHT(20),
         PLAYERJUMPFORCE(-12.0),
         PLAYERLIVES(3),
         PLAYERHEALTH(10.0),
         BULLETMASS(0.1),
-        BULLETWIDTH(5.0),
-        BULLETHEIGHT(5.0);
+        BULLETWIDTH(5),
+        BULLETHEIGHT(5);
         private final Object defaultValue;
-        // Since java does not like non-final fields in enums and there is no specific supression for this "issue"
+
         @SuppressWarnings("NonFinalFieldInEnum")
         private Object changedValue = null;
 
@@ -90,6 +90,10 @@ public class PlayingField implements GameComponent {
 
     public MapTile getPixel(double x, double y) {
         return getTile(x/map.getTileWidth(), y/map.getTileHeight());
+    }
+
+    public MapTile getPixel(Vector2d point) {
+        return getTile(point.getX()/map.getTileWidth(), point.getY()/map.getTileHeight());
     }
 
     public MapTile getTile(double x, double y) {
@@ -197,12 +201,12 @@ public class PlayingField implements GameComponent {
         return Options.PLAYERMASS.getValue(Double.class);
     }
 
-    public double getPlayerWidth() {
-        return Options.PLAYERWIDTH.getValue(Double.class);
+    public int getPlayerWidth() {
+        return Options.PLAYERWIDTH.getValue(Integer.class);
     }
 
-    public double getPlayerHeight() {
-        return Options.PLAYERHEIGHT.getValue(Double.class);
+    public int getPlayerHeight() {
+        return Options.PLAYERHEIGHT.getValue(Integer.class);
     }
 
     public double getPlayerJumpForce() {
@@ -217,12 +221,12 @@ public class PlayingField implements GameComponent {
         return Options.BULLETMASS.getValue(Double.class);
     }
 
-    public double getBulletHeight() {
-        return Options.BULLETHEIGHT.getValue(Double.class);
+    public int getBulletHeight() {
+        return Options.BULLETHEIGHT.getValue(Integer.class);
     }
 
-    public double getBulletWidth() {
-        return Options.BULLETWIDTH.getValue(Double.class);
+    public int getBulletWidth() {
+        return Options.BULLETWIDTH.getValue(Integer.class);
     }
 
     /**

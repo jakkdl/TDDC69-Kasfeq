@@ -61,6 +61,10 @@ public class Vector2d {
         return new Vector2d(vector.copy().add(theta));
     }
 
+    public Vector2d add(double x, double y) {
+        return new Vector2d(vector.copy().add(new Vector2f((float)x, (float)y)));
+    }
+
     public double length() {
         return vector.length();
     }

@@ -11,11 +11,6 @@ public class PhysicsEngine {
         CollisionResult() {
             point = new Vector2d();
         }
-
-        CollisionResult(double distance, Vector2d point) {
-            this.distance = distance;
-            this.point = point;
-        }
     }
     final static double ABSDELTAV = 0.01;
 
@@ -64,15 +59,16 @@ public class PhysicsEngine {
         Vector2d totalForce = object.getContForce().add(object.getInstantForce());
 
         //account for newton's third law
+        boolean collision = false;
         if ((totalForce.getX() > 0 && touchesSolid(object, Direction.RIGHT)) ||
                 (totalForce.getX() < 0 && touchesSolid(object, Direction.LEFT))) {
             totalForce.setX(0);
-            //collision
+            collision = true;
         }
         if ((totalForce.getY() > 0 && touchesSolid(object, Direction.DOWN)) ||
                 (totalForce.getY() < 0 && touchesSolid(object, Direction.UP))) {
             totalForce.setY(0);
-            //collision
+            collision = true;
         }
 
         //calculate acceleration from forces
@@ -89,7 +85,7 @@ public class PhysicsEngine {
 
         //then see how far the object can travel
         //MapCollisionResult result = checkMapCollision(object);
-        CollisionResult result = mapCollision(object, object.getVelocity().getTheta(), 0, 0);
+        CollisionResult result = mapCollision(object, object.getVelocity().getTheta());
 
 
 
@@ -105,14 +101,17 @@ public class PhysicsEngine {
         } else {
             //else move normally
             object.setPosition(move(object.getPosition(), object.getVelocity()));
+            if (collision) {
+                object.collision(object.getPosition().getX(), object.getPosition().getY());
+            }
         }
     }
 
-    private CollisionResult mapCollision(GameObject obj, double direction, double xOffset, double yOffset) {
+    private CollisionResult mapCollision(GameObject obj, double direction) {
         double theta= obj.getVelocity().getTheta();
         double deltav;
         Vector2d directionVector = new Vector2d(direction);
-        Vector2d vel = obj.getVelocity().add(new Vector2d(xOffset,yOffset).negate());
+        Vector2d vel = obj.getVelocity();
         CollisionResult result = new CollisionResult();
 
         if (Math.atan2(Math.sin(direction-theta), Math.cos(direction-theta)) > Math.PI/2) {
@@ -121,19 +120,16 @@ public class PhysicsEngine {
             deltav = ABSDELTAV;
         }
 
+        List<Vector2d> border = obj.getBorder();
+
         for (double dv = deltav; Math.abs(dv) <= Math.abs(vel.projectOntoUnit(directionVector).length()); dv += deltav) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 2; j++) {
-                    double x = obj.getPosition().getX() + xOffset + obj.getWidth()  * i + dv*Math.cos(direction);
-                    double y = obj.getPosition().getY() + yOffset + obj.getHeight() * j + dv*Math.sin(direction);
-                    if (x < 0 || x >= playingField.getWidth() ||
-                            y < 0 || y >= playingField.getHeight() ||
-                            playingField.getPixel(x, y) != MapTile.EMPTY) {
-                        result.distance = dv - deltav;
-                        result.point = new Vector2d(x, y);
-                        result.collision = true;
-                        return result;
-                    }
+            for (Vector2d point : border) {
+                Vector2d pointToCheck = obj.getPosition().add(point).add(directionVector.scale(dv));
+                if (playingField.getPixel(pointToCheck) != MapTile.EMPTY) {
+                    result.collision = true;
+                    result.distance = dv - deltav;
+                    result.point = pointToCheck;
+                    return result;
                 }
             }
         }
