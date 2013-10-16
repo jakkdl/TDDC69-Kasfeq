@@ -17,7 +17,6 @@ public class TiledMapLoader implements ResourceLoader<TiledMap> {
      * \brief Loads a resource from the resource directory
      * @param filename The filename of the resource to be loaded
      * @return Returns a object representing the loaded resource
-     * @throws Exception Thrown if something failed
      */
     @Override
     public TiledMap loadResource(String filename) throws FileNotFoundException, IOException, SlickException {

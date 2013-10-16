@@ -76,10 +76,10 @@ public class GameObjectManager implements GameComponent {
     }
 
     /**
-     * \brief The update function is called before every frame is rendered
+     * \brief the render function is called every frame to draw the game component
      *
-     * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
-     * @param i             The time in ms since the last update call
+     * @param gameContainer the org.newdawn.slick.gamecontainer instance of the game
+     * @param graphics the org.newdawn.slick.graphics instance used for drawing
      */
     @Override
     public void render(GameContainer gameContainer, Graphics graphics){

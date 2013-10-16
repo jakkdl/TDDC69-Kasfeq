@@ -23,7 +23,7 @@ public interface GameComponent {
 
     /**
      * \brief the render function is called every frame to draw the game component
-     * @param gamecontainer the org.newdawn.slick.gamecontainer instance of the game
+     * @param gameContainer the org.newdawn.slick.gamecontainer instance of the game
      * @param graphics the org.newdawn.slick.graphics instance used for drawing
      */
     public void render(GameContainer gameContainer, Graphics graphics);

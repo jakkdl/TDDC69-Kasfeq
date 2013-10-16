@@ -56,7 +56,6 @@ public class DeathmatchLogic extends AbstractGameLogic {
      *
      * @param gameContainer The org.newdawn.slick.GameContainer instance of the game
      * @param i             The time in ms since the last update call
-     * @throws Exception Thrown if something fails
      */
     @Override
     public void update(GameContainer gameContainer, int i) {
@@ -72,9 +71,8 @@ public class DeathmatchLogic extends AbstractGameLogic {
     /**
      * \brief the render function is called every frame to draw the game component
      *
-     * @param gamecontainer the org.newdawn.slick.gamecontainer instance of the game
+     * @param gameContainer the org.newdawn.slick.gamecontainer instance of the game
      * @param graphics      the org.newdawn.slick.graphics instance used for drawing
-     * @throws exception thrown if something fails
      */
     @Override
     public void render(GameContainer gameContainer, Graphics graphics) {
@@ -93,7 +91,6 @@ public class DeathmatchLogic extends AbstractGameLogic {
     /**
      * \brief The dispose function is called before a component is destoryed
      *
-     * @throws Exception Thrown if something fails
      */
     @Override
     public void dispose() {
