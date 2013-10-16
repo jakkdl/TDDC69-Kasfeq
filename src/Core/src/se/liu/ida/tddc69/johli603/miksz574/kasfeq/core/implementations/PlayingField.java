@@ -25,9 +25,11 @@ public class PlayingField implements GameComponent {
         PLAYERJUMPFORCE(-12.0),
         PLAYERLIVES(3),
         PLAYERHEALTH(10.0),
+        PLAYERDAMAGE(0.5),
         BULLETMASS(0.1),
         BULLETWIDTH(5),
-        BULLETHEIGHT(5);
+        BULLETHEIGHT(5),
+        BULLETDAMAGE(1.0);
         private final Object defaultValue;
 
         @SuppressWarnings("NonFinalFieldInEnum")
@@ -62,14 +64,6 @@ public class PlayingField implements GameComponent {
         }
 
         setOptions();
-    }
-
-    public int getWidth() {
-        return map.getWidth() * map.getTileWidth();
-    }
-
-    public int getHeight() {
-        return map.getHeight() * map.getTileHeight();
     }
 
     public int getTileWidth() {
@@ -130,8 +124,8 @@ public class PlayingField implements GameComponent {
         int tileWidth = getTileWidth();
         int tileHeight = getTileHeight();
 
-        int playerTileWidth = (int)Math.ceil(player.getWidth() / tileWidth);
-        int playerTileHeight = (int)Math.ceil(player.getHeight() / tileHeight);
+        int playerTileWidth = (int)Math.ceil((double)player.getWidth() / tileWidth);
+        int playerTileHeight = (int)Math.ceil((double)player.getHeight() / tileHeight);
 
         for (int x = 0; x < map.getWidth()- playerTileWidth; x++) {
             for (int y=0; y < map.getHeight()- playerTileHeight; y++) {
@@ -217,6 +211,10 @@ public class PlayingField implements GameComponent {
         return Options.PLAYERMOVEFORCE.getValue(Double.class);
     }
 
+    public double getPlayerDamage() {
+        return Options.PLAYERDAMAGE.getValue(Double.class);
+    }
+
     public double getBulletMass() {
         return Options.BULLETMASS.getValue(Double.class);
     }
@@ -227,6 +225,10 @@ public class PlayingField implements GameComponent {
 
     public int getBulletWidth() {
         return Options.BULLETWIDTH.getValue(Integer.class);
+    }
+
+    public double getBulletDamage() {
+        return Options.BULLETDAMAGE.getValue(Double.class);
     }
 
     /**

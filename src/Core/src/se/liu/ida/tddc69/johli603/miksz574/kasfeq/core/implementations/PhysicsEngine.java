@@ -12,7 +12,7 @@ public class PhysicsEngine {
             point = new Vector2d();
         }
     }
-    final static double ABSDELTAV = 0.01;
+    final static double DELTAV = 0.01;
 
     private PlayingField playingField;
 
@@ -26,7 +26,7 @@ public class PhysicsEngine {
             GameObject obj = objects.get(i);
             for (int j=i+1; j < objects.size(); j++) {
                 GameObject obj2 = objects.get(j);
-                if (checkCollision(obj, obj2, time)) {
+                if (checkCollision(obj, obj2)) {
                     obj2.collision(obj);
                     obj.collision(obj2);
                 }
@@ -35,7 +35,7 @@ public class PhysicsEngine {
         }
     }
 
-    private boolean checkCollision(GameObject obj1, GameObject obj2, int time) {
+    private boolean checkCollision(GameObject obj1, GameObject obj2) {
         double t=1;
         Vector2d pos1 = obj1.getPosition().add(obj1.getVelocity().copy().scale(t));
         Vector2d pos2 = obj2.getPosition().add(obj2.getVelocity().copy().scale(t));
@@ -49,7 +49,7 @@ public class PhysicsEngine {
         return !(x1 > x2 + width2 || x1 + width1 < x2 || y1 > y2 + height2 || y1 + height1 < y2);
     }
 
-    public void updateObject(GameObject object, int time) {
+    public void updateObject(GameObject object) {
         //calculate forces, acceleration and velocity
 
         //add gravity
@@ -85,7 +85,7 @@ public class PhysicsEngine {
 
         //then see how far the object can travel
         //MapCollisionResult result = checkMapCollision(object);
-        CollisionResult result = mapCollision(object, object.getVelocity().getTheta());
+        CollisionResult result = mapCollision(object);
 
 
 
@@ -107,35 +107,24 @@ public class PhysicsEngine {
         }
     }
 
-    private CollisionResult mapCollision(GameObject obj, double direction) {
-        double theta= obj.getVelocity().getTheta();
-        double deltav;
-        Vector2d directionVector = new Vector2d(direction);
+    private CollisionResult mapCollision(GameObject obj) {
         Vector2d vel = obj.getVelocity();
         CollisionResult result = new CollisionResult();
 
-        if (Math.atan2(Math.sin(direction-theta), Math.cos(direction-theta)) > Math.PI/2) {
-            deltav = -ABSDELTAV;
-        } else {
-            deltav = ABSDELTAV;
-        }
-
         List<Vector2d> border = obj.getBorder();
 
-        for (double dv = deltav; Math.abs(dv) <= Math.abs(vel.projectOntoUnit(directionVector).length()); dv += deltav) {
+        for (double dv = DELTAV; dv <= vel.length(); dv += DELTAV) {
             for (Vector2d point : border) {
-                Vector2d pointToCheck = obj.getPosition().add(point).add(directionVector.scale(dv));
+                Vector2d pointToCheck = obj.getPosition().add(point).add(vel.scale(dv / vel.length()));
                 if (playingField.getPixel(pointToCheck) != MapTile.EMPTY) {
                     result.collision = true;
-                    result.distance = dv - deltav;
+                    result.distance = dv - DELTAV;
                     result.point = pointToCheck;
                     return result;
                 }
             }
         }
         result.collision = false;
-        result.distance = vel.projectOntoUnit(directionVector).length();
-        result.point = obj.getPosition().add(vel).projectOntoUnit(directionVector);
         return result;
     }
 

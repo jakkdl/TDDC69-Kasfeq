@@ -25,9 +25,11 @@ public class Vector2d {
         return new Vector2d(vector.copy().add(v.vector));
     }
 
-    public void set(double x, double y) {
-        vector = vector.set((float)x, (float)y);
-    }
+// --Commented out by Inspection START (10/16/13 10:21 PM):
+//    public void set(double x, double y) {
+//        vector = vector.set((float)x, (float)y);
+//    }
+// --Commented out by Inspection STOP (10/16/13 10:21 PM)
 
     public Vector2d copy() {
         return new Vector2d(vector.copy());
@@ -37,9 +39,11 @@ public class Vector2d {
         return Math.toRadians(vector.getTheta());
     }
 
-    public void setTheta(double theta) {
-        vector.setTheta(Math.toDegrees(theta));
-    }
+// --Commented out by Inspection START (10/16/13 10:21 PM):
+//    public void setTheta(double theta) {
+//        vector.setTheta(Math.toDegrees(theta));
+//    }
+// --Commented out by Inspection STOP (10/16/13 10:21 PM)
 
     public double getX() {
         return vector.getX();
@@ -57,13 +61,17 @@ public class Vector2d {
         return new Vector2d(vector.copy().scale((float) a));
     }
 
-    public Vector2d add(double theta) {
-        return new Vector2d(vector.copy().add(theta));
-    }
+// --Commented out by Inspection START (10/16/13 10:21 PM):
+//    public Vector2d add(double theta) {
+//        return new Vector2d(vector.copy().add(theta));
+//    }
+// --Commented out by Inspection STOP (10/16/13 10:21 PM)
 
-    public Vector2d add(double x, double y) {
-        return new Vector2d(vector.copy().add(new Vector2f((float)x, (float)y)));
-    }
+// --Commented out by Inspection START (10/16/13 10:21 PM):
+//    public Vector2d add(double x, double y) {
+//        return new Vector2d(vector.copy().add(new Vector2f((float)x, (float)y)));
+//    }
+// --Commented out by Inspection STOP (10/16/13 10:21 PM)
 
     public double length() {
         return vector.length();
@@ -73,19 +81,25 @@ public class Vector2d {
         return vector.getY();
     }
 
-    public void set(Vector2d other) {
-        vector.set(other.vector);
-    }
+// --Commented out by Inspection START (10/16/13 10:21 PM):
+//    public void set(Vector2d other) {
+//        vector.set(other.vector);
+//    }
+// --Commented out by Inspection STOP (10/16/13 10:21 PM)
 
-    public Vector2d projectOntoUnit(Vector2d target) {
-        Vector2d result = new Vector2d();
-        vector.projectOntoUnit(target.vector, result.vector);
-        return result;
-    }
+// --Commented out by Inspection START (10/16/13 10:21 PM):
+//    public Vector2d projectOntoUnit(Vector2d target) {
+//        Vector2d result = new Vector2d();
+//        vector.projectOntoUnit(target.vector, result.vector);
+//        return result;
+//    }
+// --Commented out by Inspection STOP (10/16/13 10:21 PM)
 
-    public Vector2d negate() {
-        return new Vector2d(vector.negate());
-    }
+// --Commented out by Inspection START (10/16/13 10:22 PM):
+//    public Vector2d negate() {
+//        return new Vector2d(vector.negate());
+//    }
+// --Commented out by Inspection STOP (10/16/13 10:22 PM)
 
     /*public float dot(Vector2f other) {
         return vector.dot(other);

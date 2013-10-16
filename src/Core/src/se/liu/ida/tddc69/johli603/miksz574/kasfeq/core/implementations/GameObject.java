@@ -21,6 +21,7 @@ public abstract class GameObject implements GameComponent {
     private int width;
     private int height;
     private List<Vector2d> borderPoints;
+    private double damage;
 
     /**
      * \brief GameObject constructor
@@ -30,7 +31,7 @@ public abstract class GameObject implements GameComponent {
      * @param width  The width of the object
      * @param height The height of the object
      */
-    protected GameObject(World world, double mass, int width, int height) {
+    protected GameObject(World world, double mass, int width, int height, double damage) {
         this.world = world;
         position = new Vector2d();
         velocity = new Vector2d();
@@ -40,6 +41,7 @@ public abstract class GameObject implements GameComponent {
         this.width = width;
         this.height = height;
         this.borderPoints = generateBorder();
+        this.damage = damage;
     }
 
     /**
@@ -176,6 +178,14 @@ public abstract class GameObject implements GameComponent {
      */
     public int getHeight() {
         return height;
+    }
+
+    /**
+     *
+     * @return Returns the damage the object deals
+     */
+    public double getDamage() {
+        return damage;
     }
 
     private List<Vector2d> generateBorder() {

@@ -66,7 +66,7 @@ public class GameObjectManager implements GameComponent {
     public void update(GameContainer gameContainer, int i) {
         world.getPhysicsEngine().dumbCollisions(gameObjects, i);
         for (GameObject obj : gameObjects) {
-            world.getPhysicsEngine().updateObject(obj, i);
+            world.getPhysicsEngine().updateObject(obj);
             obj.update(gameContainer, i);
         }
         for (GameObject obj : despawnedGameObjects) {

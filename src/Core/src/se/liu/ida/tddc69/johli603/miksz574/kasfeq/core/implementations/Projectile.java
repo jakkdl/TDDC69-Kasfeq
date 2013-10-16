@@ -16,7 +16,7 @@ public class Projectile extends GameObject {
      * @param world The world that the projectile will be in in
      */
     public Projectile(World world) {
-        super(world, world.getPlayingField().getBulletMass(), world.getPlayingField().getBulletWidth(), world.getPlayingField().getBulletHeight());
+        super(world, world.getPlayingField().getBulletMass(), world.getPlayingField().getBulletWidth(), world.getPlayingField().getBulletHeight(), world.getPlayingField().getBulletDamage());
     }
 
     /**
@@ -74,7 +74,7 @@ public class Projectile extends GameObject {
     public void render(GameContainer gameContainer, Graphics graphics) {
         Vector2d position = getPosition();
         graphics.setColor(Color.white);
-        graphics.fillRect((float)position.getX(), (float)position.getY(), (float)getWidth(), (float)getHeight());
+        graphics.fillRect((float)position.getX(), (float)position.getY(), getWidth(), getHeight());
     }
 
     /**
