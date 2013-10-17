@@ -38,6 +38,7 @@ public class Player extends GameObject {
     /**
      * @return Returns the color of the player
      */
+    // For future implementations
     @SuppressWarnings("UnusedDeclaration")
     public Color getPlayerColor() {
         return playerColor;
@@ -55,19 +56,17 @@ public class Player extends GameObject {
     /**
      * @return Returns the health of the player
      */
-    @SuppressWarnings("UnusedDeclaration")
     public double getHealth() {
         return health;
     }
 
     /**
-     * \brief Multiplies the health by a factor
+     * \brief Deals damage to the player
      *
-     * @param healthMod The factor to multiply the health with
+     * @param damage The ammount of damage the player takes
      */
-    @SuppressWarnings("UnusedDeclaration")
-    public void modHealth(double healthMod) {
-        this.health *= healthMod;
+    public void dealDamage(double damage) {
+        health -= damage;
     }
 
     /**
@@ -83,26 +82,6 @@ public class Player extends GameObject {
      */
     public int getLives() {
         return lives;
-    }
-
-    /**
-     * \brief Abstract function that is called when a game object collides with the terrain
-     *
-     * @param x x coordinate of collision
-     * @param y y coordinate of collision
-     */
-    @Override
-    public void collision(double x, double y) {
-    }
-
-    /**
-     * \brief Abstract function that is called when a game object collides with another game object
-     *
-     * @param obj The game object that we collided with
-     */
-    @Override
-    public void collision(GameObject obj) {
-        health -= obj.getDamage();
     }
 
     /**
@@ -275,6 +254,7 @@ public class Player extends GameObject {
         }
     }
 
+    // For future implementations
     @SuppressWarnings("UnusedDeclaration")
     public void shotgun() {
         Projectile[] bullets = new Projectile[6];

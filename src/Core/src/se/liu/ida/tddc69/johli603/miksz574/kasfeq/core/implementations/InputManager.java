@@ -1,7 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.command.Command;
 import org.newdawn.slick.command.InputProvider;

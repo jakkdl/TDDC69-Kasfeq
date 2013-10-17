@@ -27,6 +27,7 @@ public class Projectile extends GameObject {
      */
     @Override
     public void collision(double x, double y) {
+        super.collision(x,y);
         for (int dx = -1; dx < getWidth()+1; dx ++) {
             for (int dy = -1; dy < getHeight()+1; dy++) {
                 getWorld().getPlayingField().destroyPixel(x+dx, y+dy);
@@ -42,6 +43,7 @@ public class Projectile extends GameObject {
      */
     @Override
     public void collision(GameObject obj) {
+        super.collision(obj);
         despawn();
     }
 

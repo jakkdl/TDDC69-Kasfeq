@@ -20,7 +20,7 @@ public class World implements DrawableGameComponent {
     private final PhysicsEngine physicsEngine;
     private final PlayingField playingField;
     private final Map<Integer, Player> players;
-    private final List<AbstractGameLogic> gameLogicHandlers;
+    private AbstractGameLogic gameLogic = null;
 
     public World() {
         players = new HashMap<Integer, Player>();
@@ -29,7 +29,6 @@ public class World implements DrawableGameComponent {
 
         playingField = new PlayingField("untitled.tmx");
         physicsEngine = new PhysicsEngine(playingField);
-        gameLogicHandlers = new ArrayList<AbstractGameLogic>();
     }
 
     public Player getPlayer(int playerID) {
@@ -57,18 +56,20 @@ public class World implements DrawableGameComponent {
     }
 
     public void playerDied(Player player) {
-        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
-            gameLogic.onPlayerDeath(player);
+        gameLogic.onPlayerDeath(player);
 
-            if(players.size() == 1) {
-                for(Player winningPlayer : players.values()) {
-                    gameLogic.onPlayerWon(winningPlayer);
-                }
-            }
-            else if(players.size() < 1) {
-                gameLogic.onPlayerDraw();
+        if(players.size() == 1) {
+            for(Player winningPlayer : players.values()) {
+                gameLogic.onPlayerWon(winningPlayer);
             }
         }
+        else if(players.size() < 1) {
+            gameLogic.onPlayerDraw();
+        }
+    }
+
+    public AbstractGameLogic getGameLogic() {
+        return gameLogic;
     }
 
     public PhysicsEngine getPhysicsEngine() {
@@ -93,11 +94,8 @@ public class World implements DrawableGameComponent {
         spawnNewPlayer(Color.orange);
         spawnNewPlayer(Color.magenta);
 
-        gameLogicHandlers.add(new DeathmatchLogic(this));
-
-        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
-            gameLogic.init(gameContainer);
-        }
+        gameLogic = new DeathmatchLogic(this);
+        gameLogic.init(gameContainer);
     }
 
     @Override
@@ -106,9 +104,7 @@ public class World implements DrawableGameComponent {
         inputManager.update(gameContainer, i);
         playingField.update(gameContainer, i);
 
-        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
-            gameLogic.update(gameContainer, i);
-        }
+        gameLogic.update(gameContainer, i);
     }
 
     @Override
@@ -119,9 +115,7 @@ public class World implements DrawableGameComponent {
         playingField.render(gameContainer, graphics);
         gameObjectManager.render(gameContainer, graphics);
 
-        for(AbstractGameLogic gameLogic : gameLogicHandlers) {
-            gameLogic.render(gameContainer, graphics);
-        }
+        gameLogic.render(gameContainer, graphics);
     }
 
     @Override
@@ -129,14 +123,7 @@ public class World implements DrawableGameComponent {
         gameObjectManager.dispose();
         inputManager.dispose();
         playingField.dispose();
-
-        Iterator<AbstractGameLogic> iterator = gameLogicHandlers.iterator();
-        while (iterator.hasNext()) {
-            AbstractGameLogic logic = iterator.next();
-            logic.dispose();
-
-            iterator.remove();
-        }
+        gameLogic.dispose();
 
         Iterator<Map.Entry<Integer, Player>> playerIterator = players.entrySet().iterator();
         while(playerIterator.hasNext()) {

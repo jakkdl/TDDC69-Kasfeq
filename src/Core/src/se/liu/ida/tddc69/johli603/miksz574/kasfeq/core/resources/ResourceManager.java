@@ -33,6 +33,7 @@ public enum ResourceManager {
      * @param <T> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
+    // Inspector mistake, it is used in try-catch blocks
     @SuppressWarnings("UnusedDeclaration")
     public <T> T loadResource(Class<T> resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
         T resource = resourceClass.cast(cachedResources.get(filename));

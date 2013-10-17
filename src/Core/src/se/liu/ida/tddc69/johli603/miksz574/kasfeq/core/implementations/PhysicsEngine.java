@@ -19,6 +19,7 @@ public class PhysicsEngine {
         RIGHT,
 
         /** \brief Describes the up direction */
+        // Supressing the warning since this is a good name for a direction
         @SuppressWarnings("EnumeratedConstantNamingConvention")
         UP,
 
@@ -43,9 +44,9 @@ public class PhysicsEngine {
         this.playingField = playingField;
     }
 
+    // TODO: Use the time parameter for something good
     @SuppressWarnings("UnusedParameters")
     public void dumbCollisions(List<GameObject> objects, int time) {
-
         for (int i=0; i < objects.size(); i++) {
             GameObject obj = objects.get(i);
             for (int j=i+1; j < objects.size(); j++) {

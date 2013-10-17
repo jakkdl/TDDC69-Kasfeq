@@ -1,7 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ public abstract class GameObject implements DrawableGameComponent {
     private Vector2d velocity;
     private Vector2d continuousForce;
     private Vector2d instantaneousForce;
+    // For future implementations were facing will be used
     @SuppressWarnings("UnusedDeclaration")
     private double facing;
     private double mass;
@@ -122,6 +122,7 @@ public abstract class GameObject implements DrawableGameComponent {
      *
      * @param force The new instant force vector
      */
+    // For future implementations
     @SuppressWarnings("UnusedDeclaration")
     public void setContForce(Vector2d force) {
         this.continuousForce = force;
@@ -157,6 +158,7 @@ public abstract class GameObject implements DrawableGameComponent {
      *
      * @param mass The new mass of the object
      */
+    // Foro future implementation
     @SuppressWarnings("UnusedDeclaration")
     public void setMass(double mass) {
         this.mass = mass;
@@ -205,19 +207,24 @@ public abstract class GameObject implements DrawableGameComponent {
     }
 
     /**
-     * \brief Abstract function that is called when a game object collides with the terrain
+     * \brief Function that is called when a game object collides with the terrain
      *
      * @param x x coordinate of collision
      * @param y y coordinate of collision
      */
-    public abstract void collision(double x, double y);
+    // This is a optional function
+    @SuppressWarnings("NoopMethodInAbstractClass")
+    public void collision(double x, double y) {
+    }
 
     /**
-     * \brief Abstract function that is called when a game object collides with another game object
+     * \brief Function that is called when a game object collides with another game object
      *
      * @param obj The game object that we collided with
      */
-    public abstract void collision(GameObject obj);
+    public void collision(GameObject obj) {
+        world.getGameLogic().onGameObjectCollision(this, obj);
+    }
 
     /**
      * \brief Despawns this game object from the world.

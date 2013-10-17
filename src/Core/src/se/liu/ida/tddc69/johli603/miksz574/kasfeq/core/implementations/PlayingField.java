@@ -57,6 +57,7 @@ public class PlayingField implements DrawableGameComponent {
 
         private final Object defaultValue;
 
+        // In order to be able to change values we need to keep this field non-final
         @SuppressWarnings("NonFinalFieldInEnum")
         private Object changedValue = null;
 

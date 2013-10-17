@@ -8,15 +8,17 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 /**
- * \class DeathmatchLogic
- * \brief A game logic implementation describing a deathmatch game logic
+ * \class MarioLogic
+ * \brief A game logic implementation describing a mario style game logic
  */
-public class DeathmatchLogic extends AbstractGameLogic {
+// For future implementations
+@SuppressWarnings("UnusedDeclaration")
+public class MarioLogic extends AbstractGameLogic {
     private int winningPlayerID = -1;
     private int waitTime = 0;
     private static final int SCORE_SCREEN_TIME = 5000;
 
-    public DeathmatchLogic(World world) {
+    public MarioLogic(World world) {
         super(world);
     }
 
@@ -65,8 +67,11 @@ public class DeathmatchLogic extends AbstractGameLogic {
         if(receiver.getClass() == Player.class) {
             Player player = Player.class.cast(receiver);
 
-            if(collider.getClass() != Player.class) {
-                player.dealDamage(collider.getDamage());
+            if(collider.getClass() == Player.class) {
+                // One player jumps on the other
+                if(collider.getPosition().getY() < player.getPosition().getY()) {
+                    player.dealDamage(player.getHealth());
+                }
             }
         }
     }

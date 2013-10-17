@@ -1,8 +1,8 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.logic;
 
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.GameObject;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 /**
@@ -43,4 +43,11 @@ public abstract class AbstractGameLogic implements DrawableGameComponent {
      * \brief Abstract function that is called when the game draws
      */
     public abstract void onPlayerDraw();
+
+    /**
+     * \brief Abstract function that is called when game objects collide
+     * @param receiver The game object that receives the collision
+     * @param collider The game object that the the receiver collided with
+     */
+    public abstract void onGameObjectCollision(GameObject receiver, GameObject collider);
 }
