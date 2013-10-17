@@ -5,7 +5,7 @@ import org.newdawn.slick.Game;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 import java.util.logging.Level;
@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * Contains the main entry point and handles initialization of everything
  */
 class KasfeqGame implements Game {
-    private GameComponent activeComponent;
+    private DrawableGameComponent activeComponent;
     private static final int VSYNC_FPS = 120;
 
     /**

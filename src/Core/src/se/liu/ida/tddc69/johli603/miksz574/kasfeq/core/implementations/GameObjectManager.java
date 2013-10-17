@@ -2,7 +2,7 @@ package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  * \class GameObjectManager
  * \brief The GameObjectManager class is responsible for managing all instances of the GameObject class
  */
-public class GameObjectManager implements GameComponent {
+public class GameObjectManager implements DrawableGameComponent {
     private final List<GameObject> gameObjects;
     private final List<GameObject> despawnedGameObjects;
     private final World world;

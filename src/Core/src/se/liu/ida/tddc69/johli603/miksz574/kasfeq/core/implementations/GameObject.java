@@ -1,5 +1,6 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations;
 
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * \class GameObject
  * \brief The base class that all objects in the game world inherit
  */
-public abstract class GameObject implements GameComponent {
+public abstract class GameObject implements DrawableGameComponent {
     private final World world;
     private Vector2d position;
     private Vector2d velocity;

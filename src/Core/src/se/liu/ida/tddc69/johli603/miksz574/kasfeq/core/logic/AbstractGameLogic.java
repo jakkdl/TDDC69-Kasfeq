@@ -1,6 +1,7 @@
 package se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.logic;
 
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.Player;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
 
@@ -8,7 +9,7 @@ import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.world.World;
  * \class AbstractGameLogic
  * \brief Base class for game logics
  */
-public abstract class AbstractGameLogic implements GameComponent {
+public abstract class AbstractGameLogic implements DrawableGameComponent {
     private final World world;
 
     /**

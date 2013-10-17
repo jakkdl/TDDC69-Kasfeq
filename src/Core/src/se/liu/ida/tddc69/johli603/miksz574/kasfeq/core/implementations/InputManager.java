@@ -81,16 +81,6 @@ public class InputManager implements GameComponent {
     }
 
     /**
-     * \brief the render function is called every frame to draw the game component
-     *
-     * @param gameContainer the org.newdawn.slick.gamecontainer instance of the game
-     * @param graphics      the org.newdawn.slick.graphics instance used for drawing
-     */
-    @Override
-    public void render(GameContainer gameContainer, Graphics graphics) {
-    }
-
-    /**
      * \brief The dispose function is called before a component is destoryed
      *
      */

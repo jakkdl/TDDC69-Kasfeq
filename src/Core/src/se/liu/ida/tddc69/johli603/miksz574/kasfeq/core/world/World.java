@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.implementations.*;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.logic.AbstractGameLogic;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.logic.DeathmatchLogic;
 
@@ -14,7 +14,7 @@ import java.util.*;
  * \class World
  * \brief Describes the world of the game
  */
-public class World implements GameComponent {
+public class World implements DrawableGameComponent {
     private final GameObjectManager gameObjectManager;
     private final InputManager inputManager;
     private final PhysicsEngine physicsEngine;

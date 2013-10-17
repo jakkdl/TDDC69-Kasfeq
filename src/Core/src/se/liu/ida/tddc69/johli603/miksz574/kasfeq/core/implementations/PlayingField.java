@@ -4,7 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
-import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.GameComponent;
+import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.interfaces.DrawableGameComponent;
 import se.liu.ida.tddc69.johli603.miksz574.kasfeq.core.resources.ResourceManager;
 
 import java.io.FileNotFoundException;
@@ -16,7 +16,7 @@ import java.util.List;
  * \class PlayingField
  * \brief Describes the map of the game
  */
-public class PlayingField implements GameComponent {
+public class PlayingField implements DrawableGameComponent {
     /**
      * \enum Options
      * \brief Enum map options
