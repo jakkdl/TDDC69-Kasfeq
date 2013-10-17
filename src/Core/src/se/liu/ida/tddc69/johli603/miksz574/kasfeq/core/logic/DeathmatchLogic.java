@@ -26,8 +26,15 @@ public class DeathmatchLogic extends AbstractGameLogic {
      */
     @Override
     public void onPlayerDeath(Player player) {
-
         player.reduceLife();
+
+        if(player.getLives() < 0) {
+            getWorld().despawn(player);
+        }
+        else {
+            player.setPosition(getWorld().getPlayingField().getAvailablePosition(player));
+        }
+
     }
 
     /**

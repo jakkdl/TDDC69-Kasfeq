@@ -79,6 +79,13 @@ public class Player extends GameObject {
     }
 
     /**
+     * @return Returns the ammount of lives the player has left
+     */
+    public int getLives() {
+        return lives;
+    }
+
+    /**
      * \brief Abstract function that is called when a game object collides with the terrain
      *
      * @param x x coordinate of collision
@@ -118,14 +125,6 @@ public class Player extends GameObject {
         aimAngle += aimAngleSpeed;
         if (health <= 0) {
             getWorld().playerDied(this);
-
-            if (lives > 0) {
-                setPosition(getWorld().getPlayingField().getAvailablePosition(this));
-            }
-            else {
-                getWorld().despawn(this);
-
-            }
         }
     }
 
