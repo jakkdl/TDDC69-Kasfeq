@@ -24,6 +24,8 @@ public class PlayingField implements DrawableGameComponent {
     public enum Options {
         /** \brief The name of the map */
         MAPNAME("defaultMapName"),
+        /** \brief The name of the outhor of the map */
+        AUTHOR("defaultAuthor"),
         /** \brief The gravity of the map */
         GRAVITY(0.05),
         /** \brief The friction of the map */

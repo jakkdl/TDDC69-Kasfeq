@@ -36,7 +36,7 @@ public class PhysicsEngine {
             point = new Vector2d();
         }
     }
-    final static double DELTAV = 0.5;
+    private final static double DELTAV = 0.5;
 
     private PlayingField playingField;
 

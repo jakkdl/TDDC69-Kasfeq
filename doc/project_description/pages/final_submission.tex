@@ -64,17 +64,75 @@ Beskrivning från websidan:\\
 8. \ldots \\
 \section{Användarmanual}
 När ni har implementerat ett program krävs det också en manual som förklarar hur programmet fungerar. Ni ska beskriva programmet tillräckligt mycket för att en labbhandledare själv ska kunna starta det, testa det och förstå hur det fungerar. \\
+
+LWJGL (Lightweight java-game library) och slick2d är dependencies.
+Kontrollerna är hårdkodade i inputManager-klassen (planerade feature att lägga detta i en konfigurationsfil) och är för nuvarande
+Spelare 1:
+Sikta motsols: W
+Sikta medsols: S
+Vänster: A
+Höger: D
+Skjut: G
+Hoppa: H
+
+Spelare 2:
+Sikta motsols: upp
+Sikta medsols: ned
+Vänster: vänster
+Höger: höger
+Skjut: Ins (numpad 0 med num lock avslaget)
+Hoppa: Del (numpad , med num lock avslaget)
+
+Men dessa går såklart att ändra i källkoden. Lista över tillgängliga knappar finns på http://www.java-gaming.org/index.php?topic=27994.0 .
+
+
+Även namnet på kartfilen är hårdkodat, i World-klassen. Detta är också planerat att läggas i en konfigurationsfil och är för nuvarande default.tmx .
+För att ändra och skapa kartfiler används Tiled ( http://www.mapeditor.org/ ) och inställningar för gravitation, friktion etc kan ställas in där.
+
+<insert instructions for tiled>
+<is there even any settings being changed in the mapfile? At least change MAPNAME and AUTHOR>
+
+Ovanför varje spelare finns en health bar, som krymper när man tar skada. Man tar skada genom att träffas av skott <samt bli hoppad på?>. När mätaren når botten förlorar man ett liv och spelaren återskapas på en slumpmässig plats på kartan. Siffran till vänster om mätaren är antalet liv man har kvar (alt. antalet gånger man kan återskapas). När man dör med 0 liv återskapas man inte och är ute ur matchen. När endast en spelare återstår tar spelet slut och vinnaren skrivs ut på skärmen. Sedan startar spelet om några sekunder senare.
+
+Röd terräng är förstörbar och går sönder om man skjuter på den.
+
+Man kan hoppa om man står på fast mark (röd, grön eller slutet på kartan). Det går även att "vägghoppa" (eng. wall jump) genom att nudda en vägg åt en sida, styra i motsatt riktning samt hoppa samtidigt, detta är dock ganska svårt att få till.
+
+
 Inkludera flera (minst 3) skärmdumpar som visar hur programmet ser ut!\\
+<spelstart, två spelare precis spawnat med fullt antal liv, ingen skada och ingen terräng förstörd.>
+
+<en bit in i ett spel, spelarna har tappat några olika liv, och är skadade. Det finns ett antal skott i luften och en del terräng är förstörd.>
+
+<mitten av spelet på en annan bana>
+
+<game over screen>
+
 \section{Betygsambitioner}
 Ange här vilket betyg ni siktar på i ert projekt.  Se sedan till att ni har följt de mätbara kraven för detta betyg och att detta finns dokumenterat i projektbeskrivningen ovan.\\
 \section{Utvärdering och erfarenheter}
 Detta avsnitt är en väldigt viktig del av projektspecifikationen. Här ska ni tänka tillbaka och utvärdera projektet (något som man alltid bör göra efter ett projekt). Som en hjälp på vägen kan ni utgå från följande frågeställningar:\\
 Vad gick bra? Mindre bra?\\
+
+I början av projektet hade vi väldigt storslagna planer på hur vi skulle göra ett helt modulärt spel där användaren lätt skulle kunna byta ut centrala delar av programmet. Detta var dock mer än vi klarade av och vi spenderade mycket tid på att planera hur abstraheringen skulle se ut, dock inte tillräckligt och när vi satte oss ned för att programmera var det fortfarande många frågetecket kvar. Det slutade med att vi två veckor innan deadline knappt hade någon kod skriven och vi kom fram till att det inte skulle gå. Vi skippade majoriteten av all modularitet vilket gjorde abstraheringen mycket enklare, och kunde således koncentrera oss på att skriva koden. Det blev stressigt mot slutet men vi lyckades hinna klart med den grundläggande delen av spelet. 
+
 Lade ni ned för mycket/lite tid?\\
+
+De första veckorna la vi ned alldeles för lite tid, vilket bl.a. berodde på att det var så svårt att skriva och att man inte kom någonstans när man skrev, så det var inte kul att kod. De sista veckorna la vi ned mycket mer tid och gjorde stora framsteg vilket var kul. Sett på det stora hela så hade vi nog gärna lagt ned mer tid och implementerat mer funktioner.
+
 Var arbetsfördelningen jämn? Om inte: Vad hade ni kunnat göra för att förbättra den?\\
+
+Arbetsfördelningen var relativt jämn. Mikael gjorde nog lite mer då han är mer erfaren programmerare inom objektorientering och John hade assistentjobb och annat som hjälpte till att ta tid och ork ur honom.
+
 Har ni haft någon nytta av projektbeskrivningen? Vad har varit mest användbart med den? Minst?\\
+
+Vi har nog nästan inte haft någon nytta av projektbeskrivningen. Vi planerade nog lite mer och specade hur spelet skulle bli, men då vi kommunicerade mycket med varandra tittade vi sällan på projektbeskrivningen. 
+
 Har arbetet fungerat som ni tänkt er? Har ni följt "arbetsmetodiken"? Något som skiljer sig? Till det bättre? Till det sämre?\\
 Vad har varit mest problematiskt, om man utesluter den programmeringstekniska delen? Alltså saker runt omkring, som att hitta ledig tid eller plats att vara på.\\
+
+Mest problematiskt har varit att finna motivation och tid. Då vi använt slick2d och lwjgl har vi heller inte kunnat koda och testa på skoldatorerna, men det har inte varit något större problem annat än på redovisningspass.
+
 Vad har ni lärt er så här långt som kan vara bra att ta med till era egna kommande kurser/projekt?\\
 Vilka tips skulle ni vilja ge till studenter i nästa års kurs?\\
 Har ni saknat något i kursen som hade underlättat projektet?\\
