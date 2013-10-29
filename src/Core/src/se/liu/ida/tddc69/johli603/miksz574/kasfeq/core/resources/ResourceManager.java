@@ -39,8 +39,7 @@ public enum ResourceManager {
         T resource = resourceClass.cast(cachedResources.get(filename));
 
         if (resource == null) {
-            resource = resourceClass.cast(resourceLoaders.get(resourceClass).loadResource("resources/" + filename));
-            cachedResources.put(filename, resource);
+            resource = reloadResource(resourceClass, filename);
         }
 
         return resource;

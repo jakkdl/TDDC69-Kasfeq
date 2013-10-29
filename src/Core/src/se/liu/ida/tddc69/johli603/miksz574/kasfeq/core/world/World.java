@@ -21,14 +21,14 @@ public class World implements DrawableGameComponent {
     private final PlayingField playingField;
     private final Map<Integer, Player> players;
     private AbstractGameLogic gameLogic = null;
-    private final static String mapName = "default.tmx";
+    private final static String DEFAULT_MAP_NAME = "default.tmx";
 
     public World() {
         players = new HashMap<Integer, Player>();
         gameObjectManager = new GameObjectManager(this);
         inputManager = new InputManager(this);
 
-        playingField = new PlayingField(mapName);
+        playingField = new PlayingField(DEFAULT_MAP_NAME);
         physicsEngine = new PhysicsEngine(playingField);
     }
 
