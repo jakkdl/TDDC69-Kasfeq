@@ -32,7 +32,7 @@ Den största ändringen från de planerade funktionerna är att projektet nu int
 {\color{red}Skriv ner vilka klassbibliotek och vilket annat fritt material ni har använt utöver det som ingår i Java 7, eller ange uttryckligen att ni inte har använt något.\\}
 Vi har använt oss av klassbiblioteket Slick2D för utritning av spelet. Slick2D är i sin tur baserat på klassbiblioteket LWJGL som är en java wrapper för OpenGL.
 \subsection{Användning av designmönster}
-Beskriv tydligt i numrerad lista vilka designmönster som använts i implementationen, vad ni åstadkommer genom att använda just de designmönstren i just ert projekt (vad var bra med att använda det?), och hur designmönstret har realiserats i praktiken, t.ex. vilka klasser som är inblandade och vad de motsvarar i designmönstrets terminologi (”Klasserna X och Y är våra konkreta strategier för den här användningen av strategimönstret”).\\
+{\color{red}Beskriv tydligt i numrerad lista vilka designmönster som använts i implementationen, vad ni åstadkommer genom att använda just de designmönstren i just ert projekt (vad var bra med att använda det?), och hur designmönstret har realiserats i praktiken, t.ex. vilka klasser som är inblandade och vad de motsvarar i designmönstrets terminologi (”Klasserna X och Y är våra konkreta strategier för den här användningen av strategimönstret”).\\
 Beskrivning från websidan:\\
 \begin{tabular}{| p{11cm} |}
     \hline
@@ -40,7 +40,8 @@ Beskrivning från websidan:\\
     Designmönstren ska implementeras från grunden. Om ni använder en Comparator som argument till Javas sorteringsmetoder räknas det inte som att ni har implementerat Strategy-mönstret. \\ \hline
     Alla designmönster från Design Patterns av Gamma, Helm, Johnson och Vlissides är godkända. Fråga examinatorn om ni vill tillgodoräkna er andra mönster och ge en referens till det mönster ni undrar över. \\ \hline
     Beskriv noggrant var och hur designmönstret är implementerat (vilka klasser/metoder i er kod), varför ni valde att använda detta mönster snarare än något annat mönster eller en ad-hoc-metod, samt en kortare förklaring av designmönstrets för- och nackdelar i denna specifika situation. \\ \hline
-\end{tabular}\\\vspace{11pt}
+\end{tabular}\\}
+\vspace{11pt}
 1. Factory Method\\
 Detta mönster är uppbygt utav ett interface eller en funktion som returnerar en ny instans utav ett objekt givet ett visst antal parametrar, till skilland från att direkt skapa ett objekt så kan dessa funktioner själva lägga till information till extra information till objektet som anroparen inte skulle kunnat göra utan att bryta mot abstraktionen.\\
 World.spawnNewPlayer givet en spelarfärg skapar en ny spelare, hittar en fri position på kartan och lägger till spelaren till spelet.\\
@@ -50,13 +51,14 @@ ResourceLoader klassen som givet ett filnamn laddar in en resurs av en viss typ.
 Detta mönster är uppbygt av två delar. Själva direktorn som håller reda på byggarna(``Builders'') och en eller flera byggare som själva skapar objekt. Man kan se direktorn som en proxy för byggarna.\\
 ResourceManager är i detta fall klassen som är direktorn och hanterar valet av vilken ``builder'' som ska väljas för inladdning av resursen. Själva ``builder'' interfacet är i detta fall ResourceLoader som implementeras av till exempel TiledMapLoader. ResourceManager har även en objektcache så att den inte laddar om samma objekt flera gånger.\\
 \subsection{Användning av objektorientering}
-För varje betygsnivå måste ni peka ut ett visst antal lösningar ni har gjort där ni använder objektorienterade "finesser" som t.ex. polymorfism.  Diskutera hur man kunde ha löst detta utan objektorientering och kontrastera de lösningarna mot varandra. \\
+{\color{red}För varje betygsnivå måste ni peka ut ett visst antal lösningar ni har gjort där ni använder objektorienterade "finesser" som t.ex. polymorfism.  Diskutera hur man kunde ha löst detta utan objektorientering och kontrastera de lösningarna mot varandra. \\
 Beskrivning från websidan:\\
 \begin{tabular}{| p{11cm} |}
     \hline
     För varje betygsnivå måste ni peka ut ett visst antal lösningar ni har gjort där ni använder objektorienterade "finesser" som t.ex. polymorfism, och diskutera kortfattat (några meningar) hur man kunde ha löst detta utan objektorientering. \\ \hline
     Tänk på att det verkligen ska gälla finesser som är "unika" för objektorientering. Enum-konstanter finns t.ex. i olika former i icke-OO-språk som C. Serialisering av datastrukturer finns också i icke-OO-språk. \\ \hline
-\end{tabular}\\\vspace{11pt}
+\end{tabular}\\}
+\vspace{11pt}
 1. Polymorphism\\
 GameObject klassen är en abstrakt klass som representerar alla objekt på spelplan. Klasserna Player och Projectile ärver och utökar GameObject.\\
 GameObjectManager klassen lagrar alla aktiva instanser utav GameObject klassen.\\
@@ -71,14 +73,15 @@ Tack vare våran implementation av Options så kan vi enkelt och snyggt beskriva
 Vi använder interfaces i flera delar av spelet. Bland de viktigaste interfacen är GameComponent, som beskriver en del av spelet som kan initieras, updateras och tas bort. En utökning av detta interface är DrawableGameComponent som även har en funktion för utritning.\\
 Dessa interface implementeras utav alla spelobjekt(GameObject) men även av andra viktiga klasser som GameObjectManager, InputManager och AbstractGameLogic.\\
 \subsection{Motiverade designbeslut med alternativ}
-Här anger ni (numrerade) motiverade designbeslut enligt betygskraven på webben.  Anledningen är både att ni ska visa oss hur ni har tänkt och att ni själva ska fundera och reflektera över era val.\\
+{\color{red}Här anger ni (numrerade) motiverade designbeslut enligt betygskraven på webben.  Anledningen är både att ni ska visa oss hur ni har tänkt och att ni själva ska fundera och reflektera över era val.\\
 Sådant som ska göras enligt projektkraven är inte (gruppens) designbeslut, t.ex. att de flesta fält ska vara privata.  De alternativa lösningarna som ni anger ska vara någorlunda rimliga (det är normalt inte ett designbeslut att dela upp koden i flera klasser eftersom alternativet för ett projekt av den här storleken skulle vara absurt).\\
 Beskrivning från websidan:\\
 \begin{tabular}{| p{11cm} |}
     \hline
     För varje betygsnivå måste ni beskriva ett visst antal designbeslut ni har tagit, med särskild tonvikt på användning av objektorientering. För varje designbeslut ska ni beskriva vad ni ville åstadkomma, hur ni gjorde, minst en annan alternativ lösning, och varför den lösning ni gjorde var bättre än alternativet. (I vissa fall kanske ni inser att den lösning ni valde var sämre än alternativet – beskriv då varför.) Detta ska vara andra lösningar än de som kommer från punkten ovan. \\ \hline
     Designbesluten ska vara på rimligt hög "objektorienterad nivå", dvs. inte varför ni valde att använda "int" istället för "long" för ett visst fält... Använde ni en enda lyssnarklass för knapparna i ett GUI, eller flera? Använder ni fabriker, prototyper eller vanliga konstruktorer för att skapa brickor i Breakout? \\ \hline
-\end{tabular}\\\vspace{11pt}
+\end{tabular}\\}
+\vspace{11pt}
 1. \ldots \\
 2. \ldots \\
 3. \ldots \\
@@ -88,7 +91,7 @@ Beskrivning från websidan:\\
 7. \ldots \\
 8. \ldots \\
 \section{Användarmanual}
-När ni har implementerat ett program krävs det också en manual som förklarar hur programmet fungerar. Ni ska beskriva programmet tillräckligt mycket för att en labbhandledare själv ska kunna starta det, testa det och förstå hur det fungerar. \\
+{\color{red}När ni har implementerat ett program krävs det också en manual som förklarar hur programmet fungerar. Ni ska beskriva programmet tillräckligt mycket för att en labbhandledare själv ska kunna starta det, testa det och förstå hur det fungerar. \\}
 \vspace{11pt}
 LWJGL (Lightweight java-game library) och slick2d är dependencies.\\
 Kontrollerna är hårdkodade i inputManager-klassen (planerade feature att lägga detta i en konfigurationsfil) och är för nuvarande\\
@@ -134,9 +137,9 @@ Inkludera flera (minst 3) skärmdumpar som visar hur programmet ser ut!\\
 \vspace{11pt}
 \includegraphics[scale=0.5]{game_5}\\
 \section{Betygsambitioner}
-Ange här vilket betyg ni siktar på i ert projekt.  Se sedan till att ni har följt de mätbara kraven för detta betyg och att detta finns dokumenterat i projektbeskrivningen ovan.\\
+{\color{red}Ange här vilket betyg ni siktar på i ert projekt.  Se sedan till att ni har följt de mätbara kraven för detta betyg och att detta finns dokumenterat i projektbeskrivningen ovan.\\}
 \section{Utvärdering och erfarenheter}
-Detta avsnitt är en väldigt viktig del av projektspecifikationen. Här ska ni tänka tillbaka och utvärdera projektet (något som man alltid bör göra efter ett projekt). Som en hjälp på vägen kan ni utgå från följande frågeställningar:\\
+{\color{red}Detta avsnitt är en väldigt viktig del av projektspecifikationen. Här ska ni tänka tillbaka och utvärdera projektet (något som man alltid bör göra efter ett projekt). Som en hjälp på vägen kan ni utgå från följande frågeställningar:\\
 Vad gick bra? Mindre bra?\\
 
 I början av projektet hade vi väldigt storslagna planer på hur vi skulle göra ett helt modulärt spel där användaren lätt skulle kunna byta ut centrala delar av programmet. Detta var dock mer än vi klarade av och vi spenderade mycket tid på att planera hur abstraheringen skulle se ut, dock inte tillräckligt och när vi satte oss ned för att programmera var det fortfarande många frågetecket kvar. Det slutade med att vi två veckor innan deadline knappt hade någon kod skriven och vi kom fram till att det inte skulle gå. Vi skippade majoriteten av all modularitet vilket gjorde abstraheringen mycket enklare, och kunde således koncentrera oss på att skriva koden. Det blev stressigt mot slutet men vi lyckades hinna klart med den grundläggande delen av spelet. 
@@ -163,4 +166,4 @@ Vilka tips skulle ni vilja ge till studenter i nästa års kurs?\\
 Har ni saknat något i kursen som hade underlättat projektet?\\
 \vspace{11pt}
 Vi använder detta för att utveckla och förbättra kursen till nästa år.  Vissa delar som är användbara som tips till andra studenter kan komma att citeras (givetvis helt anonymt!) under föreläsningar eller på websidor.\\
-(Glöm inte att exportera till PDF-format innan ni skickar in!)\\
+(Glöm inte att exportera till PDF-format innan ni skickar in!)\\}
