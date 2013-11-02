@@ -269,7 +269,7 @@ public class PlayingField implements DrawableGameComponent {
     @Override
     public void init(GameContainer gameContainer) {
         try {
-            map = ResourceManager.INSTANCE.reloadResource(TiledMap.class, filename);
+            map = ResourceManager.reloadResource(TiledMap.class, filename);
             setOptions();
         } catch (FileNotFoundException ignored) {
             System.out.println("Could not find map file");
