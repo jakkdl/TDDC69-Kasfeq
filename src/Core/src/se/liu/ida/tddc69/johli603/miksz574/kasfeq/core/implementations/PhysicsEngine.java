@@ -9,7 +9,7 @@ import java.util.List;
 public class PhysicsEngine {
     /**
      * \enum Direction
-     * \brief Used by the PhysicsEngine
+     * \brief Used by checkSolidCollision
      */
     public enum Direction {
         /** \brief Describes the left direction */
@@ -27,6 +27,9 @@ public class PhysicsEngine {
         DOWN
     }
 
+    /**
+     * \brief used by mapCollision
+     */
     private class CollisionResult {
         double distance;
         Vector2d point;
@@ -36,6 +39,12 @@ public class PhysicsEngine {
             point = new Vector2d();
         }
     }
+
+    /**
+     * \brief used by mapCollision to determine
+     * the size of the increments in velocity to check for collisions.
+     * Too low slows the game down and too high makes people stop at a distance from walls
+     */
     private final static double DELTAV = 0.5;
 
     private PlayingField playingField;
@@ -44,14 +53,19 @@ public class PhysicsEngine {
         this.playingField = playingField;
     }
 
-    // TODO: Use the time parameter for something good
+    /**
+     * \brief Checks collision between all objects in the provided list
+     *
+     * @param time is the time since the last frame. Planned feature to use this to make the physics engine
+     *             consistent across different fps.
+     */
     @SuppressWarnings("UnusedParameters")
     public void dumbCollisions(List<GameObject> objects, int time) {
         for (int i=0; i < objects.size(); i++) {
             GameObject obj = objects.get(i);
             for (int j=i+1; j < objects.size(); j++) {
                 GameObject obj2 = objects.get(j);
-                if (checkCollision(obj, obj2)) {
+                if (checkCollision(obj, obj2, time)) {
                     obj2.collision(obj);
                     obj.collision(obj2);
                 }
@@ -60,20 +74,45 @@ public class PhysicsEngine {
         }
     }
 
-    private boolean checkCollision(GameObject obj1, GameObject obj2) {
-        double t=1;
-        Vector2d pos1 = obj1.getPosition().add(obj1.getVelocity().copy().scale(t));
-        Vector2d pos2 = obj2.getPosition().add(obj2.getVelocity().copy().scale(t));
+    /**
+     *
+     * @param obj1 The first object to check collision between.
+     * @param obj2 The second object to check collision between
+     * @param time Time since last frame. Not implemented yet.
+     * @return True if the objects collide, false otherwise.
+     */
+    @SuppressWarnings("UnusedParameters")
+    private boolean checkCollision(GameObject obj1, GameObject obj2, int time) {
+        Vector2d pos1 = obj1.getPosition().add(obj1.getVelocity());
+        Vector2d pos2 = obj2.getPosition().add(obj2.getVelocity());
         if (checkRectangleCollision(pos1.getX(), pos1.getY(), obj1.getHeight(), obj1.getWidth(), pos2.getX(), pos2.getY(), obj2.getHeight(), obj2.getWidth())) {
             return true;
         }
         return false;
     }
 
+    /**
+     * \brief Returns whether two rectangles overlap/collide. Used by checkCollision
+     *
+     * @param x1 X coordinate of object 1.
+     * @param y1 Y coordinate of object 1.
+     * @param height1 Height of object 1.
+     * @param width1 width of object 1.
+     * @param x2 X coordinate of object 2.
+     * @param y2 Y coordinate of object 2.
+     * @param height2 Height of object 2.
+     * @param width2 Width of object 2.
+     * @return True if the rectangles overlap.
+     */
     private boolean checkRectangleCollision(double x1, double y1, double height1, double width1, double x2, double y2, double height2, double width2) {
         return !(x1 > x2 + width2 || x1 + width1 < x2 || y1 > y2 + height2 || y1 + height1 < y2);
     }
 
+    /**
+     * \brief Updates forces, velocity and moves the provided object.
+     *
+     * @param object The object to update.
+     */
     public void updateObject(GameObject object) {
         //calculate forces, acceleration and velocity
 
@@ -132,6 +171,12 @@ public class PhysicsEngine {
         }
     }
 
+    /**
+     * \brief Sees how far an object can travel before colliding with terrain.
+     *
+     * @param obj The object to move.
+     * @return Returns CollisionResult that tells whether it collided, and if so, at what distance and at what point.
+     */
     private CollisionResult mapCollision(GameObject obj) {
         Vector2d vel = obj.getVelocity();
         CollisionResult result = new CollisionResult();
@@ -153,18 +198,46 @@ public class PhysicsEngine {
         return result;
     }
 
+    /**
+     * \brief Adds velocity to (a copy of) point.
+     *
+     * @param point Starting point.
+     * @param velocity Distance to move.
+     * @return A Vector2d consisting of point+velocity.
+     */
     private Vector2d move(final Vector2d point, final Vector2d velocity) {
         return point.add(velocity);
     }
 
+    /**
+     * \brief Calculate acceleration given force and mass
+     *
+     * @param force The force acting on an object.
+     * @param mass The mass of an object.
+     * @return Returns the acceleration on the object.
+     */
     private Vector2d addForces(final Vector2d force, double mass) {
         return force.scale(1 / mass);
     }
 
+    /**
+     * \brief Adds acceleration to (a copy of) velocity.
+     *
+     * @param velocity Velocity of an object.
+     * @param acceleration Acceleration of an object.
+     * @return A Vector2d consisting of velocity+acceleration.
+     */
     private Vector2d addAcceleration(Vector2d velocity, Vector2d acceleration) {
         return velocity.add(acceleration);
     }
 
+    /**
+     * \brief Checks if the side of the object is touching something non-empty on the map.
+     *
+     * @param object The object to check.
+     * @param direction Which direction to check.
+     * @return True if the object is touching something non-empty, otherwise false.
+     */
     public boolean checkSolidCollision(GameObject object, Direction direction) {
         switch (direction) {
             case LEFT:
