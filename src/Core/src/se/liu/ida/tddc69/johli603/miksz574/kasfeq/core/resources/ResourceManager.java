@@ -9,18 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * \enum ResourceManager
+ * \class ResourceManager
  * \brief The ResourceManager class is responsible for managing all the resources for the game
  */
-public enum ResourceManager {
-    /**
-     * \brief The Singleton instance of the ResourceManager
-     */
-    INSTANCE;
-    private final Map<Class<?>, ResourceLoader<?>> resourceLoaders;
-    private final Map<String, Object> cachedResources;
+public class ResourceManager {
+    private static final Map<Class<?>, ResourceLoader<?>> resourceLoaders;
+    private static final Map<String, Object> cachedResources;
 
-    ResourceManager() {
+    static {
         resourceLoaders = new HashMap<Class<?>, ResourceLoader<?>>();
         resourceLoaders.put(TiledMap.class, new TiledMapLoader());
         cachedResources = new HashMap<String, Object>();
@@ -35,7 +31,7 @@ public enum ResourceManager {
      */
     // Inspector mistake, it is used in try-catch blocks
     @SuppressWarnings("UnusedDeclaration")
-    public <T> T loadResource(Class<T> resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
+    public static <T> T loadResource(Class<T> resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
         T resource = resourceClass.cast(cachedResources.get(filename));
 
         if (resource == null) {
@@ -52,7 +48,7 @@ public enum ResourceManager {
      * @param <T> The type of the resource to load
      * @return The loaded object returned by a ResourceLoader
      */
-    public <T> T reloadResource(Class<T> resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
+    public static <T> T reloadResource(Class<T> resourceClass, String filename) throws FileNotFoundException, IOException, SlickException {
         T resource = resourceClass.cast(resourceLoaders.get(resourceClass).loadResource("resources/" + filename));
         cachedResources.put(filename, resource);
 

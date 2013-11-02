@@ -17,6 +17,10 @@ Den största ändringen från de planerade funktionerna är att projektet nu int
 {\color{red}Framhäv gärna det ni själva tycker är bra lösningar eller annat som handledaren borde titta på vid bedömningen.\\}
 {\color{red}Se även sidan om krav på programkod på webben.\\}
 {\color{red}Vi räknar med att de flesta projekt behöver runt 2-5 sidor för det här avsnittet.\\}
+\includegraphics[scale=0.5]{gameobject}\\
+\includegraphics[scale=0.5]{managers}\\
+\includegraphics[scale=0.5]{gameLogics}\\
+\includegraphics[scale=0.4]{all_gamecomponents}\\
 \subsection{Användning av fritt material}
 {\color{red}Skriv ner vilka klassbibliotek och vilket annat fritt material ni har använt utöver det som ingår i Java 7, eller ange uttryckligen att ni inte har använt något.\\}
 Vi har använt oss av klassbiblioteket Slick2D för utritning av spelet. Slick2D är i sin tur baserat på klassbiblioteket LWJGL som är en java wrapper för OpenGL.
@@ -30,12 +34,14 @@ Beskrivning från websidan:\\
     Alla designmönster från Design Patterns av Gamma, Helm, Johnson och Vlissides är godkända. Fråga examinatorn om ni vill tillgodoräkna er andra mönster och ge en referens till det mönster ni undrar över. \\ \hline
     Beskriv noggrant var och hur designmönstret är implementerat (vilka klasser/metoder i er kod), varför ni valde att använda detta mönster snarare än något annat mönster eller en ad-hoc-metod, samt en kortare förklaring av designmönstrets för- och nackdelar i denna specifika situation. \\ \hline
 \end{tabular}\\\vspace{11pt}
-1. Singleton
-Resurshanteraren(ResourceManager) använder det så kallade Singleton mönstret, detta gör så att koden blir renare för att vi slipper skriva static före varje funktion och fält i klassen. Och det gör också så att vi kan lagra en instans av resurshanteraren i ett fält om man nu skulle villja utöka projektet så att det blir modulärt.\\
-2. Factory Method
-Vi använder detta mönster i World.spawnNewPlayer som skapar en ny spelare givet en spelarfärg.\\
-3. Z\ldots\\
-\ldots\\
+1. Factory Method\\
+Detta mönster är uppbygt utav ett interface eller en funktion som returnerar en ny instans utav ett objekt givet ett visst antal parametrar, till skilland från att direkt skapa ett objekt så kan dessa funktioner själva lägga till information till extra information till objektet som anroparen inte skulle kunnat göra utan att bryta mot abstraktionen.\\
+World.spawnNewPlayer givet en spelarfärg skapar en ny spelare, hittar en fri position på kartan och lägger till spelaren till spelet.\\
+ResourceLoader klassen som givet ett filnamn laddar in en resurs av en viss typ. En ResourceLoader instans är bunden till en viss typ av resurs. En TiledMapLoader laddar in ett TiledMap objekt osv\ldots ResourceManager klassen hanterar bindningen mellan resurstypen och laddaren.\\
+\vspace{11pt}
+2. Builder Pattern\\
+Detta mönster är uppbygt av två delar. Själva direktorn som håller reda på byggarna(``Builders'') och en eller flera byggare som själva skapar objekt. Man kan se direktorn som en proxy för byggarna.\\
+ResourceManager är i detta fall klassen som är direktorn och hanterar valet av vilken ``builder'' som ska väljas för inladdning av resursen. Själva ``builder'' interfacet är i detta fall ResourceLoader som implementeras av till exempel TiledMapLoader. ResourceManager har även en objektcache så att den inte laddar om samma objekt flera gånger.\\
 \subsection{Användning av objektorientering}
 För varje betygsnivå måste ni peka ut ett visst antal lösningar ni har gjort där ni använder objektorienterade "finesser" som t.ex. polymorfism.  Diskutera hur man kunde ha löst detta utan objektorientering och kontrastera de lösningarna mot varandra. \\
 Beskrivning från websidan:\\
@@ -44,9 +50,19 @@ Beskrivning från websidan:\\
     För varje betygsnivå måste ni peka ut ett visst antal lösningar ni har gjort där ni använder objektorienterade "finesser" som t.ex. polymorfism, och diskutera kortfattat (några meningar) hur man kunde ha löst detta utan objektorientering. \\ \hline
     Tänk på att det verkligen ska gälla finesser som är "unika" för objektorientering. Enum-konstanter finns t.ex. i olika former i icke-OO-språk som C. Serialisering av datastrukturer finns också i icke-OO-språk. \\ \hline
 \end{tabular}\\\vspace{11pt}
-1. \ldots\\
-2. \ldots\\
-3. \ldots\\
+1. Polymorphism\\
+GameObject klassen är en abstrakt klass som representerar alla objekt på spelplan. Klasserna Player och Projectile ärver och utökar GameObject.\\
+GameObjectManager klassen lagrar alla aktiva instanser utav GameObject klassen.\\
+\vspace{11pt}
+2. Enums är Objekt (i Java)\\
+Detta går även att implementera i andra språk än Java med då med statiska fält i klasser.
+Vi använder oss av att enums i java är objekt genom att använda detta för att lagra egenskaper för spelet/kartan (Se PlayingField.Options).\\
+En enum i Java är egentligen en klass med statiska fält med instanser utav klassen, och när man skickar enums som parametrar så skickar man dessa instanser. Jämförelse görs enkelt eftersom == operatorn jämför minnesadresser.\\
+Tack vare våran implementation av Options så kan vi enkelt och snyggt beskriva egenskaper och dess standardvärden. Och även enkelt ändra värden på dessa egenskaper utan att använda en Map eller liknande för lagring.\\
+\vspace{11pt}
+3. Interfaces\\
+Vi använder interfaces i flera delar av spelet. Bland de viktigaste interfacen är GameComponent, som beskriver en del av spelet som kan initieras, updateras och tas bort. En utökning av detta interface är DrawableGameComponent som även har en funktion för utritning.\\
+Dessa interface implementeras utav alla spelobjekt(GameObject) men även av andra viktiga klasser som GameObjectManager, InputManager och AbstractGameLogic.\\
 \subsection{Motiverade designbeslut med alternativ}
 Här anger ni (numrerade) motiverade designbeslut enligt betygskraven på webben.  Anledningen är både att ni ska visa oss hur ni har tänkt och att ni själva ska fundera och reflektera över era val.\\
 Sådant som ska göras enligt projektkraven är inte (gruppens) designbeslut, t.ex. att de flesta fält ska vara privata.  De alternativa lösningarna som ni anger ska vara någorlunda rimliga (det är normalt inte ett designbeslut att dela upp koden i flera klasser eftersom alternativet för ett projekt av den här storleken skulle vara absurt).\\
@@ -100,15 +116,16 @@ Röd terräng är förstörbar och går sönder om man skjuter på den.\\
 \vspace{11pt}
 Man kan hoppa om man står på fast mark (röd, grön eller slutet på kartan). Det går även att "vägghoppa" (eng. wall jump) genom att nudda en vägg åt en sida, styra i motsatt riktning samt hoppa samtidigt, detta är dock ganska svårt att få till.\\
 \vspace{11pt}
-\vspace{11pt}
 Inkludera flera (minst 3) skärmdumpar som visar hur programmet ser ut!\\
-<spelstart, två spelare precis spawnat med fullt antal liv, ingen skada och ingen terräng förstörd.>\\
+\includegraphics[scale=0.5]{game_1}\\
 \vspace{11pt}
-<en bit in i ett spel, spelarna har tappat några olika liv, och är skadade. Det finns ett antal skott i luften och en del terräng är förstörd.>\\
+\includegraphics[scale=0.5]{game_2}\\
+\vspace{11pt}
+\includegraphics[scale=0.5]{game_3}\\
 \vspace{11pt}
 <mitten av spelet på en annan bana>\\
 \vspace{11pt}
-<game over screen>\\
+\includegraphics[scale=0.5]{game_5}\\
 \section{Betygsambitioner}
 Ange här vilket betyg ni siktar på i ert projekt.  Se sedan till att ni har följt de mätbara kraven för detta betyg och att detta finns dokumenterat i projektbeskrivningen ovan.\\
 \section{Utvärdering och erfarenheter}
