@@ -76,6 +76,7 @@ Projectile klassen representerar ett skott.\\
 \subsubsection{PhysicsEngine}
 PhysicsEngine klassen är fysikmotorn i spelet.\\
 \subsubsection{AbstractGameLogic}
+\includegraphics[scale=0.5]{gameLogics}\\
 En abstrakt klass som representerar själva logiken i spelet.\\
 \subsubsection{DeathmathLogic}
 En konkret implementation av en Deathmatch logik.\\
@@ -88,8 +89,6 @@ Håller reda på alla registrerade resursladdare och alla inladdade resurser.\\
 loadResource funktionen laddar in en resurs av typen representerad av >Class objektet i första parametern< givet ett filnamn. Om en resurs med samma filnamn redan är inläst så kommer denna att returneras.\\
 \subsubsection{TiledMapLoader}
 En klass som implementerar ResourceLoader<TiledMap> interfacet och returnerar ett TiledMap objekt som sedan används för att skapa ett PlayingField objekt. <More>\\
-\includegraphics[scale=0.5]{managers}\\
-\includegraphics[scale=0.5]{gameLogics}\\
 \subsection{Användning av fritt material}
 Vi har använt oss av klassbiblioteket Slick2D för utritning av spelet. Slick2D är i sin tur baserat på klassbiblioteket LWJGL som är en java wrapper för OpenGL.
 \subsection{Användning av designmönster}
@@ -166,7 +165,7 @@ Ovanför varje spelare finns en health bar, som krymper när man tar skada. Man 
 \vspace{11pt}
 Röd terräng är förstörbar och går sönder om man skjuter på den.\\
 \vspace{11pt}
-Man kan hoppa om man står på fast mark (röd, grön eller slutet på kartan). Det går även att "vägghoppa" (eng. wall jump) genom att nudda en vägg åt en sida, styra i motsatt riktning samt hoppa samtidigt, detta är dock ganska svårt att få till.\\
+Man kan hoppa om man står på fast mark (röd, grön eller slutet på kartan). Det går även att ``vägghoppa'' (eng. wall jump) genom att nudda en vägg åt en sida, styra i motsatt riktning samt hoppa samtidigt, detta är dock ganska svårt att få till.\\
 \vspace{11pt}
 \subsection{Skärmdumpar}
 \includegraphics[scale=0.7]{game_1}\\
@@ -178,9 +177,9 @@ Ytterligare terräng är förstörd och spelare 2 (lila) är skadad samt har tap
 \includegraphics[scale=0.7]{game_5}\\
 Spelet slut, och spelare 1 (gul) vann.\\
 \section{Betygsambitioner}
-3
+Vi nöjer oss med en trea, vi har säkert en drös med objektorienterade beslut liggandes på lager men vi kommer inte på dem och uppfyller därmed inte kraven för antalet objektorienterade beslut.
 \section{Utvärdering och erfarenheter}
-{\color{red}Detta avsnitt är en väldigt viktig del av projektspecifikationen. Här ska ni tänka tillbaka och utvärdera projektet (något som man alltid bör göra efter ett projekt). Som en hjälp på vägen kan ni utgå från följande frågeställningar:\\
+{\color{red}
 Vad gick bra? Mindre bra?\\}
 I början av projektet hade vi väldigt storslagna planer på hur vi skulle göra ett helt modulärt spel där användaren lätt skulle kunna byta ut centrala delar av programmet. Detta var dock mer än vi klarade av och vi spenderade mycket tid på att planera hur abstraheringen skulle se ut, dock inte tillräckligt och när vi satte oss ned för att programmera var det fortfarande många frågetecket kvar. Det slutade med att vi två veckor innan deadline knappt hade någon kod skriven och vi kom fram till att det inte skulle gå. Vi skippade majoriteten av all modularitet vilket gjorde abstraheringen mycket enklare, och kunde således koncentrera oss på att skriva koden. Det blev stressigt mot slutet men vi lyckades hinna klart med den grundläggande delen av spelet. \\
 
@@ -193,15 +192,5 @@ Arbetsfördelningen var relativt jämn. Mikael gjorde nog lite mer då han är m
 {\color{red}Har ni haft någon nytta av projektbeskrivningen? Vad har varit mest användbart med den? Minst?\\}
 Vi har nog nästan inte haft någon nytta av projektbeskrivningen. Vi planerade nog lite mer och specade hur spelet skulle bli, men då vi kommunicerade mycket med varandra tittade vi sällan på projektbeskrivningen. \\
 
-{\color{red}Har arbetet fungerat som ni tänkt er? Har ni följt "arbetsmetodiken"? Något som skiljer sig? Till det bättre? Till det sämre?\\}
-Vi hade problem med motivation under projektets gång vilket har lett till att vi inte haft någon bra ``arbetsmetodik''.\\
-{\color{red}Vad har varit mest problematiskt, om man utesluter den programmeringstekniska delen? Alltså saker runt omkring, som att hitta ledig tid eller plats att vara på.\\}
+{\color{red}Vad har varit mest problematiskt, om man utesluter den programmeringstekniska delen?\\}
 Mest problematiskt har varit att finna motivation och tid. Då vi använt slick2d och lwjgl har vi heller inte kunnat koda och testa på skoldatorerna, men det har inte varit något större problem annat än på redovisningspass.\\
-
-{\color{red}Vad har ni lärt er så här långt som kan vara bra att ta med till era egna kommande kurser/projekt?\\}
-Vi har förhoppningsvis lärt oss att motivation är viktigt, och att brist av det kan leda till allvarliga konsekvenser.\\
-{\color{red}Vilka tips skulle ni vilja ge till studenter i nästa års kurs?\\}
-Gör ett projekt som ni tycker är kul, när man har roligt så blir man motiverad till att arbeta mer.\\
-{\color{red}Har ni saknat något i kursen som hade underlättat projektet?\\}
-<More>\\
-{\color{red}Vi använder detta för att utveckla och förbättra kursen till nästa år.  Vissa delar som är användbara som tips till andra studenter kan komma att citeras (givetvis helt anonymt!) under föreläsningar eller på websidor.\\}
