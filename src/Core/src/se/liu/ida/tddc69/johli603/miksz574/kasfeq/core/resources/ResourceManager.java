@@ -12,7 +12,7 @@ import java.util.Map;
  * \class ResourceManager
  * \brief The ResourceManager class is responsible for managing all the resources for the game
  */
-public class ResourceManager {
+public final class ResourceManager {
     private static final Map<Class<?>, ResourceLoader<?>> resourceLoaders;
     private static final Map<String, Object> cachedResources;
 
@@ -20,6 +20,9 @@ public class ResourceManager {
         resourceLoaders = new HashMap<Class<?>, ResourceLoader<?>>();
         resourceLoaders.put(TiledMap.class, new TiledMapLoader());
         cachedResources = new HashMap<String, Object>();
+    }
+
+    private ResourceManager() {
     }
 
     /**

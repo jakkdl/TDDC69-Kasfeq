@@ -81,10 +81,10 @@ public class PlayingField implements DrawableGameComponent {
      * \brief Enum describing the types of tiles
      */
     public enum MapTile {
-        /** \brief Describes an empty (air) tile */
-        EMPTY,
         /** \brief Describes a solid tile */
         SOLID,
+        /** \brief Describes an empty (air) tile */
+        EMPTY,
         /** \brief Describes a destructable tile */
         DESTRUCTABLE
     }
@@ -109,22 +109,47 @@ public class PlayingField implements DrawableGameComponent {
         return map.getTileHeight();
     }
 
-    public void setPixel(double x, double y, int type) {
+    /**
+     * \brief Change MapTile of one pixel
+     *
+     * @param x X coordinate of the pixel.
+     * @param y Y coordinate of the pixel.
+     * @param type MapTile to change the pixel to.
+     */
+    public void setPixel(double x, double y, MapTile type) {
         int layerID = map.getLayerIndex("Tile Layer 1");
         int tileX = (int) Math.floor(x);
         int tileY = (int) Math.floor(y);
-        map.setTileId(tileX/map.getTileWidth(), tileY/map.getTileHeight(), layerID, type);
+        map.setTileId(tileX/map.getTileWidth(), tileY/map.getTileHeight(), layerID, type.ordinal()+1);
 
     }
 
+    /**
+     * \brief Get MapTile of a pixel.
+     * @param x X coordinate of the pixel.
+     * @param y Y coordinate of the pixel.
+     * @return The MapTile of the pixel.
+     */
     public MapTile getPixel(double x, double y) {
         return getTile(x/map.getTileWidth(), y/map.getTileHeight());
     }
 
+    /**
+     * \brief Get MapTile of a pixel at point.
+     *
+     * @param point The coordinate of the pixel.
+     * @return The MapTile of the pixel at point.
+     */
     public MapTile getPixel(Vector2d point) {
         return getTile(point.getX()/map.getTileWidth(), point.getY()/map.getTileHeight());
     }
 
+    /**
+     * \brief Get MapTile value of a tile.
+     * @param x X coordinate of the tile.
+     * @param y Y coordinate of the tile.
+     * @return MapTile value.
+     */
     public MapTile getTile(double x, double y) {
         int layerID = map.getLayerIndex("Tile Layer 1");
         int tileX = (int) Math.floor(x);
@@ -147,13 +172,24 @@ public class PlayingField implements DrawableGameComponent {
         }
     }
 
+    /**
+     * \brief Change MapTile value of a pixel from destructable to empty, if applicable.
+     * @param x X coordinate of pixel.
+     * @param y Y coordinate of pixel.
+     */
     public void destroyPixel(double x, double y) {
         if (getPixel(x, y) == MapTile.DESTRUCTABLE) {
-            setPixel(x, y, 2);
+            setPixel(x, y, MapTile.EMPTY);
         }
     }
 
-
+    /**
+     * \brief Finds and returns an available spawning position for a player, aka on where there will be only
+     * empty terrain within the playerbox.
+     *
+     * @param player The player to find a position for.
+     * @return A Vector2d position.
+     */
     public Vector2d getAvailablePosition(Player player) {
         List<int[]> points = new ArrayList<int[]>();
         int tileWidth = getTileWidth();
@@ -183,6 +219,9 @@ public class PlayingField implements DrawableGameComponent {
         return new Vector2d(points.get(random)[0]*tileWidth, points.get(random)[1]*tileHeight);
     }
 
+    /**
+     * \brief Load options from the map file.
+     */
     public void setOptions() {
         for (Options option : Options.values()) {
             String mapProperty = map.getMapProperty(option.toString(), null);
@@ -206,62 +245,122 @@ public class PlayingField implements DrawableGameComponent {
         }
     }
 
+    /**
+     *
+     * @return Aimspeed.
+     */
     public double getAimspeed() {
         return Options.AIMSPEED.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return Gravity strength.
+     */
     public double getGravity() {
         return Options.GRAVITY.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return Strength of Friction (0-1).
+     */
     public double getFriction() {
         return Options.FRICTION.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return The amount of health a player starts with.
+     */
     public double getPlayerHealth() {
         return Options.PLAYERHEALTH.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return The amount of lives a player start with.
+     */
     public int getPlayerLives() {
         return Options.PLAYERLIVES.getValue(Integer.class);
     }
 
+    /**
+     *
+     * @return Mass of a player.
+     */
     public double getPlayerMass() {
         return Options.PLAYERMASS.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return Width of a player.
+     */
     public int getPlayerWidth() {
         return Options.PLAYERWIDTH.getValue(Integer.class);
     }
 
+    /**
+     *
+     * @return Height of a player.
+     */
     public int getPlayerHeight() {
         return Options.PLAYERHEIGHT.getValue(Integer.class);
     }
 
+    /**
+     *
+     * @return The force added when a player jumps.
+     */
     public double getPlayerJumpForce() {
         return Options.PLAYERJUMPFORCE.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return How much force is added when moving with left/right.
+     */
     public double getPlayerMoveForce() {
         return Options.PLAYERMOVEFORCE.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return How much damage a player does on physical contact.
+     */
     public double getPlayerDamage() {
         return Options.PLAYERDAMAGE.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return Mass of a bullet.
+     */
     public double getBulletMass() {
         return Options.BULLETMASS.getValue(Double.class);
     }
 
+    /**
+     *
+     * @return Height of a bullet.
+     */
     public int getBulletHeight() {
         return Options.BULLETHEIGHT.getValue(Integer.class);
     }
 
+    /**
+     *
+     * @return Width of a bullet.
+     */
     public int getBulletWidth() {
         return Options.BULLETWIDTH.getValue(Integer.class);
     }
 
+    /**
+     *
+     * @return The damage a bullet does.
+     */
     public double getBulletDamage() {
         return Options.BULLETDAMAGE.getValue(Double.class);
     }

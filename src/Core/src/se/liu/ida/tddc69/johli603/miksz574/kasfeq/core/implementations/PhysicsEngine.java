@@ -59,7 +59,6 @@ public class PhysicsEngine {
      * @param time is the time since the last frame. Planned feature to use this to make the physics engine
      *             consistent across different fps.
      */
-    @SuppressWarnings("UnusedParameters")
     public void dumbCollisions(List<GameObject> objects, int time) {
         for (int i=0; i < objects.size(); i++) {
             GameObject obj = objects.get(i);

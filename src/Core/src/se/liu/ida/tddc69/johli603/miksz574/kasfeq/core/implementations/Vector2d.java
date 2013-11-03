@@ -103,4 +103,7 @@ public class Vector2d {
         return vector.getY();
     }
 
+    public double getTheta() {
+        return vector.getTheta();
+    }
 }
