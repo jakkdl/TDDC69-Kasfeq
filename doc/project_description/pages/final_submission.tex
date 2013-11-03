@@ -68,6 +68,7 @@ Detta går även att implementera i andra språk än Java med då med statiska f
 Vi använder oss av att enums i java är objekt genom att använda detta för att lagra egenskaper för spelet/kartan (Se PlayingField.Options).\\
 En enum i Java är egentligen en klass med statiska fält med instanser utav klassen, och när man skickar enums som parametrar så skickar man dessa instanser. Jämförelse görs enkelt eftersom == operatorn jämför minnesadresser.\\
 Tack vare våran implementation av Options så kan vi enkelt och snyggt beskriva egenskaper och dess standardvärden. Och även enkelt ändra värden på dessa egenskaper utan att använda en Map eller liknande för lagring.\\
+Nackdelen med detta är dock att Options lagras globalt, man kan alltså inte ha flera värden på samma egenskap beroende på objekt. Detta kan lösas genom att man skapar en ny klass för att endast lagra egenskaper.\\
 \vspace{11pt}
 3. Interfaces\\
 Vi använder interfaces i flera delar av spelet. Bland de viktigaste interfacen är GameComponent, som beskriver en del av spelet som kan initieras, updateras och tas bort. En utökning av detta interface är DrawableGameComponent som även har en funktion för utritning.\\
@@ -82,11 +83,24 @@ Beskrivning från websidan:\\
     Designbesluten ska vara på rimligt hög "objektorienterad nivå", dvs. inte varför ni valde att använda "int" istället för "long" för ett visst fält... Använde ni en enda lyssnarklass för knapparna i ett GUI, eller flera? Använder ni fabriker, prototyper eller vanliga konstruktorer för att skapa brickor i Breakout? \\ \hline
 \end{tabular}\\}
 \vspace{11pt}
-1. \ldots \\
-2. \ldots \\
-3. \ldots \\
-4. \ldots \\
+1. DrawableGameComponent\\
+DrawableGameComponent som från början hade namnet GameComponent skapades tidigt för att på ett enklare sätt implementera en meny i framtiden.\\
+Man kan se alla komponenterna i spelet som ett träd där roten på träden ligger i KasfeqGame klassen under fältet KasfeqGame.activeComponent.\\
+Skulle vi i framtiden implementera en meny så skulle denna placeras i roten på detta träd.\\
+\vspace{11pt}
+2. Uppdelningen av GameComponent till GameComponent och DrawableGameComponent\\
+Vi valde att ta bort funktionen för utritning ur GameComponent interfacet. Vi skapade då interfaced DrawableGameComponent to utökar GameComponent och lägger till en funktion för utritning.\\
+Vi gjorde detta för att på ett mer tydligt sätt beskriva klasser som implementerar dessa interface. En klass som implementerar GameComponent har alltså ingen möjlighet att rita ut saker på skärmen.\\
+\vspace{11pt}
+3. TiledMap\\
+Eftersom det blev lite ont om tid valde vi att använda oss av Slick2D's TiledMap klass för att hantera kartan. Denna klass har färdiga funktioner för utritning och för att enkelt hämta ut information om kartan.\\
+Vi wrappar ett TiledMap objekt i våran egna klass som heter PlayingField. Denna klass läser även in kartegenskaper (engelska options) och sparar dem på ett specielt sätt.
+\vspace{11pt}
+4. PlayingField.Options och icke konstanta enums
+Eftersom enums i java är objekt (Se ``Användning av objektorientering'' för förklaring) så kan vi på ett snyggt och enkelt sätt spara kartalternativ. Nackdelen med detta är dock att dessa egenskaper är globala, alltså det går inte att ha flera PlayingField objekt för då skrivs egenskaperna över.
+\vspace{11pt}
 5. \ldots \\
+\vspace{11pt}
 6. \ldots \\
 7. \ldots \\
 8. \ldots \\
@@ -140,30 +154,22 @@ Inkludera flera (minst 3) skärmdumpar som visar hur programmet ser ut!\\
 {\color{red}Ange här vilket betyg ni siktar på i ert projekt.  Se sedan till att ni har följt de mätbara kraven för detta betyg och att detta finns dokumenterat i projektbeskrivningen ovan.\\}
 \section{Utvärdering och erfarenheter}
 {\color{red}Detta avsnitt är en väldigt viktig del av projektspecifikationen. Här ska ni tänka tillbaka och utvärdera projektet (något som man alltid bör göra efter ett projekt). Som en hjälp på vägen kan ni utgå från följande frågeställningar:\\
-Vad gick bra? Mindre bra?\\
-
-I början av projektet hade vi väldigt storslagna planer på hur vi skulle göra ett helt modulärt spel där användaren lätt skulle kunna byta ut centrala delar av programmet. Detta var dock mer än vi klarade av och vi spenderade mycket tid på att planera hur abstraheringen skulle se ut, dock inte tillräckligt och när vi satte oss ned för att programmera var det fortfarande många frågetecket kvar. Det slutade med att vi två veckor innan deadline knappt hade någon kod skriven och vi kom fram till att det inte skulle gå. Vi skippade majoriteten av all modularitet vilket gjorde abstraheringen mycket enklare, och kunde således koncentrera oss på att skriva koden. Det blev stressigt mot slutet men vi lyckades hinna klart med den grundläggande delen av spelet. 
-
+Vad gick bra? Mindre bra?\\}
+I början av projektet hade vi väldigt storslagna planer på hur vi skulle göra ett helt modulärt spel där användaren lätt skulle kunna byta ut centrala delar av programmet. Detta var dock mer än vi klarade av och vi spenderade mycket tid på att planera hur abstraheringen skulle se ut, dock inte tillräckligt och när vi satte oss ned för att programmera var det fortfarande många frågetecket kvar. Det slutade med att vi två veckor innan deadline knappt hade någon kod skriven och vi kom fram till att det inte skulle gå. Vi skippade majoriteten av all modularitet vilket gjorde abstraheringen mycket enklare, och kunde således koncentrera oss på att skriva koden. Det blev stressigt mot slutet men vi lyckades hinna klart med den grundläggande delen av spelet.\\
 Lade ni ned för mycket/lite tid?\\
-
-De första veckorna la vi ned alldeles för lite tid, vilket bl.a. berodde på att det var så svårt att skriva och att man inte kom någonstans när man skrev, så det var inte kul att kod. De sista veckorna la vi ned mycket mer tid och gjorde stora framsteg vilket var kul. Sett på det stora hela så hade vi nog gärna lagt ned mer tid och implementerat mer funktioner.
-
+De första veckorna la vi ned alldeles för lite tid, vilket bl.a. berodde på att det var så svårt att skriva och att man inte kom någonstans när man skrev, så det var inte kul att kod. De sista veckorna la vi ned mycket mer tid och gjorde stora framsteg vilket var kul. Sett på det stora hela så hade vi nog gärna lagt ned mer tid och implementerat mer funktioner.\\
 Var arbetsfördelningen jämn? Om inte: Vad hade ni kunnat göra för att förbättra den?\\
-
-Arbetsfördelningen var relativt jämn. Mikael gjorde nog lite mer då han är mer erfaren programmerare inom objektorientering och John hade assistentjobb och annat som hjälpte till att ta tid och ork ur honom.
-
+Arbetsfördelningen var relativt jämn. Mikael gjorde nog lite mer då han är mer erfaren programmerare inom objektorientering och John hade assistentjobb och annat som hjälpte till att ta tid och ork ur honom.\\
 Har ni haft någon nytta av projektbeskrivningen? Vad har varit mest användbart med den? Minst?\\
-
-Vi har nog nästan inte haft någon nytta av projektbeskrivningen. Vi planerade nog lite mer och specade hur spelet skulle bli, men då vi kommunicerade mycket med varandra tittade vi sällan på projektbeskrivningen. 
-
+Vi har nog nästan inte haft någon nytta av projektbeskrivningen. Vi planerade nog lite mer och specade hur spelet skulle bli, men då vi kommunicerade mycket med varandra tittade vi sällan på projektbeskrivningen. \\
 Har arbetet fungerat som ni tänkt er? Har ni följt "arbetsmetodiken"? Något som skiljer sig? Till det bättre? Till det sämre?\\
 Vad har varit mest problematiskt, om man utesluter den programmeringstekniska delen? Alltså saker runt omkring, som att hitta ledig tid eller plats att vara på.\\
-
-Mest problematiskt har varit att finna motivation och tid. Då vi använt slick2d och lwjgl har vi heller inte kunnat koda och testa på skoldatorerna, men det har inte varit något större problem annat än på redovisningspass.
-
+Mest problematiskt har varit att finna motivation och tid. Då vi använt slick2d och lwjgl har vi heller inte kunnat koda och testa på skoldatorerna, men det har inte varit något större problem annat än på redovisningspass.\\
+{\color{red}
 Vad har ni lärt er så här långt som kan vara bra att ta med till era egna kommande kurser/projekt?\\
 Vilka tips skulle ni vilja ge till studenter i nästa års kurs?\\
 Har ni saknat något i kursen som hade underlättat projektet?\\
 \vspace{11pt}
 Vi använder detta för att utveckla och förbättra kursen till nästa år.  Vissa delar som är användbara som tips till andra studenter kan komma att citeras (givetvis helt anonymt!) under föreläsningar eller på websidor.\\
-(Glöm inte att exportera till PDF-format innan ni skickar in!)\\}
+(Glöm inte att exportera till PDF-format innan ni skickar in!)\\
+}
