@@ -1263,5 +1263,17 @@
     <mapping directory="" vcs="" />
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
   </component>
+  <component name="libraryTable">
+    <library name="Slick2D">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/../lib/slick/lib" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="file://$PROJECT_DIR$/../lib/slick/javadoc" />
+      </JAVADOC>
+      <SOURCES />
+      <jarDirectory url="file://$PROJECT_DIR$/../lib/slick/lib" recursive="false" />
+    </library>
+  </component>
 </project>
 
