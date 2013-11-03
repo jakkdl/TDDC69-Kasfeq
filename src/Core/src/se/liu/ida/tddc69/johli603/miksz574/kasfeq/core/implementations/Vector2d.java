@@ -5,6 +5,7 @@ import org.newdawn.slick.geom.Vector2f;
 /**
  * \class Vector2d
  * \brief A wrapper for the org.newdawn.slick.geom.Vector2f that uses doubles in function parameters
+ * this is to reduce the number of casts needed in other parts of the code.
  */
 public class Vector2d {
     private Vector2f vector;
@@ -17,146 +18,89 @@ public class Vector2d {
         this.vector = v;
     }
 
+    /**
+     * \brief Creates a Vector2d given two coordinates
+     *
+     * @param x X coordinate of vector.
+     * @param y Y coordinate of vector.
+     */
     public Vector2d(double x, double y) {
         this.vector = new Vector2f((float) x, (float) y);
     }
 
+    /**
+     * \brief Creates a Vector2d of length 1 in theta direction
+     *
+     * @param theta Angle of vector.
+     */
     public Vector2d(double theta) {
         this.vector = new Vector2f((float) Math.toDegrees(theta));
     }
 
+    /**
+     * \brief Adds a vector2d to another.
+     *
+     * @param v The vector2d to be added.
+     * @return A new vector2d consisting of v and this.
+     */
     public Vector2d add(Vector2d v) {
         return new Vector2d(vector.copy().add(v.vector));
     }
 
-// --Commented out by Inspection START (10/16/13 10:21 PM):
-//    public void set(double x, double y) {
-//        vector = vector.set((float)x, (float)y);
-//    }
-// --Commented out by Inspection STOP (10/16/13 10:21 PM)
-
-    public Vector2d copy() {
-        return new Vector2d(vector.copy());
-    }
-
-    public double getTheta() {
-        return Math.toRadians(vector.getTheta());
-    }
-
-// --Commented out by Inspection START (10/16/13 10:21 PM):
-//    public void setTheta(double theta) {
-//        vector.setTheta(Math.toDegrees(theta));
-//    }
-// --Commented out by Inspection STOP (10/16/13 10:21 PM)
-
+    /**
+     * \brief Return X coordinate of vector.
+     *
+     * @return The X coordinate of this.
+     */
     public double getX() {
         return vector.getX();
     }
 
+    /**
+     * \brief Set X coordinate of this.
+     *
+     * @param x X coordinate to set the vectors X value to.
+     */
     public void setX(double x) {
         vector.set((float)x, vector.getY());
     }
 
+    /**
+     * \brief set Y coordinate of this.
+     *
+     * @param y Y coordinate to set the vector's Y value to.
+     */
     public void setY(double y) {
         vector.set(vector.getX(), (float)y);
     }
 
+    /**
+     * \brief Scales the length of this vector.
+     *
+     * @param a What to scale the vector with.
+     *
+     * @return Returns a scaled copy of the vector2d instance.
+     */
     public Vector2d scale(double a) {
         return new Vector2d(vector.copy().scale((float) a));
     }
 
-// --Commented out by Inspection START (10/16/13 10:21 PM):
-//    public Vector2d add(double theta) {
-//        return new Vector2d(vector.copy().add(theta));
-//    }
-// --Commented out by Inspection STOP (10/16/13 10:21 PM)
-
-// --Commented out by Inspection START (10/16/13 10:21 PM):
-//    public Vector2d add(double x, double y) {
-//        return new Vector2d(vector.copy().add(new Vector2f((float)x, (float)y)));
-//    }
-// --Commented out by Inspection STOP (10/16/13 10:21 PM)
-
+    /**
+     * \brief Returns the length of the vector2d.
+     *
+     * @return Returns the length of the vector2d.
+     */
     public double length() {
         return vector.length();
     }
 
+    /**
+     * \brief Get the Y coordinate of the vector2d.
+     *
+     * @return Y coordinate of the vector2d.
+     */
     public double getY() {
         return vector.getY();
     }
 
-// --Commented out by Inspection START (10/16/13 10:21 PM):
-//    public void set(Vector2d other) {
-//        vector.set(other.vector);
-//    }
-// --Commented out by Inspection STOP (10/16/13 10:21 PM)
-
-// --Commented out by Inspection START (10/16/13 10:21 PM):
-//    public Vector2d projectOntoUnit(Vector2d target) {
-//        Vector2d result = new Vector2d();
-//        vector.projectOntoUnit(target.vector, result.vector);
-//        return result;
-//    }
-// --Commented out by Inspection STOP (10/16/13 10:21 PM)
-
-// --Commented out by Inspection START (10/16/13 10:22 PM):
-//    public Vector2d negate() {
-//        return new Vector2d(vector.negate());
-//    }
-// --Commented out by Inspection STOP (10/16/13 10:22 PM)
-
-    /*public float dot(Vector2f other) {
-        return vector.dot(other);
-    }*/
-
-    /*public Vector2f getNormal() {
-        return vector.getNormal();
-    }*/
-
-    /*public double distance(Vector2f other) {
-        return vector.distance(other);
-    }*/
-
-    /*public Vector2f normalise() {
-        return vector.normalise();
-    }*/
-
-    /*public Vector2f sub(Vector2f v) {
-        return vector.sub(v);
-    }*/
-
-    /*public Vector2f set(float[] pt) {
-        return vector.set(pt);
-    }*/
-
-    /*public float distanceSquared(Vector2f other) {
-        return vector.distanceSquared(other);
-    }*/
-
-    /*public Vector2f sub(double theta) {
-        return vector.sub(theta);
-    }*/
-
-    /*public Vector2f getPerpendicular() {
-        return vector.getPerpendicular();
-    }*/
-
-    /*public float lengthSquared() {
-        return vector.lengthSquared();
-    }*/
-
-    /*public Vector2f negateLocal() {
-        return vector.negateLocal();
-    }*/
-
-
-/*
-    @Override
-    public boolean equals(Object other) {
-        return vector.equals(other);
-    }
-    @Override
-    public int hashCode() {
-        return getNormal().hashCode();
-    }*/
 }

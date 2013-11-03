@@ -81,8 +81,8 @@ public class PlayingField implements DrawableGameComponent {
      * \brief Enum describing the types of tiles
      */
     public enum MapTile {
-        /** \brief Describes a empty tile */
-        EMPTY, //AIR
+        /** \brief Describes an empty (air) tile */
+        EMPTY,
         /** \brief Describes a solid tile */
         SOLID,
         /** \brief Describes a destructable tile */
@@ -96,6 +96,11 @@ public class PlayingField implements DrawableGameComponent {
         this.filename = filename;
     }
 
+    /**
+     * \brief Returns the pixels per tile.
+     *
+     * @return Number of pixels
+     */
     public int getTileWidth() {
         return map.getTileWidth();
     }
