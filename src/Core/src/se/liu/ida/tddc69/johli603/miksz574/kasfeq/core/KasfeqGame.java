@@ -80,6 +80,7 @@ class KasfeqGame implements Game {
     public boolean closeRequested() {
         // Cleanup
         // Return true if the game should close
+        activeComponent.dispose();
         return true;
     }
 
