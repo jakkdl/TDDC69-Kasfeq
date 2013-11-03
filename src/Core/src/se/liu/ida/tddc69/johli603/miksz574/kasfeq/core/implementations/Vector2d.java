@@ -4,7 +4,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 /**
  * \class Vector2d
- * \brief A wrapper for the org.newdawn.slick.geom.Vector2f that uses doubles in function parameters
+ * \brief A wrapper for the org.newdawn.slick.geom.Vector2f that uses doubles and radians in function parameters
  * this is to reduce the number of casts needed in other parts of the code.
  */
 public class Vector2d {
@@ -103,7 +103,11 @@ public class Vector2d {
         return vector.getY();
     }
 
+    /**
+     * \brief Get the angle in radians of the vector2d.
+     * @return Angle in radions of the vector2d.
+     */
     public double getTheta() {
-        return vector.getTheta();
+        return Math.toRadians(vector.getTheta());
     }
 }
