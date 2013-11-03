@@ -2,9 +2,7 @@
   \textbf{\Huge Slutinlämning}\\[1cm]
 \end{center}
 \section{Implementationsbeskrivning}
-{\color{red}Den här sektionen använder ni för att beskriva hur projektet är strukturerat och implementerat. Algoritmer och övergripande design passar också in i det här kapitlet (bilder, flödesdiagram, osv. kan vara användbart). Skapa gärna egna delkapitel för enskilda delar, om det underlättar.\\ }
 \subsection{Milstolpar}
-{\color{red}``Ange för varje milstolpe om ni har genomfört den helt, delvis eller inte alls.  (Detta är främst till för att labbhandledaren ska veta vilken funktionalitet man måste ”leta efter” i koden.  Själva bedömningen beror inte på antalet milstolpar i sig.)''\\}
 1. Förarbete\\
 Fullständigt implementerad.\\
 2. Kartgrafik\\
@@ -22,48 +20,37 @@ Fullständigt implementerad, bl.a. i World.\\
 9. Ytterligare funktionalitet.\\
 Ej implementerade.\\
 \subsection{Dokumentation för programkod}
-{\color{red}Programkod behöver dokumenteras för att man ska förstå hur den fungerar och hur allt hänger ihop.  Vissa typer av dokumentation är direkt relaterad till ett enda fält, en enda metod eller en enda klass och placeras då lämpligast vid fältet, metoden eller klassen i en Javadoc-kommentar, inte här.  Då är det både enklare att hitta dokumentationen och större chans att den faktiskt uppdateras när det sker ändringar.  Annan dokumentation är mer övergripande och placeras då här.  Det kan gälla till exempel:\\}
-{\color{red}Övergripande programstruktur, t.ex. att man har implementerat ett spel som styrs av timer-tick n gånger per sekund där man vid varje sådant tick först tar hand om input och gör eventuella förflyttningar för objekt av typ X, Y och Z, därefter kontrollerar kollisioner vilket sker med hjälp av klass W, och till slut uppdaterar skärmen.\\}
-\vspace{11pt}
-{\color{red}Översikter över relaterade klasser och hur de hänger ihop.  Här kan det ofta vara bra att använda UML-diagram för att illustrera – men fundera då först på vilka grupper av klasser det är ni vill beskriva, och skapa sedan ett UML-diagram för varje grupp av klasser (det är sällan särskilt användbart att lägga in hela projektet i ett enda gigantiskt diagram).  Skriv sedan en textbeskrivning av vad det är ni illustrerar med UML-diagrammet.  Texten är den huvudsakliga dokumentationen medan UML-diagrammet hjälper läsaren att förstå texten och få en översikt.  IDEA kan hjälpa till att göra klassdiagram som ni sedan kan klippa och klistra in i dokumentet.\\}
-\vspace{11pt}
-{\color{red}Labbhandledaren och examinatorn kommer bland annat att använda den här dokumentationen för att förstå programmet vid bedömningen.  Ni kan också tänka er att ni själva ska vidareutveckla projektet efter att en annan grupp har utvecklat grunden.  Vad skulle ni själva vilja veta i det läget?  Om viktig information saknas kan ni få komplettera.\\}
-{\color{red}När ni pratar om klasser och metoder ska deras namn anges tydligt (inte bara ”vår timerklass” eller ”utritningsmetoden”).\\}
-{\color{red}Framhäv gärna det ni själva tycker är bra lösningar eller annat som handledaren borde titta på vid bedömningen.\\}
-{\color{red}Se även sidan om krav på programkod på webben.\\}
-{\color{red}Vi räknar med att de flesta projekt behöver runt 2-5 sidor för det här avsnittet.\\}
 \subsubsection{KasfeqGame}
-Klassen implementerar Game interfacet från Slick2D biblioteket som bland annat ger oss tillgång till init, update och render funktionerna.\\
-Den här klassen gör själv inget mer än att ger parametrarna till fönstret och hller reda påp nuvarande på den nuvarnade aktiva komponenten. I detta fall är det tänkt att det ska finnas två komponenter som kan vara aktiva i KasfeqGame. Den första komponenten är inte implementerad med skulle i detta fall vara en meny. Eftersom man inte både kan spela spelet och ha menyen öppen samtidigt så använder vi ett fält för att välja vilket ``tillstånd'' man är i. Den andra komponenten är World klassen som representerar ett aktivt spel.\\
-En spelkomponent implementerar minst GameComponent interfacet, men kan även implementera det utökade DrawableGameComponent interfacet som också har en funktion för utritning.\\
+Klassen implementerar interfacet Game från Slick2D som bland annat ger oss tillgång till funktionerna init, update och render.\\
+Den här klassen gör själv inget mer än att ge parametrarna till fönstret och hålla reda på den nuvarande aktiva komponenten. I detta fall är det tänkt att det ska finnas två komponenter som kan vara aktiva i KasfeqGame. Eftersom man inte både kan spela spelet och ha menyen öppen samtidigt så använder vi ett fält för att välja vilket ``tillstånd'' man är i. Den första komponenten är menyn, som ej är implementerad. Den andra komponenten är World klassen som representerar ett aktivt spel.\\
+En spelkomponent implementerar minst interfacet GameComponent, men kan även implementera det utökade interfacet DrawableGameComponent som även har en funktion för utritning.\\
 \subsubsection{GameComponent}
-GameComponent interfacet är grunden till alla komponenter i spelet och ger tillgång till tre funktioner, init, update och dispose.\\
+Interfacet GameComponent är grunden till alla komponenter i spelet och ger tillgång till tre funktioner: init, update och dispose.\\
 \paragraph{init}
 Init anropas då komponenten initieras och är vanligtvis då spelet startar.\\
 \paragraph{update}
-Update anropas före innan något ritas ut på skärmen. Andra parametern är en integer som representerar antalet milisekunder från sista update anropet.\\
+Update anropas varje frame innan något ritas ut på skärmen. Andra parametern är en integer som representerar antalet milisekunder från sista update anropet.\\
 \paragraph{dispose}
-Denna funktion har ingen direkt representation i Slick2D men det är tänkt att den här funktionen anropas innan komponenten slutar användas.\\
+Denna funktion har ingen direkt representation i Slick2D men det är tänkt att funktionen anropas innan komponenten slutar användas.\\
 \subsubsection{DrawableGameComponent}
-En utökning av GameComponent interfacet.
+En utökning av interfacet GameComponent.
 \paragraph{render}
 Render anropas efter att alla update anrop är klara och skickar med ett Graphics objekt som andra parameter för utritning.\\
 \subsubsection{World}
-World klassen representerar ett aktivt spel (Icke meny). Och är samlingspunkten för all utritning och spellogik.\\
-World klassen håller även reda på alla aktiva (Icke döda) spelare.\\
+Klassen World representerar ett aktivt spel (Icke meny) och är samlingspunkten för all utritning och spellogik.\\
+World håller även reda på alla aktiva (Icke döda) spelare och avslutar spelet när det finns <=1 kvar.\\
 \subsubsection{GameObjectManager}
 GameObjectManager klassen håller reda på alla spelobjekt. Den har även ansvaret att anropa fysikmotorn så att denna gör sitt jobb.\\
-När GameObjectManager.update anropas så andropar denna GameObject.update för alla aktiva objekt. Man kan tänka sig GameObjectManager som en ``proxy'' som skickar vidare alla funktionsanrop till alla spelobjekt.\\
+När GameObjectManager.update anropas så anropar denna GameObject.update för alla aktiva objekt. Man kan tänka sig GameObjectManager som en ``proxy'' som skickar vidare alla funktionsanrop till alla spelobjekt.\\
 \subsubsection{InputManager}
 InputManager klassen är ansvarig för att binda tangentbordsknappar till olika handlingar för de olika spelarna.\\
 För nuvarande så är spelkontrollerna hårdkodade i koden.\\
-InputManager använder sig utav flera interface från Slick2D biblioteket. I grunden så binder InputManager en instans utav Control interfacet(Slick2D) till en instans utav PlayerCommand klassen.\\
+InputManager använder sig av flera interface från Slick2D biblioteket. I grunden så binder InputManager en instans utav interfacet Control (Slick2D) till en instans av PlayerCommand klassen.\\
 \subsubsection{PlayerCommand}
-PlayerCommand klassen representerar kombinationen av en spelarhandling (PlayerCommand.InputType) och ett id för den spelaren som spelarhandling är kopplad till.\\
-När InputManager får ett anrop från Slick2D att en viss tangent blivit nertryckt så får den också PlayerCommand objektet kopplad till den tangenten. Det PlayerCommand objektet gör är att den tar och hämtar spelrobjektet som har samma ID som PlayerCommand objektet är bundet till och anropas funktionerna som representerar handlingen som ska ske.\\
+PlayerCommand representerar kombinationen av en spelarhandling (PlayerCommand.InputType) och ett id för den spelaren som spelarhandling är kopplad till.\\
+När InputManager får ett anrop från Slick2D att en tangent blivit nertryckt så får den också PlayerCommand-objektet kopplad till den tangenten. PlayerCommand hämtar det spelobjekt som har samma ID som PlayerCommand-objektet är bundet till och anropar funktionerna som representerar handlingen som ska ske.\\
 \subsubsection{PlayingField}
 PlayingField klassen representerar en spelkarta och dess spelinställningar.\\
-<Skriv MER>\\
 \subsubsection{Vector2d}
 Vector2d klassen är en wrapper till Slick2Ds Vector2f, vi skapade den här klassen så att vi skulle slippa många casts från doubles till floats i PhysicsEngine klassen. Den här klassen är även byggd på ett sånt sätt så att den inte är in-place för att minimera mistag gjorda med referenser till vektorer.\\
 \subsubsection{GameObject}
@@ -81,7 +68,7 @@ En abstrakt klass som representerar själva logiken i spelet.\\
 \subsubsection{DeathmathLogic}
 En konkret implementation av en Deathmatch logik.\\
 \subsubsection{MarioLogic}
-En konkret implementation av en spellogik. Enda sättet att <döda> motståndaren är att hoppa på dem. <More>\\
+En konkret implementation av en spellogik där enda sättet att döda motståndaren är att hoppa på dem.\\
 \subsubsection{ResourceLoader<T>}
 ResourceLoader interfacet representerar en inladdare som kan ladda in en resurs av typen <T> givet ett filnamn.\\
 \subsubsection{ResourceManager}
@@ -106,7 +93,7 @@ GameObject klassen är en abstrakt klass som representerar alla objekt på spelp
 GameObjectManager klassen lagrar alla aktiva instanser utav GameObject klassen.\\
 \vspace{11pt}
 2. Enums är Objekt (i Java)\\
-Detta går även att implementera i andra språk än Java med då med statiska fält i klasser.
+Detta går även att implementera i andra språk än Java men då med statiska fält i klasser.
 Vi använder oss av att enums i java är objekt genom att använda detta för att lagra egenskaper för spelet/kartan (Se PlayingField.Options).\\
 En enum i Java är egentligen en klass med statiska fält med instanser utav klassen, och när man skickar enums som parametrar så skickar man dessa instanser. Jämförelse görs enkelt eftersom == operatorn jämför minnesadresser.\\
 Tack vare våran implementation av Options så kan vi enkelt och snyggt beskriva egenskaper och dess standardvärden. Och även enkelt ändra värden på dessa egenskaper utan att använda en Map eller liknande för lagring.\\
@@ -127,7 +114,7 @@ Vi gjorde detta för att på ett mer tydligt sätt beskriva klasser som implemen
 \vspace{11pt}
 3. TiledMap\\
 Eftersom det blev lite ont om tid valde vi att använda oss av Slick2D's TiledMap klass för att hantera kartan. Denna klass har färdiga funktioner för utritning och för att enkelt hämta ut information om kartan.\\
-Vi wrappar ett TiledMap objekt i våran egna klass som heter PlayingField. Denna klass läser även in kartegenskaper (engelska options) och sparar dem på ett specielt sätt.
+Vi wrappar ett TiledMap objekt i våran egna klass som heter PlayingField. Denna klass läser även in kartegenskaper (eng. options) och sparar dem.
 \vspace{11pt}
 4. PlayingField.Options och icke konstanta enums
 Eftersom enums i java är objekt (Se ``Användning av objektorientering'' för förklaring) så kan vi på ett snyggt och enkelt sätt spara kartalternativ. Nackdelen med detta är dock att dessa egenskaper är globala, alltså det går inte att ha flera PlayingField objekt för då skrivs egenskaperna över.
