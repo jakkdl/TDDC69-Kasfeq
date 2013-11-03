@@ -5,13 +5,13 @@
 {\color{red}Den här sektionen använder ni för att beskriva hur projektet är strukturerat och implementerat. Algoritmer och övergripande design passar också in i det här kapitlet (bilder, flödesdiagram, osv. kan vara användbart). Skapa gärna egna delkapitel för enskilda delar, om det underlättar.\\ }
 \subsection{Milstolpar}
 {\color{red}``Ange för varje milstolpe om ni har genomfört den helt, delvis eller inte alls.  (Detta är främst till för att labbhandledaren ska veta vilken funktionalitet man måste ”leta efter” i koden.  Själva bedömningen beror inte på antalet milstolpar i sig.)''\\}
-1. Fullständigt implementerad.
-2. Fullständigt implementerad.
-3. Objekt har själva en render-funktion som ritar ut sig själva. Testfunktionerna utfasade i slutprodukten.
-4. Fullständigt implementerad i physicsEngine-klassen.
-5. Förflyttningsknappar, sikte, hoppa och skjut implementerat. Melee struket och sikte tillagt. Funktionalitet ligger i PlayerCommand och Player.
-6. Fullständigt implementerad i ??
-7, 8 och 9. Ej implementerade.
+1. Fullständigt implementerad.\\
+2. Fullständigt implementerad.\\
+3. Objekt har själva en render-funktion som ritar ut sig själva. Testfunktionerna utfasade i slutprodukten.\\
+4. Fullständigt implementerad i physicsEngine-klassen.\\
+5. Förflyttningsknappar, sikte, hoppa och skjut implementerat. Melee struket och sikte tillagt. Funktionalitet ligger i PlayerCommand och Player.\\
+6. Fullständigt implementerad i ??\\
+7, 8 och 9. Ej implementerade.\\
 Den största ändringen från de planerade funktionerna är att projektet nu inte är modulärt. Efter att vi arbetat länge med strukturen av projektet så valde vi att börja om från början. Detta på grund av att det är väldigt komplicerat att skapa ett projekt som ska vara helt modulärt utan att t.ex. använda sig av så kallade ``Entity Systems''(\url{http://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/}.\\
 \subsection{Dokumentation för programkod}
 {\color{red}Programkod behöver dokumenteras för att man ska förstå hur den fungerar och hur allt hänger ihop.  Vissa typer av dokumentation är direkt relaterad till ett enda fält, en enda metod eller en enda klass och placeras då lämpligast vid fältet, metoden eller klassen i en Javadoc-kommentar, inte här.  Då är det både enklare att hitta dokumentationen och större chans att den faktiskt uppdateras när det sker ändringar.  Annan dokumentation är mer övergripande och placeras då här.  Det kan gälla till exempel:\\}
@@ -24,81 +24,62 @@ Den största ändringen från de planerade funktionerna är att projektet nu int
 {\color{red}Framhäv gärna det ni själva tycker är bra lösningar eller annat som handledaren borde titta på vid bedömningen.\\}
 {\color{red}Se även sidan om krav på programkod på webben.\\}
 {\color{red}Vi räknar med att de flesta projekt behöver runt 2-5 sidor för det här avsnittet.\\}
-
-KasfeqGame:\\
+\subsubsection{KasfeqGame}
 Klassen implementerar Game interfacet från Slick2D biblioteket som bland annat ger oss tillgång till init, update och render funktionerna.\\
 Den här klassen gör själv inget mer än att ger parametrarna till fönstret och hller reda påp nuvarande på den nuvarnade aktiva komponenten. I detta fall är det tänkt att det ska finnas två komponenter som kan vara aktiva i KasfeqGame. Den första komponenten är inte implementerad med skulle i detta fall vara en meny. Eftersom man inte både kan spela spelet och ha menyen öppen samtidigt så använder vi ett fält för att välja vilket ``tillstånd'' man är i. Den andra komponenten är World klassen som representerar ett aktivt spel.\\
 En spelkomponent implementerar minst GameComponent interfacet, men kan även implementera det utökade DrawableGameComponent interfacet som också har en funktion för utritning.\\
-\vspace{11pt}
-GameComponent och DrawableGameComponent:\\
-Dessa två interface är grunden till alla komponenterna i spelet. GameComponent interfacet ger tillgång till tre funktioner, init, update och dispose.\\
-init:\\
+\subsubsection{GameComponent}
+GameComponent interfacet är grunden till alla komponenter i spelet och ger tillgång till tre funktioner, init, update och dispose.\\
+\paragraph{init}
 Init anropas då komponenten initieras och är vanligtvis då spelet startar.\\
-update:\\
+\paragraph{update}
 Update anropas före innan något ritas ut på skärmen. Andra parametern är en integer som representerar antalet milisekunder från sista update anropet.\\
-render(DrawableGameComponent):\\
-Render anropas efter att alla update anrop är klara och skickar med ett Graphics objekt som andra parameter för utritning.\\
-dispose:\\
+\paragraph{dispose}
 Denna funktion har ingen direkt representation i Slick2D men det är tänkt att den här funktionen anropas innan komponenten slutar användas.\\
-\vspace{11pt}
-World:\\
+\subsubsection{DrawableGameComponent}
+En utökning av GameComponent interfacet.
+\paragraph{render}
+Render anropas efter att alla update anrop är klara och skickar med ett Graphics objekt som andra parameter för utritning.\\
+\subsubsection{World}
 World klassen representerar ett aktivt spel (Icke meny). Och är samlingspunkten för all utritning och spellogik.\\
 World klassen håller även reda på alla aktiva (Icke döda) spelare.\\
 <more>\\
-\vspace{11pt}
-GameObjectManager:\\
-GameObjectManager klassen håller reda på alla spelobjekt. Den har även ansvaret att anropa fysikmotorn så att denna gör sitt jobb.
+\subsubsection{GameObjectManager}
+GameObjectManager klassen håller reda på alla spelobjekt. Den har även ansvaret att anropa fysikmotorn så att denna gör sitt jobb.\\
 När GameObjectManager.update anropas så andropar denna GameObject.update för alla aktiva objekt. Man kan tänka sig GameObjectManager som en ``proxy'' som skickar vidare alla funktionsanrop till alla spelobjekt.\\
-\vspace{11pt}
-InputManager:\\
+\subsubsection{InputManager}
 InputManager klassen är ansvarig för att binda tangentbordsknappar till olika handlingar för de olika spelarna.\\
 För nuvarande så är spelkontrollerna hårdkodade i koden.\\
 InputManager använder sig utav flera interface från Slick2D biblioteket. I grunden så binder InputManager en instans utav Control interfacet(Slick2D) till en instans utav PlayerCommand klassen.\\
-\vspace{11pt}
-PlayerCommand:\\
-PlayerCommand klassen representerar kombinationen av en spelarhandling (PlayerCommand.InputType) och ett id för den spelaren som spelarhandling är kopplad till.
+\subsubsection{PlayerCommand}
+PlayerCommand klassen representerar kombinationen av en spelarhandling (PlayerCommand.InputType) och ett id för den spelaren som spelarhandling är kopplad till.\\
 När InputManager får ett anrop från Slick2D att en viss tangent blivit nertryckt så får den också PlayerCommand objektet kopplad till den tangenten. Det PlayerCommand objektet gör är att den tar och hämtar spelrobjektet som har samma ID som PlayerCommand objektet är bundet till och anropas funktionerna som representerar handlingen som ska ske.\\
-\vspace{11pt}
-PlayingField:
-PlayingField klassen representerar en spelkarta och dess spelinställningar.
-<Skriv MER>
-\vspace{11pt}
-Vector2d:\\
+\subsubsection{PlayingField}
+PlayingField klassen representerar en spelkarta och dess spelinställningar.\\
+<Skriv MER>\\
+\subsubsection{Vector2d}
 Vector2d klassen är en wrapper till Slick2Ds Vector2f, vi skapade den här klassen så att vi skulle slippa många casts från doubles till floats i PhysicsEngine klassen. Den här klassen är även byggd på ett sånt sätt så att den inte är in-place för att minimera mistag gjorda med referenser till vektorer.\\
-\vspace{11pt}
-GameObject:\\
+\subsubsection{GameObject}
 GameObject klassen är en abstrakt klass som representerar alla spelobjekt och inehåller många av fälten som används av PhysicsEngine klassen för att göra beräkningar.\\
-Player:\\
-Player klassen representerar en spelare.\\
-<More>\\
-Projectile:\\
-Projectile klassen representerar ett skott.\\
-<More>\\
-\vspace{11pt}
-PhysicsEngine:\\
-PhysicsEngine klassen är fysikmotorn i spelet.\\
-<More>\\
-\vspace{11pt}
-AbstractGameLogic:\\
-En abstrakt klass som representerar själva logiken i spelet.\\
-<More>\\
-DeathmathLogic:\\
-En konkret implementation av en Deathmatch logik.\\
-<MORE>\\
-MarioLogic:\\
-En konkret implementation av en spellogik. Enda sättet att <döda> motståndaren är att hoppa på dem.\\
-<more>\\
-\vspace{11pt}
-ResourceLoader<T>:\\
+\subsubsection{Player}
+Player klassen representerar en spelare. <More>\\
+\subsubsection{Projectile}
+Projectile klassen representerar ett skott. <More>\\
+\subsubsection{PhysicsEngine}
+PhysicsEngine klassen är fysikmotorn i spelet. <More>\\
+\subsubsection{AbstractGameLogic}
+En abstrakt klass som representerar själva logiken i spelet. <More>\\
+\subsubsection{DeathmathLogic}
+En konkret implementation av en Deathmatch logik. <More>\\
+\subsubsection{MarioLogic}
+En konkret implementation av en spellogik. Enda sättet att <döda> motståndaren är att hoppa på dem. <More>\\
+\subsubsection{ResourceLoader<T>}
 ResourceLoader interfacet representerar en inladdare som kan ladda in en resurs av typen <T> givet ett filnamn.\\
-ResourceManager:\\
+\subsubsection{ResourceManager}
 Håller reda på alla registrerade resursladdare och alla inladdade resurser.\\
 loadResource funktionen laddar in en resurs av typen representerad av >Class objektet i första parametern< givet ett filnamn. Om en resurs med samma filnamn redan är inläst så kommer denna att returneras.\\
-TiledMapLoader:\\
-En klass som implementerar ResourceLoader<TiledMap> interfacet och returnerar ett TiledMap objekt som sedan används för att skapa ett PlayingField objekt.\\
-<More>\\
-\vspace{11pt}
-
+\subsubsection{TiledMapLoader}
+En klass som implementerar ResourceLoader<TiledMap> interfacet och returnerar ett TiledMap objekt som sedan används för att skapa ett PlayingField objekt. <More>
 \includegraphics[scale=0.5]{gameobject}\\
 \includegraphics[scale=0.5]{managers}\\
 \includegraphics[scale=0.5]{gameLogics}\\
