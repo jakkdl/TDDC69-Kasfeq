@@ -24,6 +24,8 @@ public class PlayingField implements DrawableGameComponent {
     public enum Options {
         /** \brief The name of the map */
         MAPNAME("defaultMapName"),
+        /** \brief The name of the default map layer */
+        MAPLAYER("Tile Layer 1"),
         /** \brief The name of the outhor of the map */
         AUTHOR("defaultAuthor"),
         /** \brief The gravity of the map */
@@ -117,7 +119,7 @@ public class PlayingField implements DrawableGameComponent {
      * @param type MapTile to change the pixel to.
      */
     public void setPixel(double x, double y, MapTile type) {
-        int layerID = map.getLayerIndex("Tile Layer 1");
+        int layerID = map.getLayerIndex(Options.MAPLAYER.getValue(String.class));
         int tileX = (int) Math.floor(x);
         int tileY = (int) Math.floor(y);
         map.setTileId(tileX/map.getTileWidth(), tileY/map.getTileHeight(), layerID, type.ordinal()+1);
